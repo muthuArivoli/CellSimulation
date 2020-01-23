@@ -47,3 +47,24 @@ This would allow for the simulation to run while remaining shy. Then, for the vi
 we might pass in just a Collection, such that it does not matter how the actual simulation is implemented. At the moment,
 we were thinking that we could pass in the output collection from the simulation, as well as some shape that is carried
 over from the configuration, and from that we would be able to reconstruct the actual layout of the visualization. 
+
+1) Cells know about their neighbors via some method called in them main simulation class which passes in their neighbors
+information. Using a graph makes it easy to determine what cells are neighboring a given cell. Additionally, we discussed
+a rough implementation which incorporates implementing a new Graph each iteration, which would be easy to determine if a 
+Cell has been updated, and solves the issue of a changing cell affecting its neighbors. We recognize that this is not 
+memory or speed efficient, but it makes the problem simpler to discuss and solve. We also tossed around the idea of
+some step counter which would ensure that a cell could not be updated with a cell that is older or newer than it.
+2) As mentioned above, there will be a Simulation class, which the Cell class will interact with to determine its threshold
+and states. In turn, this will determine the functionality of a cell, but the cell itself will handle its functions and 
+changing. Thus, the simulation class sets the rules that the cells play by.
+3) The grid is a graph, which contains Cells and their neighbors. The grid itself, as we are currently describing it, is 
+merely a representation of geometric relationships, but the actual behaviours would be handled by the cells and the
+configuration of the simulation, which would be beneficial as it would help separate the implementation of the simulation
+and the configuration. Only the simulation needs to know about the specifics of the grid, but the result should be passed
+in some encapsulated form such that the implementation is hidden but there is enough information for the visualization to
+be handled properly.
+4) The simulation needs to know the thresholds for change, the states of the cells, and the way those two interact. This
+will determine parameters and instance variables that define the Simulation class and Cell classes that will be used.
+5) Something will have to be passed as output from the simulation to the visualization. We mentioned earlier that in an
+attempt to hide the implementation, we were thinking that a Collection could be passed in, and the shape of the 
+grid could also be passed in, such that the grid can be reconfigured from any collection
