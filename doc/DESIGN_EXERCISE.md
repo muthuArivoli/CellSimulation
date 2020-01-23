@@ -25,7 +25,10 @@
 ### Using Inheritance in Game
 We found a slew of potential places where we could have (and wished we had) implemented inheritance in our Game designs.
 Popular places for all three of us were in designing Brick and Powerup subclasses, rather than handling every possible 
-scenario in those classes. It would have been cleaner, and easier to add more options.
+scenario in those classes. It would have been cleaner, and easier to add more options, rather than making each of those
+classes longer and more confusing as time went on. It would also make the code easier to read and understand, and imagining
+a scenario where a lot of bricks are made, or a lot of powerups/levels, it would be much better than all of the necessary
+if statements one could imagine having in our current implementation.
 
 ### High Level Design of Simulation
 In terms of design, we all agreed that the need for encapsulation between the different components was key, especially in
