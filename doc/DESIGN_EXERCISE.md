@@ -70,4 +70,5 @@ be handled properly.
 will determine parameters and instance variables that define the Simulation class and Cell classes that will be used.
 5) Something will have to be passed as output from the simulation to the visualization. We mentioned earlier that in an
 attempt to hide the implementation, we were thinking that a Collection could be passed in, and the shape of the 
-grid could also be passed in, such that the grid can be reconfigured from any collection
+grid could also be passed in, such that the grid can be reconfigured from any collection rather than having to pass in 
+the actually implemented grid, which would require more changes if the implementation was to be changed at some point.
