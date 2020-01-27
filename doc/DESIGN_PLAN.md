@@ -157,7 +157,7 @@ program will then call a method that will create a new Wator Simulation with the
 
 ## Team Responsibilities
 
-* Team Member #1 - Dennis 
+* Team Member #1
 Dennis will primarily work on the Configuration and Parameter classes, with secondary responsibilities on the Simulation,
 helping Muthu where necessary. At a high level, the plan is to implement the Configuration so as to handle multiple types
 of files, and utilize the type of file to build a specific Parameter object that will pass as much information as 
@@ -167,13 +167,13 @@ generic, abstract methods that will be implemented specifically with a Parameter
 implementation, such as WatorParam, FireParam, SegregationParam, etc. These methods will include setUI, setThreshold,
 setStates, etc.
 
-* Team Member #2 - Muthu
+* Team Member #2
 Muthu will be primarily responsible for the Simulation class, with secondary responsibilities on the Visualization 
 classes. At a high level, the Simulation will consist mainly of maintaining, constructing, and updating the grid of 
 cells, represented as a graph of Cell objects. This will utilize a Parameter object to set initial values, and then 
 will apply those values to functions defined in the aforementioned classes to make necessary changes.
 
-* Team Member #3 - Luke - 
+* Team Member #3
 Luke?s primary responsibility will be the Visualization class, with secondary responsibilities with the Configuration 
 class. The Visualization will take in the Parameter object in order to define UI components, and then will utilize the 
 Parameter object, input, and Collection passed in from the Simulation to update the grid that is being presented on the
