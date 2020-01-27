@@ -40,11 +40,11 @@ UI and then will set up the parameters of the simulation based on the Parameter 
 essentially extensions of the classes above, and they are only separated for clarity, as well as to further create 
 separation between the other classes. The design is expanded upon in the diagrams below.
 
-![Outline](/doc/image1.jpg)
+![Outline](image1.jpg)
 
 ## User Interface
 
-![UI](/doc/image2.jpg)
+![UI](image2.jpg)
 
 As shown in the picture above, the interface will have all the features outlined in specification for the project. 
 This includes buttons to pause, continue and step through the simulation. It will also have a sliding bar that allows 
@@ -57,14 +57,14 @@ interacts with the driver of the simulation to advance and take the next step fo
 occurs for the step except it happens only once per button push.
 
 
-## Design Details -- Dennis
+## Design Details
 In this section we will describe in more specifics the five main classes described above ? Configuration, Simulation, 
 Visualization, Parameter, and Driver. The ways in which they generally operate are described in the Overview above, but 
 this section will describe some specific jobs of each, as well as important/vital method calls and how they are 
 distributed among the classes to enable the solutions to the use cases as described below in the Design Consideration 
 sections.
 
-###Driver
+### Driver
 The purpose of the Driver class is to act as a space for communication between the various classes doing work to 
 perform the simulation, and act as another degree of separation between them. The Driver class will have a step 
 function defined in it which will perform the necessary actions in the Simulation and Visualization classes, updating 
@@ -73,7 +73,7 @@ will also be the place that will call the initialize Configuration UI class, int
 The configuration will return the Parameter object, as specified by the input from the file, which will then be passed 
 into the Simulation and Visualization classes in order to determine their set up and define some of their functionalities.
 
-###Configuration
+### Configuration
 The Configuration class will have the job of taking in a File and reading in the type of simulation, as well as the 
 initial set up and parameters for the simulation. This will occur in a readFile method, which will in turn pass 
 results into a createParameter object. The latter will construct the specific Parameter object that the simulation 
@@ -81,7 +81,7 @@ calls for. This Parameter will be an instance variable that can be accessed via 
 both the Simulation and Visualization via the Driver class as an abstract Parameter object, even though it will carry 
 the specific implementation.
 
-###Parameter
+### Parameter
 Their will be various types of Parameter objects, each of which corresponds to a different type of simulation. These 
 parameter objects will include the necessary states, thresholds, and actions to be taken in a simulation, and will 
 also provide the information necessary to describe the specific visualization UI for this simulation, such that there 
@@ -91,7 +91,7 @@ will allow for other classes to not have to be changed if new simulations were t
 will have specific implementations of methods such as setUI, setThreshold, setStates, or setInitial such that they 
 will help to set up the Simulation and Visualization classes.
 
-###Simulation
+### Simulation
 The purpose of the Simulation class will be to perform the calculations necessary to update and maintain the grid of 
 cells during each iteration of the simulation. This will include an updateCell method, which looks at all of a Cells 
 neighbors and calls its setState function if the threshold for change is met. It will also have a method that is 
@@ -103,14 +103,14 @@ will in turn be passed as a collection into the visualization. The calls to upda
 but will be called within an updateGrid method, which iterates over all of the cells and their neighbors, creating a 
 new grid/graph as it does so, and replacing the instance variable myGraph after the new graph is completed.
 
-###Cell
+### Cell
 The Cell class will be the object that is stored in the grid, and will include several instance variables that are 
 crucial to the implementation of the grid, and will be much easier and cleaner than implementing nested ArrayLists or 
 some other confusing method. It will include the current and possible states, a means of transitioning states, as 
 well as information for how they should be represented in the visualization. A cell could also include information on 
 its neighrbors such that it can help reconstruct the grid after the collection is passed into the visualization.
 
-###Visualization
+### Visualization
 This Visualization class will include components that construct the UI. It will have methods such as setUI based on 
 the parameter input and will also handle the input from the user such that it is interactive. These inputs will help 
 construct a new Simulation to start, communicating via the Driver class. The Visualization will also reconstruct the 
