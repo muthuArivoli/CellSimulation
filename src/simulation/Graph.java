@@ -2,10 +2,16 @@ package simulation;
 
 import java.util.*;
 
-public class Graph<T> {
+public class Graph<T extends Clonable> {
     private Map<T, List<T> > adjList;
     public Graph(){
         adjList = new LinkedHashMap<>();
+    }
+
+    public Graph(Graph<T> myGraph){
+        for(T myThing:myGraph.getVertices()){
+            addVertex((T)myThing.clone(),adjList.get(myThing));
+        }
     }
 
     public void addEdge(T source, T dest){
@@ -18,20 +24,12 @@ public class Graph<T> {
         adjList.put(c, neighbors);
     }
 
-    public boolean checkVertex(T vertex){
-        return adjList.containsKey(vertex);
-    }
-
     public List<T> getNeighbors(T ind){
         return adjList.get(ind);
     }
 
     public Set<T> getVertices(){
         return adjList.keySet();
-    }
-
-    public Iterator createIterator() {
-        return adjList.keySet().iterator();
     }
 
 }

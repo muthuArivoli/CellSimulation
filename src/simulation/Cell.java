@@ -1,6 +1,6 @@
 package simulation;
 
-public class Cell {
+public class Cell implements Clonable {
 
     private int state;
     public Cell(int state){
@@ -11,4 +11,8 @@ public class Cell {
         return state;
     }
 
+    @Override
+    public Cell clone() {
+        return new Cell(this.state);
+    }
 }
