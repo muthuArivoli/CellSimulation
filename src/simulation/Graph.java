@@ -9,8 +9,8 @@ public class Graph<T extends Clonable> {
     }
 
     public Graph(Graph<T> myGraph){
-        for(T myThing:myGraph.getVertices()){
-            addVertex((T)myThing.clone(),adjList.get(myThing));
+        for(T myVertex:myGraph.getVertices()){
+            addVertex((T)myVertex.clone(),adjList.get(myVertex));
         }
     }
 

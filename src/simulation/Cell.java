@@ -11,6 +11,10 @@ public class Cell implements Clonable {
         return state;
     }
 
+    public void setState(int state) {
+        this.state = state;
+    }
+
     @Override
     public Cell clone() {
         return new Cell(this.state);
