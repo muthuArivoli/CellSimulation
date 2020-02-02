@@ -1,4 +1,4 @@
-package cellsociety;
+package Visualization;
 
 import java.awt.GridLayout;
 import java.util.Hashtable;
@@ -39,11 +39,7 @@ public class Slider {
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
 
-        Hashtable<Integer, JLabel> ticks = new Hashtable<Integer, JLabel>();
-        for (int i=0; i<NUMBER_OF_TICKS; i++){
-            int currentValue = (BIGGEST_VISUALIZATION_SIZE/(NUMBER_OF_TICKS-1))*i;
-            ticks.put(currentValue, new JLabel(String.valueOf(currentValue)));
-        }
+        Hashtable<Integer, JLabel> ticks = makeTicks();
 
         slider.setLabelTable(ticks);
         slider.addChangeListener(new ChangeListener() {
@@ -57,6 +53,15 @@ public class Slider {
         frame.add(status);
         frame.pack();
         frame.setVisible(true);
+    }
+
+    private  Hashtable<Integer, JLabel> makeTicks(){
+        Hashtable<Integer, JLabel> ticks = new Hashtable<Integer, JLabel>();
+        for (int i=0; i<NUMBER_OF_TICKS; i++){
+            int currentValue = (BIGGEST_VISUALIZATION_SIZE/(NUMBER_OF_TICKS-1))*i;
+            ticks.put(currentValue, new JLabel(String.valueOf(currentValue)));
+        }
+        return ticks;
     }
 
     public int getCurrentSimulationSpeed() {

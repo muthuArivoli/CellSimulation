@@ -1,4 +1,4 @@
-package cellsociety;
+package Visualization;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;

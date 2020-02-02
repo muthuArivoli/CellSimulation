@@ -1,36 +1,16 @@
-package cellsociety;
+package Visualization;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
 
 public class Visualization extends Application {
     public static final String TITLE = "Visualization";
@@ -82,8 +62,6 @@ public class Visualization extends Application {
 
         stepButton.setOnAction(value -> {
             //step through once
-
-            Slider mySlider = new Slider();
         });
         return stepButton;
     }
@@ -100,19 +78,31 @@ public class Visualization extends Application {
         return getFileButton;
     }
 
+    private Button makeChangeSimulationRateButton() {
+        Button getFileButton = new Button("Change Simualtion Rate");
+        getFileButton.setTranslateX(SIZE*(1.0/8));
+        getFileButton.setTranslateY(SIZE*(2.0/10));
+
+        getFileButton.setOnAction(value -> {
+            Slider mySlider = new Slider();
+            System.out.print(mySlider.getCurrentSimulationSpeed());
+        });
+        return getFileButton;
+    }
+
     private Scene setupGame (int width, int height, Paint background) {
         Button a = makePauseResumeButton();
         Button b = makeStepButton();
         Button c = makeGetFileButton();
+        Button d = makeChangeSimulationRateButton();
 
-        JSlider mySlider = new JSlider();
-        HBox hbox = new HBox(a, b, c);
-
+        HBox hbox = new HBox(a, b, c, d);
 
         Scene scene = new Scene(hbox, width, height, background);
         scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         return scene;
     }
+
 
     private void step (double elapsedTime) {
     }

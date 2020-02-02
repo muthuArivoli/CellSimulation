@@ -1,4 +1,4 @@
-package cellsociety;
+package Visualization;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
