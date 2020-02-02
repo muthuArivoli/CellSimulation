@@ -1,5 +1,7 @@
 package configuration.parameters;
 
+import cellsociety.Cell;
+import configuration.GridBuilder;
 import configuration.States;
 
 import java.io.File;
@@ -12,26 +14,22 @@ public class Fire extends Parameter {
     public Integer gridWidth;
     public double probCatch;
     public ArrayList<States> possibleStates;
-    //public ArrayList<ArrayList<Cell>> initialGrid;
+    public ArrayList<ArrayList<Cell>> initialGrid;
 
     public Fire(){
         gridLength = 25;
         gridWidth = 25;
         probCatch = .25;
         possibleStates = new ArrayList<States>(Arrays.asList(States.BURNING, States.EMPTY, States.TREE));
-        createGrid();
     }
 
-    //public Fire(File file){
-//        readFile();
-//    }
-
-    private void createGrid(){
+    public Fire(File file){
+        createGrid(file);
     }
 
-    //public Collection getGrid(){
-        //return myGrid;
-    //}
+    public Collection getGrid(){
+        return initialGrid;
+    }
 
 
     @Override

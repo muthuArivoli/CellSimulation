@@ -1,17 +1,21 @@
-package simulation;
+package cellsociety;
+
+import configuration.States;
+import simulation.Clonable;
 
 public class Cell implements Clonable {
 
-    private int state;
-    public Cell(int state){
+    private States state;
+
+    public Cell(States state){
         this.state = state;
     }
 
-    public int getState(){
+    public States getState(){
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(States state) {
         this.state = state;
     }
 

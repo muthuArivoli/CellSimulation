@@ -31,7 +31,6 @@ public class Configuration {
 
     private Scene myScene;
     private Group myLayout;
-    private ArrayList<ArrayList<Cell>> myGrid;
 
     public Configuration(){
         initializeConfiguration();
