@@ -1,45 +1,65 @@
 package cellsociety;
 
-import javax.swing.DefaultBoundedRangeModel;
+import java.awt.GridLayout;
+import java.util.Hashtable;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-
-import java.util.Hashtable;
-
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 /*
  * A simple swing slider example with different constructors
  */
 
 public class Slider {
+    public static final int SMALLEST_VISUALIZATION_SIZE = 0;
+    public static final int BIGGEST_VISUALIZATION_SIZE = 100;
+    public static final int NUMBER_OF_TICKS = 5;
+
+
+    private int currentSimulationSpeed;
+
     public Slider() {
+        currentSimulationSpeed = (SMALLEST_VISUALIZATION_SIZE+BIGGEST_VISUALIZATION_SIZE)/2;
         JFrame.setDefaultLookAndFeelDecorated(true);
-        JFrame frame = new JFrame("Simualtion Rate");
+        JFrame frame = new JFrame("Simulation Rate");
+        frame.setSize(600, 600);
+        frame.setLayout(new GridLayout(3, 1));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel panel = new JPanel();
+
+        // Set the panel to add buttons
+        JPanel panel1 = new JPanel();
+
+        JLabel status = new JLabel("Simulation Rate: "+ String.valueOf(currentSimulationSpeed), JLabel.CENTER);
+
         JSlider slider = new JSlider();
-        slider.setMajorTickSpacing(25);
+        slider.setMajorTickSpacing((BIGGEST_VISUALIZATION_SIZE-SMALLEST_VISUALIZATION_SIZE)/(NUMBER_OF_TICKS-1));
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
-        Hashtable ticks = new Hashtable();
-        ticks.put(0, new JLabel("0"));
-        ticks.put(25, new JLabel("25"));
-        ticks.put(50, new JLabel("50"));
-        ticks.put(75, new JLabel("75"));
-        ticks.put(100, new JLabel("100"));
 
-        // Set the label to be drawn
+        Hashtable<Integer, JLabel> ticks = new Hashtable<Integer, JLabel>();
+        for (int i=0; i<NUMBER_OF_TICKS; i++){
+            int currentValue = (BIGGEST_VISUALIZATION_SIZE/(NUMBER_OF_TICKS-1))*i;
+            ticks.put(currentValue, new JLabel(String.valueOf(currentValue)));
+        }
+
         slider.setLabelTable(ticks);
-
-        // Add the slider to the panel
-        panel.add(slider);
-
-        // Set the window to be visible as the default to be false
-        frame.add(panel);
+        slider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                currentSimulationSpeed = ((JSlider)e.getSource()).getValue();
+                status.setText("Simulation Rate: " + currentSimulationSpeed);
+            }
+        });
+        panel1.add(slider);
+        frame.add(panel1);
+        frame.add(status);
         frame.pack();
         frame.setVisible(true);
-
     }
 
+    public int getCurrentSimulationSpeed() {
+        return currentSimulationSpeed;
+    }
 }

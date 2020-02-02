@@ -39,11 +39,9 @@ public class Visualization extends Application {
     public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static final Paint BACKGROUND = Color.AZURE;
-    public static final int SMALLEST_VISUALIZATION_SIZE = 1;
-    public static final int BIGGEST_VISUALIZATION_SIZE = 10;
 
     private Scene myScene;
-    private int visualizationSpeed = (SMALLEST_VISUALIZATION_SIZE+BIGGEST_VISUALIZATION_SIZE)/2; //move to constructor
+
 
     @Override
     public void start (Stage stage) {
