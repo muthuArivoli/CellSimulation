@@ -6,6 +6,7 @@ import configuration.parameters.Percolation;
 import configuration.parameters.PredatorPrey;
 import configuration.parameters.Segregation;
 import javafx.collections.FXCollections;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -29,18 +30,20 @@ public class Configuration {
             new Percolation(), new PredatorPrey(), new Segregation()));
 
     private Scene myScene;
-    private BorderPane myLayout;
+    private Group myLayout;
+    private ArrayList<ArrayList<Cell>> myGrid;
 
     public Configuration(){
         initializeConfiguration();
     }
 
-    public void initializeConfiguration(){
-        myLayout = new BorderPane();
+    private void initializeConfiguration(){
+        myLayout = new Group();
         myScene = new Scene(myLayout, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
-
         ComboBox combo_box = new ComboBox(FXCollections.observableArrayList(possible_simulations));
         Button uploadFile = new Button("Choose a file to upload");
+        myLayout.getChildren().add(combo_box);
+        myLayout.getChildren().add(uploadFile);
         uploadFile.setOnAction( event -> chooseFile());
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     }
