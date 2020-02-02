@@ -14,12 +14,9 @@ public class PercolationSimulation extends Simulation{
             }
             if (percolatedCell) {
                 it.next().setState(2);
-            } else {
-                it.next().setState(1);
+                return;
             }
-        }
-        else{
-            it.next().setState(0);
+            it.next();
         }
     }
 }
