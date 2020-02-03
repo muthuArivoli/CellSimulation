@@ -21,18 +21,12 @@ public class Slider {
 
     private int currentSimulationSpeed;
 
-    public Slider() {
-        currentSimulationSpeed = (SMALLEST_VISUALIZATION_SIZE+BIGGEST_VISUALIZATION_SIZE)/2;
+    public Slider(int oldSimulationSpeed) {
+        currentSimulationSpeed = oldSimulationSpeed;
         JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frame = new JFrame("Simulation Rate");
-        frame.setSize(600, 600);
-        frame.setLayout(new GridLayout(3, 1));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // Set the panel to add buttons
+        frame.setSize(200, 200);
         JPanel panel1 = new JPanel();
-
-        JLabel status = new JLabel("Simulation Rate: "+ String.valueOf(currentSimulationSpeed), JLabel.CENTER);
 
         JSlider slider = new JSlider();
         slider.setMajorTickSpacing((BIGGEST_VISUALIZATION_SIZE-SMALLEST_VISUALIZATION_SIZE)/(NUMBER_OF_TICKS-1));
@@ -45,12 +39,10 @@ public class Slider {
         slider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 currentSimulationSpeed = ((JSlider)e.getSource()).getValue();
-                status.setText("Simulation Rate: " + currentSimulationSpeed);
             }
         });
         panel1.add(slider);
         frame.add(panel1);
-        frame.add(status);
         frame.pack();
         frame.setVisible(true);
     }

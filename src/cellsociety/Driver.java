@@ -59,7 +59,6 @@ public class Driver extends Application {
             }
         }
         else{
-
         }
     }
 
