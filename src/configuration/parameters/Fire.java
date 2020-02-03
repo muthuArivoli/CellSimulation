@@ -10,27 +10,22 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public class Fire extends Parameter {
-    public Integer gridLength;
-    public Integer gridWidth;
-    public double probCatch;
-    public ArrayList<States> possibleStates;
-    public ArrayList<ArrayList<Cell>> initialGrid;
+    private double probCatch;
 
     public Fire(){
-        gridLength = 25;
-        gridWidth = 25;
-        probCatch = .25;
+        this(25, 25, .25);
+    }
+
+    public Fire(Integer length, Integer width, double prob){
+        gridLength = length;
+        gridWidth = width;
+        probCatch = prob;
         possibleStates = new ArrayList<States>(Arrays.asList(States.BURNING, States.EMPTY, States.TREE));
     }
 
-    public Fire(File file){
-        createGrid(file);
+    public double getThreshold() {
+        return probCatch;
     }
-
-    public Collection getGrid(){
-        return initialGrid;
-    }
-
 
     @Override
     public String toString(){

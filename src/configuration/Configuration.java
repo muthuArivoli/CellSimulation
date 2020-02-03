@@ -1,5 +1,6 @@
 package configuration;
 
+import cellsociety.Cell;
 import configuration.parameters.Parameter;
 import configuration.parameters.Fire;
 import configuration.parameters.Percolation;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 
 public class Configuration {
     public static final Paint BACKGROUND = Color.LIGHTGOLDENRODYELLOW;
@@ -31,19 +33,26 @@ public class Configuration {
 
     private Scene myScene;
     private Group myLayout;
+    private GridBuilder gridBuilder;
+    private Parameter currentParam;
+    private ArrayList<ArrayList<Cell>> initialGrid;
 
     public Configuration(){
         initializeConfiguration();
     }
 
     private void initializeConfiguration(){
-        myLayout = new Group();
         myScene = new Scene(myLayout, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
+        myLayout = new Group();
+        gridBuilder = new GridBuilder();
+
         ComboBox combo_box = new ComboBox(FXCollections.observableArrayList(possible_simulations));
-        Button uploadFile = new Button("Choose a file to upload");
         myLayout.getChildren().add(combo_box);
-        myLayout.getChildren().add(uploadFile);
+
+        Button uploadFile = new Button("Choose a file to upload");
         uploadFile.setOnAction( event -> chooseFile());
+        myLayout.getChildren().add(uploadFile);
+
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     }
 
@@ -52,18 +61,18 @@ public class Configuration {
         Stage fileStage = new Stage();
         File file = fileChooser.showOpenDialog(fileStage);
         if(file != null){
-            openFile(file);
+            createParameter(file);
+            createGrid(file);
         }
     }
 
-    private void openFile(File file){
-        createParameter(file);
+    private void createParameter(File file){
+        currentParam = gridBuilder.makeParameter(file);
     }
 
-    private Parameter createParameter(File file){
-        return new Percolation();
+    private void createGrid(File file){
+        initialGrid = gridBuilder.makeGrid(file);
     }
-
 
     private void handleKeyInput (KeyCode code) {
         if (code == KeyCode.ESCAPE){
@@ -73,5 +82,13 @@ public class Configuration {
 
     public Scene getConfigurationScene(){
         return myScene;
+    }
+
+    public Collection getInitialGrid() {
+        return initialGrid;
+    }
+
+    public Parameter getCurrentParam() {
+        return currentParam;
     }
 }

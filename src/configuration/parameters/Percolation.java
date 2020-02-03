@@ -2,15 +2,26 @@ package configuration.parameters;
 
 import configuration.States;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Percolation extends Parameter {
-    public Integer gridLength;
-    public Integer gridWidth;
-    public double threshold;
-    public ArrayList<States> possibleStates;
+    private double threshold;
 
     public Percolation(){
+        this(25, 25, 0);
+    }
+
+    public Percolation(Integer length, Integer width, double thresh){
+        gridLength = length;
+        gridWidth = width;
+        threshold = thresh;
+        possibleStates = new ArrayList<States>(Arrays.asList(States.BURNING, States.EMPTY, States.TREE));
+    }
+
+    public double getThreshold(){
+        return threshold;
     }
 
     @Override
