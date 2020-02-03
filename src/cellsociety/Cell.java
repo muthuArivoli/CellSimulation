@@ -5,17 +5,17 @@ import simulation.Clonable;
 
 public class Cell implements Clonable {
 
-    private States state;
+    private CellStates state;
 
-    public Cell(States state){
+    public Cell(CellStates state){
         this.state = state;
     }
 
-    public States getState(){
+    public CellStates getState(){
         return state;
     }
 
-    public void setState(States state) {
+    public void setState(CellStates state) {
         this.state = state;
     }
 

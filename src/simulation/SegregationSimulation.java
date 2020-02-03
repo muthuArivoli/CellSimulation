@@ -22,6 +22,7 @@ public class SegregationSimulation extends Simulation {
                 similarNeighbors++;
             }
         }
+        // Check that state 0 should be EMPTY
         if((double)similarNeighbors/neighbor.size() <=threshold){
             Iterator<Cell> initialIt = newGrid.getVertices().iterator();
             for(Cell c:myGrid.getVertices()){

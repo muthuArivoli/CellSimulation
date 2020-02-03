@@ -1,5 +1,6 @@
 package configuration.parameters;
 
+import cellsociety.CellStates;
 import configuration.States;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class PredatorPrey extends Parameter {
         probEaten = prob;
         gridLength = length;
         gridWidth = width;
-        possibleStates = new ArrayList<States>(Arrays.asList(States.BURNING, States.EMPTY, States.TREE));
+        possibleStates = new ArrayList<CellStates>(Arrays.asList(States.DEAD, States.PREY, States.PREDATOR));
     }
 
     public double getThreshold() {
