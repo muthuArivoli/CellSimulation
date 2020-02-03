@@ -3,11 +3,12 @@ package simulation;
 import cellsociety.Cell;
 import configuration.States;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 public class PercolationSimulation extends Simulation{
-    public PercolationSimulation(List<List<Cell>> grid) {
+    public PercolationSimulation(Collection grid) {
         super(grid);
     }
 

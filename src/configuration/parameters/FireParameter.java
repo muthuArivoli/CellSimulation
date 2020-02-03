@@ -1,23 +1,20 @@
 package configuration.parameters;
 
-import cellsociety.Cell;
 import cellsociety.CellStates;
-import configuration.GridBuilder;
 import configuration.States;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 
-public class Fire extends Parameter {
+public class FireParameter extends Parameter {
     private double probCatch;
 
-    public Fire(){
-        this(25, 25, .25);
+    public FireParameter(){
+        this("Simulation Team 7", 25, 25, .25);
     }
 
-    public Fire(Integer length, Integer width, double prob){
+    public FireParameter(String fileAuthor, Integer length, Integer width, double prob){
+        author = fileAuthor;
         gridLength = length;
         gridWidth = width;
         probCatch = prob;

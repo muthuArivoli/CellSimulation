@@ -8,19 +8,16 @@ import java.io.File;
 import java.util.ArrayList;
 
 public abstract class Parameter {
+    public String author;
     public Integer gridLength;
     public Integer gridWidth;
     public ArrayList<CellStates> possibleStates;
 
     public Parameter(){}
 
-    public void createGrid(File file){
-        GridBuilder grid = new GridBuilder();
-        ArrayList<ArrayList<Cell>> initialGrid = grid.makeGrid(file);
-    }
-
     public abstract double getThreshold();
 
+    public String getAuthor(){ return author; }
     public Integer getGridLength(){
         return gridLength;
     }

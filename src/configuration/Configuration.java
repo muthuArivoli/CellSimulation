@@ -2,22 +2,24 @@ package configuration;
 
 import cellsociety.Cell;
 import configuration.parameters.Parameter;
-import configuration.parameters.Fire;
-import configuration.parameters.Percolation;
-import configuration.parameters.PredatorPrey;
-import configuration.parameters.Segregation;
-import javafx.collections.FXCollections;
+import configuration.parameters.FireParameter;
+import configuration.parameters.PercolationParameter;
+import configuration.parameters.WaTorParameter;
+import configuration.parameters.SegregationParameter;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
+import simulation.Simulation;
+import simulation.FireSimulation;
+import simulation.GameOfLifeSimulation;
+import simulation.PercolationSimulation;
+import simulation.SegregationSimulation;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,8 +30,8 @@ public class Configuration {
     public static final double SCREEN_WIDTH = 600.0;
     public static final double SCREEN_HEIGHT = 600.0;
     private static final Paint TEXT_COLOR = Color.DARKSLATEGRAY;
-    private static final ArrayList<Parameter> possible_simulations = new ArrayList<Parameter>(Arrays.asList(new Fire(),
-            new Percolation(), new PredatorPrey(), new Segregation()));
+    private static final ArrayList<Parameter> possible_simulations = new ArrayList<Parameter>(Arrays.asList(new FireParameter(),
+            new PercolationParameter(), new WaTorParameter(), new SegregationParameter()));
     private static final double HALFWAY = SCREEN_WIDTH/2.0;
     private static final int FONT_SIZE = 30;
     private static final double INDENT = 100.0;
@@ -46,6 +48,7 @@ public class Configuration {
     private GridBuilder gridBuilder;
     private Parameter currentParam;
     private ArrayList<ArrayList<Cell>> initialGrid;
+    private Simulation currentSim;
     private boolean checkSelected;
 
     public Configuration(){
@@ -53,7 +56,7 @@ public class Configuration {
     }
 
 
-    public boolean isCheckSelected(){ return checkSelected; }
+    public boolean isSimulationSelected(){ return checkSelected; }
 
     public Scene getConfigurationScene(){
         return myScene;
@@ -66,6 +69,8 @@ public class Configuration {
     public Parameter getCurrentParam() {
         return currentParam;
     }
+
+    public Simulation getCurrentSim() { return currentSim; }
 
     private void initializeConfiguration(){
         myLayout = new Group();
@@ -144,7 +149,27 @@ public class Configuration {
     private void initializeFile(File file){
         checkSelected = true;
         currentParam = gridBuilder.makeParameter(file);
-        initialGrid = gridBuilder.makeGrid(file);
+        initialGrid = gridBuilder.makeGrid(file, currentParam);
+        createSimulation();
+    }
+
+    private void createSimulation(){
+        if(currentParam.toString().equals("Fire Simulation")){
+            currentSim = new FireSimulation(this.getInitialGrid(), this.getCurrentParam());
+        }
+        if(currentParam.toString().equals("Game of Life Simulation")){
+            currentSim = new GameOfLifeSimulation(this.getInitialGrid());
+        }
+        if(currentParam.toString().equals("Percolation Simulation")){
+            currentSim = new PercolationSimulation(this.getInitialGrid());
+        }
+        if(currentParam.toString().equals("Segregation Simulation")){
+            currentSim = new SegregationSimulation(this.getInitialGrid(), this.getCurrentParam());
+        }
+//        if(currentParam.toString().equals("Wa Tor Simulation")){
+//            currentSim = new FireSimulation(this.getInitialGrid(), this.getCurrentParam());
+//        }
+
     }
 
     private void handleKeyInput (KeyCode code) {

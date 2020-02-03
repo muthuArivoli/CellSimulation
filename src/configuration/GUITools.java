@@ -52,4 +52,23 @@ public class GUITools {
         combo_box.setLayoutX(x);
         return combo_box;
     }
+
+    public Button makePauseResumeButton(int size){
+        Button pauseResumeButton = new Button("PAUSE");
+        pauseResumeButton.setTranslateX(size*(3.0/4));
+        pauseResumeButton.setTranslateY(size*(9.0/10));
+
+        pauseResumeButton.setOnAction(value -> {
+            if (pauseResumeButton.getText().equals("PAUSE")){
+                pauseResumeButton.setText("RESUME");
+                //Pause simulation
+            }
+            else{
+                pauseResumeButton.setText("PAUSE");
+                //Resume simulation
+            }
+        });
+
+        return pauseResumeButton;
+    }
 }

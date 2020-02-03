@@ -1,5 +1,8 @@
 package Visualization;
 
+import cellsociety.Cell;
+import configuration.GUITools;
+import configuration.GridBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -11,43 +14,29 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import simulation.Simulation;
 
-public class Visualization extends Application {
+import java.util.ArrayList;
+
+public class Visualization {
     public static final String TITLE = "Visualization";
-    public static final int SIZE = 800;
+    public static final int SIZE = 500;
     public static final int FRAMES_PER_SECOND = 60;
     public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static final Paint BACKGROUND = Color.AZURE;
 
     private Scene myScene;
+    private ArrayList<ArrayList<Cell>> currentGrid;
 
-
-    @Override
-    public void start (Stage stage) {
+    public Visualization(Simulation simulation){
         myScene = setupGame(SIZE, SIZE, BACKGROUND);
-        stage.setScene(myScene);
-        stage.setTitle(TITLE);
-        stage.show();
+        GridBuilder builder = new GridBuilder();
+        currentGrid = builder.reconstructGrid();
     }
 
-    private Button makePauseResumeButton(){
-        Button pauseResumeButton = new Button("PAUSE");
-        pauseResumeButton.setTranslateX(SIZE*(3.0/4));
-        pauseResumeButton.setTranslateY(SIZE*(9.0/10));
-
-        pauseResumeButton.setOnAction(value -> {
-            if (pauseResumeButton.getText().equals("PAUSE")){
-                pauseResumeButton.setText("RESUME");
-                //Pause simulation
-            }
-            else{
-                pauseResumeButton.setText("PAUSE");
-                //Resume simulation
-            }
-        });
-
-        return pauseResumeButton;
+    public Scene getScene(){
+        return myScene;
     }
 
     private Button makeStepButton(){
@@ -60,6 +49,7 @@ public class Visualization extends Application {
         });
         return stepButton;
     }
+
 
     private Button makeGetFileButton(){
         Button getFileButton = new Button("GET FILE");
@@ -86,7 +76,9 @@ public class Visualization extends Application {
     }
 
     private Scene setupGame (int width, int height, Paint background) {
-        Button a = makePauseResumeButton();
+        GUITools constructor = new GUITools();
+        Button a = constructor.makePauseResumeButton(SIZE);
+
         Button b = makeStepButton();
         Button c = makeGetFileButton();
         Button d = makeChangeSimulationRateButton();
@@ -110,9 +102,5 @@ public class Visualization extends Application {
             handleE();
         }
          **/
-    }
-
-    public static void Visualization (String[] args) {
-        launch(args);
     }
 }

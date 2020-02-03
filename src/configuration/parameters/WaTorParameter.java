@@ -6,19 +6,20 @@ import configuration.States;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Segregation extends Parameter {
+public class WaTorParameter extends Parameter {
     private double probEaten;
 
-    public Segregation(){
-        this(25, 25, .25);
+    public WaTorParameter(){
+        this("Simulation Team 7", 25, 25, .25);
     }
 
 
-    public Segregation(Integer length, Integer width, Double prob){
+    public WaTorParameter(String fileAuthor, Integer length, Integer width, Double prob){
+        author = fileAuthor;
         probEaten = prob;
         gridLength = length;
         gridWidth = width;
-        possibleStates = new ArrayList<CellStates>(Arrays.asList(States.MAJORITY, States.MINORITY, States.EMPTY));
+        possibleStates = new ArrayList<CellStates>(Arrays.asList(States.DEAD, States.PREY, States.PREDATOR));
     }
 
     public double getThreshold() {
@@ -27,6 +28,6 @@ public class Segregation extends Parameter {
 
     @Override
     public String toString(){
-        return "Segregation Simulation";
+        return "Wa Tor Simulation";
     }
 }

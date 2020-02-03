@@ -2,19 +2,20 @@ package configuration.parameters;
 
 import cellsociety.CellStates;
 import configuration.States;
+import simulation.GameOfLifeSimulation;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Percolation extends Parameter {
+public class GameOfLifeParameter extends Parameter {
     private double threshold;
 
-    public Percolation(){
-        this(25, 25, 0);
+    public GameOfLifeParameter(){
+        this("Simulation Team 7", 25, 25, 0);
     }
 
-    public Percolation(Integer length, Integer width, double thresh){
+    public GameOfLifeParameter(String fileAuthor, Integer length, Integer width, double thresh){
+        author = fileAuthor;
         gridLength = length;
         gridWidth = width;
         threshold = thresh;
@@ -27,6 +28,6 @@ public class Percolation extends Parameter {
 
     @Override
     public String toString(){
-        return "Percolation Simulation";
+        return "Game of Life Simulation";
     }
 }

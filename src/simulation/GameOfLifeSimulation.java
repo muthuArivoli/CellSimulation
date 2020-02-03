@@ -3,11 +3,12 @@ package simulation;
 import cellsociety.Cell;
 import configuration.States;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 public class GameOfLifeSimulation extends Simulation {
-    public GameOfLifeSimulation(List<List<Cell>> grid) {
+    public GameOfLifeSimulation(Collection grid) {
         super(grid);
     }
 

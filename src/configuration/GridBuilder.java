@@ -3,11 +3,7 @@ package configuration;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import cellsociety.Cell;
-import configuration.parameters.Fire;
-import configuration.parameters.Segregation;
-import configuration.parameters.PredatorPrey;
-import configuration.parameters.Percolation;
-import configuration.parameters.Fire;
+import configuration.parameters.FireParameter;
 import configuration.parameters.Parameter;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -20,7 +16,7 @@ public class GridBuilder {
 
     public GridBuilder(){}
 
-    public ArrayList<ArrayList<Cell>> makeGrid(File file) {
+    public ArrayList<ArrayList<Cell>> makeGrid(File file, Parameter param) {
         ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -43,7 +39,7 @@ public class GridBuilder {
     }
 
     public Parameter makeParameter(File file){
-        Parameter param = new Fire();
+        Parameter param = new FireParameter();
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -64,5 +60,8 @@ public class GridBuilder {
         return param;
     }
 
+    public ArrayList<ArrayList<Cell>> reconstructGrid() {
+        return new ArrayList<ArrayList<Cell>>();
+    }
 }
 

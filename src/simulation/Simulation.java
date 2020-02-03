@@ -4,6 +4,7 @@ package simulation;
 import cellsociety.Cell;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,11 +12,12 @@ public abstract class Simulation {
 
     protected Graph<Cell> myGrid;
 
-    public Simulation(List<List<Cell> > grid){
+    public Simulation(Collection grid){
         createGraph(grid);
     }
 
-    private void createGraph(List<List<Cell>> grid){
+    private void createGraph(Collection array){
+        List<List<Cell>> grid = (List<List<Cell>>) array;
         for(int i=0; i<grid.size();i++){
             for(int k=0; k<grid.get(i).size();k++){
                 List<Cell> neighbors = new ArrayList<>();
@@ -47,7 +49,7 @@ public abstract class Simulation {
         myGrid = newGrid;
     }
 
-    public void returnGraph(){
-
+    public Graph<Cell> returnGraph(){
+        return myGrid;
     }
 }
