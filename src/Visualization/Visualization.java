@@ -29,11 +29,6 @@ public class Visualization extends Application {
         stage.setScene(myScene);
         stage.setTitle(TITLE);
         stage.show();
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
-        Timeline animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(frame);
-        animation.play();
     }
 
     private Button makePauseResumeButton(){
@@ -101,10 +96,6 @@ public class Visualization extends Application {
         Scene scene = new Scene(hbox, width, height, background);
         scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         return scene;
-    }
-
-
-    private void step (double elapsedTime) {
     }
 
     private void handleKeyInput (KeyCode code) {

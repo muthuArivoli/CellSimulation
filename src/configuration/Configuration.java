@@ -46,15 +46,32 @@ public class Configuration {
     private GridBuilder gridBuilder;
     private Parameter currentParam;
     private ArrayList<ArrayList<Cell>> initialGrid;
+    private boolean checkSelected;
 
     public Configuration(){
         initializeConfiguration();
+    }
+
+
+    public boolean isCheckSelected(){ return checkSelected; }
+
+    public Scene getConfigurationScene(){
+        return myScene;
+    }
+
+    public Collection getInitialGrid() {
+        return initialGrid;
+    }
+
+    public Parameter getCurrentParam() {
+        return currentParam;
     }
 
     private void initializeConfiguration(){
         myLayout = new Group();
         myScene = new Scene(myLayout, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
         gridBuilder = new GridBuilder();
+        checkSelected = false;
 
         GUITools constructor = new GUITools();
 
@@ -96,28 +113,23 @@ public class Configuration {
     }
 
     private void uploadFire() {
-        createParameter(new File(DEFAULT_FIRE));
-        createGrid(new File(DEFAULT_FIRE));
+        initializeFile(new File(DEFAULT_FIRE));
     }
 
     private void uploadPercolation() {
-        createParameter(new File(DEFAULT_PERCOLATION));
-        createGrid(new File(DEFAULT_PERCOLATION));
+        initializeFile(new File(DEFAULT_PERCOLATION));
     }
 
     private void uploadGameofLife() {
-        createParameter(new File(DEFAULT_GAMEOFLIFE));
-        createGrid(new File(DEFAULT_GAMEOFLIFE));
+        initializeFile(new File(DEFAULT_GAMEOFLIFE));
     }
 
     private void uploadSegregation() {
-        createParameter(new File(DEFAULT_SEGREGATION));
-        createGrid(new File(DEFAULT_SEGREGATION));
+        initializeFile(new File(DEFAULT_SEGREGATION));
     }
 
     private void uploadWaTor() {
-        createParameter(new File(DEFAULT_WATOR));
-        createGrid(new File(DEFAULT_WATOR));
+        initializeFile(new File(DEFAULT_WATOR));
     }
 
     private void chooseFile() {
@@ -125,16 +137,13 @@ public class Configuration {
         Stage fileStage = new Stage();
         File file = fileChooser.showOpenDialog(fileStage);
         if(file != null){
-            createParameter(file);
-            createGrid(file);
+            initializeFile(file);
         }
     }
 
-    private void createParameter(File file){
+    private void initializeFile(File file){
+        checkSelected = true;
         currentParam = gridBuilder.makeParameter(file);
-    }
-
-    private void createGrid(File file){
         initialGrid = gridBuilder.makeGrid(file);
     }
 
@@ -142,17 +151,5 @@ public class Configuration {
         if (code == KeyCode.ESCAPE){
             System.exit(0);
         }
-    }
-
-    public Scene getConfigurationScene(){
-        return myScene;
-    }
-
-    public Collection getInitialGrid() {
-        return initialGrid;
-    }
-
-    public Parameter getCurrentParam() {
-        return currentParam;
     }
 }
