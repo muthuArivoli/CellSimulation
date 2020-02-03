@@ -1,12 +1,16 @@
 package simulation;
 
 import cellsociety.Cell;
+import configuration.States;
 
 import java.util.Iterator;
 import java.util.List;
 
 public class SegregationSimulation extends Simulation {
+
+
     private double threshold = 0.3;
+
     protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){
         int similarNeighbors = 0;
         for(Cell c:neighbor){
@@ -14,13 +18,14 @@ public class SegregationSimulation extends Simulation {
                 similarNeighbors++;
             }
         }
+        // Check that state 0 should be EMPTY
         if((double)similarNeighbors/neighbor.size() <=threshold){
             Iterator<Cell> initialIt = newGrid.getVertices().iterator();
             for(Cell c:myGrid.getVertices()){
                 Cell thisCell = initialIt.next();
-                if(c.getState() == 0 && thisCell.getState() == 0){
+                if(c.getState() == States.EMPTY && thisCell.getState() == States.EMPTY){
                     thisCell.setState(cell.getState());
-                    it.next().setState(0);
+                    it.next().setState(States.EMPTY);
                     return;
                 }
             }

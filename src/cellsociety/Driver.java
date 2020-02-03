@@ -2,6 +2,7 @@ package cellsociety;
 
 import configuration.Configuration;
 import javafx.application.Application;
+import javafx.scene.control.TreeItem;
 import javafx.stage.Stage;
 
 /**
@@ -21,6 +22,7 @@ public class Driver extends Application {
     public void start(Stage myStage){
         Configuration config = new Configuration();
         myStage.setScene(config.getConfigurationScene());
+        myStage.setTitle(TITLE);
         myStage.show();
     }
 }

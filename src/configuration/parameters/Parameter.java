@@ -1,5 +1,6 @@
 package configuration.parameters;
 import cellsociety.Cell;
+import cellsociety.CellStates;
 import configuration.GridBuilder;
 import configuration.States;
 
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 public abstract class Parameter {
     public Integer gridLength;
     public Integer gridWidth;
-    public ArrayList<States> possibleStates;
+    public ArrayList<CellStates> possibleStates;
 
     public Parameter(){}
 
@@ -26,7 +27,7 @@ public abstract class Parameter {
     public Integer getGridWidth(){
         return gridWidth;
     }
-    public ArrayList<States> getPossibleStates(){
+    public ArrayList<CellStates> getPossibleStates(){
         return possibleStates;
     }
 

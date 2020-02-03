@@ -1,5 +1,6 @@
 package configuration.parameters;
 
+import cellsociety.CellStates;
 import configuration.States;
 
 import java.io.File;
@@ -17,7 +18,7 @@ public class Percolation extends Parameter {
         gridLength = length;
         gridWidth = width;
         threshold = thresh;
-        possibleStates = new ArrayList<States>(Arrays.asList(States.BURNING, States.EMPTY, States.TREE));
+        possibleStates = new ArrayList<CellStates>(Arrays.asList(States.OPEN, States.BLOCKED, States.FULL));
     }
 
     public double getThreshold(){

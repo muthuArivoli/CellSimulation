@@ -1,6 +1,8 @@
 package configuration;
 
-public enum States {
+import cellsociety.CellStates;
+
+public enum States implements CellStates {
     EMPTY,
     TREE,
     BURNING,
@@ -11,5 +13,6 @@ public enum States {
     OPEN,
     BLOCKED,
     MAJORITY,
-    MINORITY
+    MINORITY,
+    ALIVE
 }

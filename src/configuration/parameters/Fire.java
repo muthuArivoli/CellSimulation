@@ -1,6 +1,7 @@
 package configuration.parameters;
 
 import cellsociety.Cell;
+import cellsociety.CellStates;
 import configuration.GridBuilder;
 import configuration.States;
 
@@ -20,7 +21,7 @@ public class Fire extends Parameter {
         gridLength = length;
         gridWidth = width;
         probCatch = prob;
-        possibleStates = new ArrayList<States>(Arrays.asList(States.BURNING, States.EMPTY, States.TREE));
+        possibleStates = new ArrayList<CellStates>(Arrays.asList(States.BURNING, States.EMPTY, States.TREE));
     }
 
     public double getThreshold() {

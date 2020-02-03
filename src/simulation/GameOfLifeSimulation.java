@@ -1,6 +1,7 @@
 package simulation;
 
 import cellsociety.Cell;
+import configuration.States;
 
 import java.util.Iterator;
 import java.util.List;
@@ -9,15 +10,16 @@ public class GameOfLifeSimulation extends Simulation {
     protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){
         int liveNeighbors = 0;
         for(Cell c: neighbor){
-            if(c.getState() == 1){
+            if(c.getState() == States.ALIVE){
                 liveNeighbors++;
             }
         }
-        if(liveNeighbors>=3 || (liveNeighbors==2 && cell.getState() == 1)){
-            it.next().setState(1);
+        if((liveNeighbors>=3 && cell.getState() == States.DEAD) ||
+                (liveNeighbors==2 && cell.getState() == States.ALIVE)){
+            it.next().setState(States.ALIVE);
         }
         else{
-            it.next().setState(0);
+            it.next().setState(States.DEAD);
         }
     }
 }
