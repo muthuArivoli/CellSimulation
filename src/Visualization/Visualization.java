@@ -6,6 +6,7 @@ import configuration.GridBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
@@ -27,12 +28,16 @@ public class Visualization {
     public static final Paint BACKGROUND = Color.AZURE;
 
     private Scene myScene;
+    private Group root;
     private ArrayList<ArrayList<Cell>> currentGrid;
 
     public Visualization(Simulation simulation){
+        System.out.println(simulation);
+        Group root = new Group();
         myScene = setupGame(SIZE, SIZE, BACKGROUND);
         GridBuilder builder = new GridBuilder();
-        currentGrid = builder.reconstructGrid();
+        currentGrid = builder.reconstructGrid(simulation.returnGraph().graphToCollection());
+        Grid grid = new Grid(root, simulation.returnGraph().graphToCollection());
     }
 
     public Scene getScene(){
@@ -59,7 +64,7 @@ public class Visualization {
         getFileButton.setOnAction(value -> {
             //let user pick
 
-     });
+        });
         return getFileButton;
     }
 
@@ -77,30 +82,32 @@ public class Visualization {
 
     private Scene setupGame (int width, int height, Paint background) {
         GUITools constructor = new GUITools();
+
         Button a = constructor.makePauseResumeButton(SIZE);
 
         Button b = makeStepButton();
         Button c = makeGetFileButton();
         Button d = makeChangeSimulationRateButton();
 
-        HBox hbox = new HBox(a, b, c, d);
+        Group root = new Group();
+        root.getChildren().addAll(a,b,c,d);
 
-        Scene scene = new Scene(hbox, width, height, background);
+        Scene scene = new Scene(root, width, height, background);
         scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         return scene;
     }
 
     private void handleKeyInput (KeyCode code) {
         /**
-        if (code == KeyCode.Q) {
-            duplicateBouncers();
-        }
-        else if (code == KeyCode.W) {
-            handleW();
-        }
-        else if (code == KeyCode.E) {
-            handleE();
-        }
+         if (code == KeyCode.Q) {
+         duplicateBouncers();
+         }
+         else if (code == KeyCode.W) {
+         handleW();
+         }
+         else if (code == KeyCode.E) {
+         handleE();
+         }
          **/
     }
 }

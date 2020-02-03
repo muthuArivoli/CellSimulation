@@ -17,7 +17,9 @@ public abstract class Simulation {
     }
 
     private void createGraph(Collection array){
-        List<List<Cell>> grid = (List<List<Cell>>) array;
+        System.out.println(array.size());
+        List<List<Cell>> grid = new ArrayList<List<Cell>>(array);
+        System.out.println(grid.get(0).size());
         for(int i=0; i<grid.size();i++){
             for(int k=0; k<grid.get(i).size();k++){
                 List<Cell> neighbors = new ArrayList<>();

@@ -34,4 +34,7 @@ public class FireSimulation extends  Simulation {
         }
         it.next();
     }
+
+    @Override
+    public String toString(){ return "Fire Simulation"; }
 }

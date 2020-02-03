@@ -19,7 +19,7 @@ public class GameOfLifeParameter extends Parameter {
         gridLength = length;
         gridWidth = width;
         threshold = thresh;
-        possibleStates = new ArrayList<CellStates>(Arrays.asList(States.OPEN, States.BLOCKED, States.FULL));
+        possibleStates = new ArrayList<CellStates>(Arrays.asList(States.ALIVE, States.DEAD, States.EMPTY));
     }
 
     public double getThreshold(){

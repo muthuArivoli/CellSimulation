@@ -1,9 +1,12 @@
 package simulation;
 
+import cellsociety.Cell;
+
 import java.util.*;
 
 public class Graph<T extends Clonable> {
     private Map<T, List<T> > adjList;
+    private int rowSize = 5;
     public Graph(){
         adjList = new LinkedHashMap<>();
     }
@@ -20,6 +23,7 @@ public class Graph<T extends Clonable> {
         adjList.get(source).add(dest);
         adjList.get(dest).add(source);
     }
+
     public void addVertex(T c,List<T> neighbors){
         adjList.put(c, neighbors);
     }
@@ -30,6 +34,18 @@ public class Graph<T extends Clonable> {
 
     public Set<T> getVertices(){
         return adjList.keySet();
+    }
+
+    public Collection graphToCollection() {
+        ArrayList<ArrayList<T>> grid = new ArrayList<ArrayList<T>>();
+        for(T c : adjList.keySet()){
+            ArrayList<T> row = new ArrayList<T>();
+            for(int i = 0; i < rowSize; i++){
+                row.add(c);
+            }
+            grid.add(row);
+        }
+        return grid;
     }
 
 }

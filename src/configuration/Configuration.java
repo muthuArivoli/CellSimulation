@@ -155,8 +155,22 @@ public class Configuration {
 
     private void createSimulation(){
         if(currentParam.toString().equals("Fire Simulation")){
-            currentSim = new FireSimulation(this.getInitialGrid(), this.getCurrentParam());
+            ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
+            for(int i = 0; i < 5; i++){
+                ArrayList<Cell> row = new ArrayList<Cell>();
+                for(int j = 0; j < 5; j++){
+                    if(j == 2 || j == 3){
+                        row.add(new Cell(States.BURNING));
+                    }
+                    else{
+                        row.add(new Cell(States.ALIVE));
+                    }
+                }
+                grid.add(row);
+            }
+            currentSim = new FireSimulation(grid, this.getCurrentParam());
         }
+
         if(currentParam.toString().equals("Game of Life Simulation")){
             currentSim = new GameOfLifeSimulation(this.getInitialGrid());
         }
