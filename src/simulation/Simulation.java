@@ -17,6 +17,7 @@ public abstract class Simulation {
     }
 
     private void createGraph(Collection array){
+        myGrid = new Graph<Cell>();
         System.out.println(array.size());
         List<List<Cell>> grid = new ArrayList<List<Cell>>(array);
         System.out.println(grid.get(0).size());

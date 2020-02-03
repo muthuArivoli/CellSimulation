@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import simulation.Simulation;
@@ -30,19 +31,35 @@ public class Visualization {
     private Scene myScene;
     private Group root;
     private ArrayList<ArrayList<Cell>> currentGrid;
+    private Grid grid;
 
     public Visualization(Simulation simulation){
-        System.out.println(simulation);
-        Group root = new Group();
-        myScene = setupGame(SIZE, SIZE, BACKGROUND);
+        root = new Group();
         GridBuilder builder = new GridBuilder();
         currentGrid = builder.reconstructGrid(simulation.returnGraph().graphToCollection());
-        Grid grid = new Grid(root, simulation.returnGraph().graphToCollection());
+        grid = new Grid(simulation.returnGraph().graphToCollection());
+        myScene = setupGame(SIZE, SIZE, BACKGROUND);
     }
 
     public Scene getScene(){
         return myScene;
     }
+
+    public void setCells(ArrayList<ArrayList<Cell>> grid){
+        int length = grid.size();
+        int width = 50;
+        for (int i=0; i<length; i++) {
+            ArrayList<Cell> row = grid.get(i);
+            for(int j = 0; j < row.size(); j++) {
+                Rectangle currentRect = new Rectangle(100 + 50*j, 100 + 15*i, width, length);
+                Paint color = Color.RED;
+                currentRect.setFill(color);
+                root.getChildren().add(currentRect);
+            }
+        }
+    }
+
+
 
     private Button makeStepButton(){
         Button stepButton = new Button("STEP");
@@ -89,8 +106,9 @@ public class Visualization {
         Button c = makeGetFileButton();
         Button d = makeChangeSimulationRateButton();
 
-        Group root = new Group();
         root.getChildren().addAll(a,b,c,d);
+
+        setCells(grid.getGrid());
 
         Scene scene = new Scene(root, width, height, background);
         scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));

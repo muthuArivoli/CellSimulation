@@ -54,7 +54,6 @@ public class Driver extends Application {
             if(myConfig.isSimulationSelected()){
                 waiting = false;
                 mySimulation = myConfig.getCurrentSim();
-                System.out.println(mySimulation);
                 myVisualization = new Visualization(mySimulation);
                 myStage.setScene(myVisualization.getScene());
             }

@@ -12,9 +12,9 @@ import java.util.Collection;
 import java.util.Map;
 
 public class Grid {
-    public static final int SIZE = 500;
-    public static final int STARTING_X = 200;
-    public static final int STARTING_Y = 100;
+    public static final int SIZE = 800;
+    public static final int STARTING_X = 50;
+    public static final int STARTING_Y = 50;
 
     private Map<String, String> rulesRelatingConditionOfCellToColor;
     private String cellStatus;
@@ -23,27 +23,24 @@ public class Grid {
 
 //    public Grid(Group root, Map<String, String> rules, String status, Collection array){
 
-    public Grid(Group root, Collection array){
-//        rulesRelatingConditionOfCellToColor = rules;
-//        cellStatus = status;
-//        printCurrentStuff();
-        visualizationRoot = root;
-        displayCells();
+    public Grid(Collection array){
         grid = new ArrayList<ArrayList<Cell>>(array);
     }
 
-    private void displayCells() {
-        int length = (int) Math.sqrt(cellStatus.length());
-        int width = SIZE/length;
+    public ArrayList<ArrayList<Cell>> getGrid(){
+        return grid;
+    }
+
+    public void displayCells(Group root) {
+        int length = grid.size();
+        int width = grid.get(0).size();
         for (int i=0; i<grid.size(); i++) {
             ArrayList<Cell> row = grid.get(i);
             for(int j = 0; j < row.size(); j++) {
-                Rectangle currentRect = new Rectangle(STARTING_X + (width * (j % length)), STARTING_Y + (width * (i / length)), width, width);
-                Paint color = Color.BLACK;
-                String currentCellValue = cellStatus.substring(i, i + 1);
-//                color = color.valueOf(rulesRelatingConditionOfCellToColor.get(currentCellValue));
+                Rectangle currentRect = new Rectangle(100 + 15*j, 100 + 15*i, width, length);
+                Paint color = Color.RED;
                 currentRect.setFill(color);
-                visualizationRoot.getChildren().add(currentRect);
+                root.getChildren().add(currentRect);
             }
         }
     }
