@@ -3,7 +3,6 @@ package simulation;
 import cellsociety.Cell;
 import configuration.States;
 import configuration.parameters.Parameter;
-import jdk.jshell.StatementSnippet;
 
 import java.util.Iterator;
 import java.util.List;
@@ -12,7 +11,8 @@ public class FireSimulation extends  Simulation {
 
     private double probability;
 
-    public FireSimulation(Parameter param){
+    public FireSimulation(List<List<Cell>> grid, Parameter param){
+        super(grid);
         probability = param.getThreshold();
     }
 

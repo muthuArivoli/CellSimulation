@@ -7,6 +7,7 @@ public enum States {
     PREDATOR,
     PREY,
     DEAD,
+    LIVE,
     FULL,
     OPEN,
     BLOCKED,
