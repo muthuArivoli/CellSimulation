@@ -7,6 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 
 public class PercolationSimulation extends Simulation{
+    public PercolationSimulation(List<List<Cell>> grid) {
+        super(grid);
+    }
+
     protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){
         if(cell.getState() == States.OPEN) {
             boolean percolatedCell = false;

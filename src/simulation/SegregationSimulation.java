@@ -2,14 +2,18 @@ package simulation;
 
 import cellsociety.Cell;
 import configuration.States;
+import configuration.parameters.Parameter;
 
 import java.util.Iterator;
 import java.util.List;
 
 public class SegregationSimulation extends Simulation {
+    private double threshold;
 
-
-    private double threshold = 0.3;
+    public SegregationSimulation(List<List<Cell>> grid, Parameter param) {
+        super(grid);
+        threshold = param.getThreshold();
+    }
 
     protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){
         int similarNeighbors = 0;
