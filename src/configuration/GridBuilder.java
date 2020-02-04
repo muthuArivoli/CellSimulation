@@ -58,7 +58,7 @@ public class GridBuilder {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
                     System.out.println("Title : " + eElement.getElementsByTagName("title").item(0).getTextContent());
-                    title =  eElement.getElementsByTagName("title").item(0).getTextContent().toString();
+                    title =  eElement.getElementsByTagName("title").item(0).getTextContent();
                     System.out.println("gridWidth : " + eElement.getElementsByTagName("gridWidth").item(0).getTextContent());
                     width = Integer.parseInt(eElement.getElementsByTagName("gridWidth").item(0).getTextContent());
                     System.out.println("gridLength : " + eElement.getElementsByTagName("gridLength").item(0).getTextContent());
@@ -71,8 +71,8 @@ public class GridBuilder {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("PRINTING TITLE");
-        System.out.println(title);
+        title.replaceAll("\\P{Print}","");
+
         if(title.equals("Fire")){
             double prob = ORIGINAL_DIST;
             return new FireParameter(title, length, width, prob, percentage);
@@ -80,7 +80,7 @@ public class GridBuilder {
         if(title.equals("Game of Life")){
             return new GameOfLifeParameter(title, length, width, percentage);
         }
-        if(title.toString().equals("Percolation")){
+        if(title.equals("Percolation")){
             return new PercolationParameter(title, length, width, percentage);
         }
         if(title.equals("Segregation")){

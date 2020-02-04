@@ -1,6 +1,8 @@
 package configuration;
 
 import cellsociety.CellStates;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 public class WatorState implements CellStates {
     private States myState;
@@ -26,5 +28,8 @@ public class WatorState implements CellStates {
     }
     public States getState(){
         return myState;
+    }
+    public Paint getColor(){
+        return Color.GREEN;
     }
 }
