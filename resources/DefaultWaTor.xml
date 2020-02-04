@@ -1,0 +1,13 @@
+<General>
+    <Configuration>
+        <author>"Dennis Harrsch"</author>
+        <title>"WaTor</title>
+        <gridWidth>100</gridWidth>
+        <gridLength>100</gridLength>
+        <percentage>8</percentage>
+    </Configuration>
+    <WaTor>
+        <probEaten>.3</probEaten>
+    </WaTor>
+</General>
+

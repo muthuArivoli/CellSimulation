@@ -1,0 +1,9 @@
+<General>
+    <Configuration>
+        <author>"Dennis Harrsch"</author>
+        <title>"Percolation"</title>
+        <gridWidth>100</gridWidth>
+        <gridLength>100</gridLength>
+        <percentage>8</percentage>
+    </Configuration>
+</General>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<General>
+    <Configuration>
+        <author>"Dennis Harrsch"</author>
+        <title>"Fire"</title>
+        <gridWidth>100</gridWidth>
+        <gridLength>100</gridLength>
+        <percentage>8</percentage>
+    </Configuration>
+    <Fire>
+        <probability>.5</probability>
+    </Fire>
+</General>
