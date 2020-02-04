@@ -20,6 +20,9 @@ public class PercolationSimulation extends Simulation{
                     percolatedCell = true;
                 }
             }
+            if(neighbor.size() < 4){
+                percolatedCell = true;
+            }
             if (percolatedCell) {
                 it.next().setState(States.FULL);
                 return;
