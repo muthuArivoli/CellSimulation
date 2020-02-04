@@ -1,7 +1,7 @@
 <General>
     <Configuration>
         <author>"Dennis Harrsch"</author>
-        <title>"Segregation"</title>
+        <title>Segregation</title>
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
         <percentage>8</percentage>

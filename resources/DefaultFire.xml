@@ -2,7 +2,7 @@
 <General>
     <Configuration>
         <author>"Dennis Harrsch"</author>
-        <title>"Fire"</title>
+        <title>Fire</title>
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
         <percentage>8</percentage>

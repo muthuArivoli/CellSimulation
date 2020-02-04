@@ -1,7 +1,7 @@
 <General>
     <Configuration>
         <author>"Dennis Harrsch"</author>
-        <title>"Game of Life"</title>
+        <title>Game of Life</title>
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
         <percentage>8</percentage>
