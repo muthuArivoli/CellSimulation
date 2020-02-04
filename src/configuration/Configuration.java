@@ -24,6 +24,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Random;
 
 public class Configuration {
     public static final Paint BACKGROUND = Color.WHEAT;
@@ -37,11 +38,11 @@ public class Configuration {
     private static final double INDENT = 100.0;
     private static final double BUTTON_LENGTH = 200.0;
 
-    private static final String DEFAULT_FIRE = "/resources/DefaultFire.xml";
-    private static final String DEFAULT_PERCOLATION = "/resources/DefaultPercolation.xml";
-    private static final String DEFAULT_SEGREGATION = "/resources/DefaultSegregation.xml";
-    private static final String DEFAULT_GAMEOFLIFE = "/resources/DefaultGameofLife.xml";
-    private static final String DEFAULT_WATOR = "/resources/DefaultWaTor.xml";
+    private static final String DEFAULT_FIRE = "./resources/DefaultFire.xml";
+    private static final String DEFAULT_PERCOLATION = "./resources/DefaultPercolation.xml";
+    private static final String DEFAULT_SEGREGATION = "./resources/DefaultSegregation.xml";
+    private static final String DEFAULT_GAMEOFLIFE = "./resources/DefaultGameofLife.xml";
+    private static final String DEFAULT_WATOR = "./resources/DefaultWaTor.xml";
 
     private Scene myScene;
     private Group myLayout;
@@ -85,7 +86,7 @@ public class Configuration {
         myLayout.getChildren().add(title);
 
         Button PercolationSimulation = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(2.0/8.0),
-                "PERCOLATION:", BUTTON_LENGTH, "-fx-base: #264653;");
+                "PERCOLATION", BUTTON_LENGTH, "-fx-base: #264653;");
         PercolationSimulation.setOnAction( event -> uploadPercolation());
         myLayout.getChildren().add(PercolationSimulation);
 
@@ -149,78 +150,23 @@ public class Configuration {
     private void initializeFile(File file){
         checkSelected = true;
         currentParam = gridBuilder.makeParameter(file);
-        initialGrid = gridBuilder.makeGrid(file, currentParam);
+        initialGrid = gridBuilder.makeGrid(currentParam);
         createSimulation();
     }
 
     private void createSimulation(){
         if(currentParam.toString().equals("Fire Simulation")){
-            ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
-            for(int i = 0; i < 5; i++){
-                ArrayList<Cell> row = new ArrayList<Cell>();
-                for(int j = 0; j < 6; j++){
-                    if(j == 2 || j == 3){
-                        row.add(new Cell(States.BURNING));
-                    }
-                    else{
-                        row.add(new Cell(States.ALIVE));
-                    }
-                }
-                grid.add(row);
-            }
-            currentSim = new FireSimulation(grid, this.getCurrentParam());
+            currentSim = new FireSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
 
         if(currentParam.toString().equals("Game of Life Simulation")){
-            ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
-            for(int i = 0; i < 5; i++){
-                ArrayList<Cell> row = new ArrayList<Cell>();
-                for(int j = 0; j < 6; j++){
-                    if(j == 2 || j == 3){
-                        row.add(new Cell(States.ALIVE));
-                    }
-                    else{
-                        row.add(new Cell(States.DEAD));
-                    }
-                }
-                grid.add(row);
-            }
-            currentSim = new GameOfLifeSimulation(grid);
-//            currentSim = new GameOfLifeSimulation(this.getInitialGrid());
+            currentSim = new GameOfLifeSimulation(this.getInitialGrid());
         }
         if(currentParam.toString().equals("Percolation Simulation")){
-            ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
-            for(int i = 0; i < 5; i++){
-                ArrayList<Cell> row = new ArrayList<Cell>();
-                for(int j = 0; j < 6; j++){
-                    if(j == 2 || j == 3){
-                        row.add(new Cell(States.OPEN));
-                    }
-                    else{
-                        row.add(new Cell(States.BLOCKED));
-                    }
-                }
-                grid.add(row);
-            }
-            currentSim = new PercolationSimulation(grid);
-//            currentSim = new PercolationSimulation(this.getInitialGrid());
+            currentSim = new PercolationSimulation(this.getInitialGrid());
         }
         if(currentParam.toString().equals("Segregation Simulation")){
-            ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
-            for(int i = 0; i < 5; i++){
-                ArrayList<Cell> row = new ArrayList<Cell>();
-                for(int j = 0; j < 6; j++){
-                    if(j == 2 || j == 3){
-                        row.add(new Cell(States.MINORITY));
-                    }
-                    else{
-                        row.add(new Cell(States.MAJORITY));
-                    }
-                }
-                grid.add(row);
-            }
-            currentSim = new SegregationSimulation(grid, this.getCurrentParam());
-//            currentSim = new SegregationSimulation(this.getInitialGrid(), this.getCurrentParam());
+            currentSim = new SegregationSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
 //        if(currentParam.toString().equals("Wa Tor Simulation")){
 //            currentSim = new FireSimulation(this.getInitialGrid(), this.getCurrentParam());

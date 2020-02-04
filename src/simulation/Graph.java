@@ -12,7 +12,7 @@ public class Graph<T extends Clonable> {
         this();
         for(T myVertex:myGraph.getVertices()){
             addVertex((T)myVertex.clone(),new ArrayList<>(myGraph.getAdjList().get(myVertex)));
-            System.out.println(myVertex.toString());
+//            System.out.println(myVertex.toString());
         }
     }
 

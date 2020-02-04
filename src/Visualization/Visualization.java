@@ -36,6 +36,8 @@ public class Visualization {
     public static final Paint BACKGROUND = Color.WHEAT;
     public static final String BUTTON_NAME_PATH = "./resources/ButtonNames.txt";
     public static final String SIMULATION_FILE_EXAMPLE_PATH = "./resources/SimulationFileExample.txt";
+    public static final int GRID_SIZE = 300;
+    public static final int GRID_TOP_LEFT = 100;
 
 
     private Scene myScene;
@@ -67,11 +69,12 @@ public class Visualization {
 
     public void setCells(ArrayList<ArrayList<Cell>> grid){
         int length = grid.size();
-        int width = 25;
+        int width = GRID_SIZE/length;
+        System.out.println(width);
         for (int i=0; i<length; i++) {
             ArrayList<Cell> row = grid.get(i);
             for(int j = 0; j < row.size(); j++) {
-                Rectangle currentRect = new Rectangle(30 + width*j, 30 + 15*i, width, width);
+                Rectangle currentRect = new Rectangle(GRID_TOP_LEFT + width*j, GRID_TOP_LEFT + width*i, width, width);
                 Paint color = row.get(j).getState().getColor();
                 currentRect.setFill(color);
                 display.add(currentRect);

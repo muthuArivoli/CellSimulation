@@ -10,16 +10,17 @@ public class SegregationParameter extends Parameter {
     private double probEaten;
 
     public SegregationParameter(){
-        this("Simulation Team 7", 25, 25, .25);
+        this("Simulation Team 7", 25, 25, .5, .7);
     }
 
 
-    public SegregationParameter(String fileAuthor, Integer length, Integer width, Double prob){
+    public SegregationParameter(String fileAuthor, Integer length, Integer width, Double prob, Double perc){
         author = fileAuthor;
         probEaten = prob;
         gridLength = length;
         gridWidth = width;
-        possibleStates = new ArrayList<CellStates>(Arrays.asList(States.MAJORITY, States.MINORITY, States.EMPTY));
+        percentage = perc;
+        possibleStates = new ArrayList<CellStates>(Arrays.asList(States.MINORITY, States.MAJORITY, States.EMPTY));
     }
 
     public double getThreshold() {

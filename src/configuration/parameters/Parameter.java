@@ -11,6 +11,7 @@ public abstract class Parameter {
     public String author;
     public Integer gridLength;
     public Integer gridWidth;
+    public double percentage;
     public ArrayList<CellStates> possibleStates;
 
     public Parameter(){}
@@ -27,6 +28,7 @@ public abstract class Parameter {
     public ArrayList<CellStates> getPossibleStates(){
         return possibleStates;
     }
+    public double getPercentage(){ return percentage; }
 
     @Override
     public abstract String toString();

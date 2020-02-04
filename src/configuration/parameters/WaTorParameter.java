@@ -10,15 +10,16 @@ public class WaTorParameter extends Parameter {
     private double probEaten;
 
     public WaTorParameter(){
-        this("Simulation Team 7", 25, 25, .25);
+        this("Simulation Team 7", 25, 25, .25, .7);
     }
 
 
-    public WaTorParameter(String fileAuthor, Integer length, Integer width, Double prob){
+    public WaTorParameter(String fileAuthor, Integer length, Integer width, Double prob, Double perc){
         author = fileAuthor;
         probEaten = prob;
         gridLength = length;
         gridWidth = width;
+        percentage = perc;
         possibleStates = new ArrayList<CellStates>(Arrays.asList(States.DEAD, States.PREY, States.PREDATOR));
     }
 

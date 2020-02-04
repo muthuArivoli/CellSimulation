@@ -10,15 +10,16 @@ import java.util.Arrays;
 public class GameOfLifeParameter extends Parameter {
     private double threshold;
 
+
     public GameOfLifeParameter(){
-        this("Simulation Team 7", 25, 25, 0);
+        this("Simulation Team 7", 25, 25, .7);
     }
 
-    public GameOfLifeParameter(String fileAuthor, Integer length, Integer width, double thresh){
+    public GameOfLifeParameter(String fileAuthor, Integer length, Integer width, double perc){
         author = fileAuthor;
         gridLength = length;
         gridWidth = width;
-        threshold = thresh;
+        percentage = perc;
         possibleStates = new ArrayList<CellStates>(Arrays.asList(States.ALIVE, States.DEAD, States.EMPTY));
     }
 

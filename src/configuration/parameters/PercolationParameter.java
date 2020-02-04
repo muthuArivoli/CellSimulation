@@ -9,15 +9,16 @@ import java.util.Arrays;
 public class PercolationParameter extends Parameter {
     private double threshold;
 
+
     public PercolationParameter(){
-        this("Simulation Team 7", 25, 25, 0);
+        this("Simulation Team 7", 25, 25, .7);
     }
 
-    public PercolationParameter(String fileAuthor, Integer length, Integer width, double thresh){
+    public PercolationParameter(String fileAuthor, Integer length, Integer width, double perc){
         author = fileAuthor;
         gridLength = length;
         gridWidth = width;
-        threshold = thresh;
+        percentage = perc;
         possibleStates = new ArrayList<CellStates>(Arrays.asList(States.OPEN, States.BLOCKED, States.FULL));
     }
 
