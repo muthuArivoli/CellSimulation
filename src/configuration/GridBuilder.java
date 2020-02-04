@@ -65,7 +65,7 @@ public class GridBuilder {
                     length =  Integer.parseInt(eElement.getElementsByTagName("gridLength").item(0).getTextContent());
                     System.out.println("percentage : " + eElement.getElementsByTagName("percentage").item(0).getTextContent());
                     percentage =  Integer.parseInt(eElement.getElementsByTagName("percentage").item(0).getTextContent());
-                    percentage = percentage/100.0;
+                    percentage = percentage/10.0;
                 }
             }
         } catch (Exception e) {
