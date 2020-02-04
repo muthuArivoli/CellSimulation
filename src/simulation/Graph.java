@@ -9,9 +9,15 @@ public class Graph<T extends Clonable> {
     }
 
     public Graph(Graph<T> myGraph){
+        this();
         for(T myVertex:myGraph.getVertices()){
-            addVertex((T)myVertex.clone(),new ArrayList<>(adjList.get(myVertex)));
+            addVertex((T)myVertex.clone(),new ArrayList<>(myGraph.getAdjList().get(myVertex)));
+            System.out.println(myVertex.toString());
         }
+    }
+
+    public Map<T, List<T>> getAdjList(){
+        return adjList;
     }
 
     public void addEdge(T source, T dest){

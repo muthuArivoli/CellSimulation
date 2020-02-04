@@ -17,6 +17,10 @@ public class SegregationSimulation extends Simulation {
     }
 
     protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){
+        if(cell.getState() == States.EMPTY){
+            it.next();
+            return;
+        }
         int similarNeighbors = 0;
         for(Cell c:neighbor){
             if(c.getState() == cell.getState()){

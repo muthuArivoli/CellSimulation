@@ -158,7 +158,7 @@ public class Configuration {
             ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
             for(int i = 0; i < 5; i++){
                 ArrayList<Cell> row = new ArrayList<Cell>();
-                for(int j = 0; j < 5; j++){
+                for(int j = 0; j < 6; j++){
                     if(j == 2 || j == 3){
                         row.add(new Cell(States.BURNING));
                     }
@@ -172,13 +172,55 @@ public class Configuration {
         }
 
         if(currentParam.toString().equals("Game of Life Simulation")){
-            currentSim = new GameOfLifeSimulation(this.getInitialGrid());
+            ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
+            for(int i = 0; i < 5; i++){
+                ArrayList<Cell> row = new ArrayList<Cell>();
+                for(int j = 0; j < 6; j++){
+                    if(j == 2 || j == 3){
+                        row.add(new Cell(States.ALIVE));
+                    }
+                    else{
+                        row.add(new Cell(States.DEAD));
+                    }
+                }
+                grid.add(row);
+            }
+            currentSim = new GameOfLifeSimulation(grid);
+//            currentSim = new GameOfLifeSimulation(this.getInitialGrid());
         }
         if(currentParam.toString().equals("Percolation Simulation")){
-            currentSim = new PercolationSimulation(this.getInitialGrid());
+            ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
+            for(int i = 0; i < 5; i++){
+                ArrayList<Cell> row = new ArrayList<Cell>();
+                for(int j = 0; j < 6; j++){
+                    if(j == 2 || j == 3){
+                        row.add(new Cell(States.OPEN));
+                    }
+                    else{
+                        row.add(new Cell(States.BLOCKED));
+                    }
+                }
+                grid.add(row);
+            }
+            currentSim = new PercolationSimulation(grid);
+//            currentSim = new PercolationSimulation(this.getInitialGrid());
         }
         if(currentParam.toString().equals("Segregation Simulation")){
-            currentSim = new SegregationSimulation(this.getInitialGrid(), this.getCurrentParam());
+            ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
+            for(int i = 0; i < 5; i++){
+                ArrayList<Cell> row = new ArrayList<Cell>();
+                for(int j = 0; j < 6; j++){
+                    if(j == 2 || j == 3){
+                        row.add(new Cell(States.MINORITY));
+                    }
+                    else{
+                        row.add(new Cell(States.MAJORITY));
+                    }
+                }
+                grid.add(row);
+            }
+            currentSim = new SegregationSimulation(grid, this.getCurrentParam());
+//            currentSim = new SegregationSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
 //        if(currentParam.toString().equals("Wa Tor Simulation")){
 //            currentSim = new FireSimulation(this.getInitialGrid(), this.getCurrentParam());

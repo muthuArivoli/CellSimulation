@@ -14,32 +14,51 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import simulation.Simulation;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Visualization {
     public static final String TITLE = "Visualization";
     public static final int SIZE = 500;
     public static final int FRAMES_PER_SECOND = 60;
-    public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    public static final int MILLISECOND_DELAY = 1000*100000 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-    public static final Paint BACKGROUND = Color.AZURE;
+    public static final Paint BACKGROUND = Color.WHEAT;
+    public static final String BUTTON_NAME_PATH = "./resources/ButtonNames.txt";
+    public static final String SIMULATION_FILE_EXAMPLE_PATH = "./resources/SimulationFileExample.txt";
+
 
     private Scene myScene;
     private Group root;
     private ArrayList<ArrayList<Cell>> currentGrid;
     private Grid grid;
+    private ArrayList<Rectangle> display;
+    private Slider mySlider;
+    private int simulationSpeed;
+    private SimulationFile mySimulationFile;
+    private ArrayList<Text> myText;
+    private Board myBoard;
+    private Text simulationSpeedText;
+
 
     public Visualization(Simulation simulation){
         root = new Group();
+        simulationSpeed = 50;
+        display = new ArrayList<Rectangle>();
         GridBuilder builder = new GridBuilder();
-        currentGrid = builder.reconstructGrid(simulation.returnGraph().graphToCollection());
-        grid = new Grid(simulation.returnGraph().graphToCollection());
-        myScene = setupGame(SIZE, SIZE, BACKGROUND);
+        currentGrid = builder.reconstructGrid(simulation.returnGraph());
+        grid = new Grid(simulation.returnGraph());
+        setupGame(SIZE, SIZE, BACKGROUND);
     }
 
     public Scene getScene(){
@@ -48,91 +67,166 @@ public class Visualization {
 
     public void setCells(ArrayList<ArrayList<Cell>> grid){
         int length = grid.size();
-        int width = 50;
+        int width = 25;
         for (int i=0; i<length; i++) {
             ArrayList<Cell> row = grid.get(i);
             for(int j = 0; j < row.size(); j++) {
-                Rectangle currentRect = new Rectangle(100 + 50*j, 100 + 15*i, width, length);
-                Paint color = Color.RED;
+                Rectangle currentRect = new Rectangle(30 + width*j, 30 + 15*i, width, width);
+                Paint color = row.get(j).getState().getColor();
                 currentRect.setFill(color);
+                display.add(currentRect);
                 root.getChildren().add(currentRect);
             }
         }
     }
 
+    private Button makeChangeSimulationSpeedButton(String name) {
+        Button changeSimulationSpeedButton = new Button(name);
+        changeSimulationSpeedButton.setTranslateX(SIZE * (1.0 / 4));
+        changeSimulationSpeedButton.setTranslateY(SIZE * (9.0 / 10));
+
+        changeSimulationSpeedButton.setOnAction(value -> {
+            //watch for multiple windows
+            mySlider = new Slider(simulationSpeed);
+        });
+        return changeSimulationSpeedButton;
+    }
+
+    private void setupGame(int width, int height, Paint background) {
+        String[] buttonNames = getButtonNames();
+        Button a = makePauseResumeButton(buttonNames[0]);
+        Button b = makeStepButton(buttonNames[1]);
+        Button c = makeGetFileButton(buttonNames[2]);
+        Button d = makeChangeSimulationSpeedButton(buttonNames[3]);
+        root.getChildren().addAll(a,b,c,d);
+        setCells(grid.getGrid());
+        simulationSpeedText = new Text(SIZE*(0.4/5), (SIZE * (9.22 / 10)), "Simulation Rate: 50");
+        simulationSpeedText.setFill(Color.BLACK);
+        simulationSpeedText.setFont(Font.font(java.awt.Font.SERIF, 15));
+        root.getChildren().add(simulationSpeedText);
+
+        myScene = new Scene(root, width, height, background);
+    }
 
 
-    private Button makeStepButton(){
-        Button stepButton = new Button("STEP");
-        stepButton.setTranslateX(SIZE*(3.0/4));
-        stepButton.setTranslateY(SIZE*(9.0/10));
+    private String[] getButtonNames() {
+        String[] buttonNames = new String[4];
+        //change hard coding
+        try {
+            File newFile = new File(BUTTON_NAME_PATH);
+            Scanner myReader = new Scanner(newFile);
+            int i=0;
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                buttonNames[i] = data;
+                i++;
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+            e.printStackTrace();
+        }
+        return buttonNames;
+    }
+
+    private void displayArrayOfTextInScene(){
+        for (int i=0; i<myText.size(); i++) {
+            myText.get(i).setY(50+i*50);
+            root.getChildren().add(myText.get(i));
+        }
+    }
+
+    public void updateGrid(Collection graph) {
+        for(Rectangle r : display){
+            root.getChildren().remove(r);
+        }
+        display.clear();
+        grid = new Grid(graph);
+        setCells(grid.getGrid());
+    }
+
+    private Button makePauseResumeButton(String name) {
+        String firstName = name.substring(0, name.indexOf("/"));
+        String lastName = name.substring(name.indexOf("/")+1);
+
+        Button pauseResumeButton = new Button(firstName);
+        pauseResumeButton.setTranslateX(SIZE * (2.0 / 4));
+        pauseResumeButton.setTranslateY(SIZE * (9.0 / 10));
+
+        pauseResumeButton.setOnAction(value -> {
+            if (pauseResumeButton.getText().equals(firstName)) {
+                pauseResumeButton.setText(lastName);
+                simulationSpeed = 0;
+                System.out.println(simulationSpeed);
+                //Pause simulation
+            } else {
+                pauseResumeButton.setText(firstName);
+                simulationSpeed = mySlider.getCurrentSimulationSpeed();
+                System.out.println(simulationSpeed);
+                //Resume simulation
+            }
+        });
+
+        return pauseResumeButton;
+    }
+
+    private Button makeStepButton(String name) {
+        Button stepButton = new Button(name);
+        stepButton.setTranslateX(SIZE * (2.35 / 4));
+        stepButton.setTranslateY(SIZE * (9.0 / 10));
 
         stepButton.setOnAction(value -> {
-            //step through once
+            //get new status
+            try {
+                myBoard.updateBoard("102201200");
+            }
+            catch(Exception e) {
+                System.out.println("No File Loaded");
+            }
         });
         return stepButton;
     }
 
-
-    private Button makeGetFileButton(){
-        Button getFileButton = new Button("GET FILE");
-        getFileButton.setTranslateX(SIZE*(1.0/8));
-        getFileButton.setTranslateY(SIZE*(2.0/10));
+    private Button makeGetFileButton(String name) {
+        Button getFileButton = new Button(name);
+        getFileButton.setTranslateX(SIZE * (2.6 / 4));
+        getFileButton.setTranslateY(SIZE * (9.0 / 10));
 
         getFileButton.setOnAction(value -> {
-            //let user pick
-
+            getFileButtonHasBeenPushed();
         });
         return getFileButton;
     }
 
-    private Button makeChangeSimulationRateButton() {
-        Button getFileButton = new Button("Change Simualtion Rate");
-        getFileButton.setTranslateX(SIZE*(1.0/8));
-        getFileButton.setTranslateY(SIZE*(2.0/10));
-
-        getFileButton.setOnAction(value -> {
-            Slider mySlider = new Slider(50);
-            System.out.print(mySlider.getCurrentSimulationSpeed());
-        });
-        return getFileButton;
+    private void getFileButtonHasBeenPushed() {
+        //make way to get real path
+        mySimulationFile = new SimulationFile(SIMULATION_FILE_EXAMPLE_PATH);
+        createArrayOfTextFromSimulationFile();
+        displayArrayOfTextInScene();
+        Map<String, String> rulesRelatingConditionOfCellToColor = mySimulationFile.getRulesRelatingConditionOfCellToColor();
+        String cellStatus = mySimulationFile.getCellStatus();
+//        myBoard = new Board(root, rulesRelatingConditionOfCellToColor, cellStatus);
     }
 
-    private Scene setupGame (int width, int height, Paint background) {
-        GUITools constructor = new GUITools();
 
-        Button a = constructor.makePauseResumeButton(SIZE);
+    private void createArrayOfTextFromSimulationFile() {
+        myText = new ArrayList<>();
+        Text currentText = new Text(25, 25, mySimulationFile.getFileName());
+        currentText.setFill(Color.BLACK);
+        currentText.setFont(Font.font(java.awt.Font.SERIF, 15));
+        myText.add(currentText);
+        currentText = new Text(25, 25, mySimulationFile.getSimulationName());
+        currentText.setFill(Color.BLACK);
+        currentText.setFont(Font.font(java.awt.Font.SERIF, 15));
+        myText.add(currentText);
 
-        Button b = makeStepButton();
-        Button c = makeGetFileButton();
-        Button d = makeChangeSimulationRateButton();
+        ArrayList<String> arrayOfRules = mySimulationFile.getArrayOfRules();
 
-        root.getChildren().addAll(a,b,c,d);
-
-        setCells(grid.getGrid());
-
-        Scene scene = new Scene(root, width, height, background);
-        scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
-        return scene;
-    }
-
-    private void handleKeyInput (KeyCode code) {
-        /**
-         if (code == KeyCode.Q) {
-         duplicateBouncers();
-         }
-         else if (code == KeyCode.W) {
-         handleW();
-         }
-         else if (code == KeyCode.E) {
-         handleE();
-         }
-         **/
-    }
-
-    public void updateGrid(Collection graph) {
-        grid = new Grid(graph);
-        setCells(grid.getGrid());
-
+        for (int i=0; i<arrayOfRules.size(); i++) {
+            currentText = new Text(25, 25, arrayOfRules.get(i));
+            currentText.setFill(Color.BLACK);
+            currentText.setFont(Font.font(java.awt.Font.SERIF, 15));
+            myText.add(currentText);
+        }
     }
 }

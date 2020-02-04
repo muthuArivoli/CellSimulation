@@ -5,6 +5,7 @@ import javax.xml.parsers.DocumentBuilder;
 import cellsociety.Cell;
 import configuration.parameters.FireParameter;
 import configuration.parameters.Parameter;
+import configuration.parameters.SegregationParameter;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -40,7 +41,7 @@ public class GridBuilder {
     }
 
     public Parameter makeParameter(File file){
-        Parameter param = new FireParameter();
+        Parameter param = new SegregationParameter();
 //        try {
 //            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 //            DocumentBuilder db = dbf.newDocumentBuilder();

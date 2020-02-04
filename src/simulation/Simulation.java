@@ -11,16 +11,18 @@ import java.util.List;
 public abstract class Simulation {
 
     protected Graph<Cell> myGrid;
+    private int gridLength;
+    private int gridWidth;
 
     public Simulation(Collection grid){
         createGraph(grid);
     }
 
     private void createGraph(Collection array){
-        myGrid = new Graph<Cell>();
-        System.out.println(array.size());
         List<List<Cell>> grid = new ArrayList<List<Cell>>(array);
-        System.out.println(grid.get(0).size());
+        gridLength = grid.size();
+        gridWidth = grid.get(0).size();
+        myGrid = new Graph<Cell>();
         for(int i=0; i<grid.size();i++){
             for(int k=0; k<grid.get(i).size();k++){
                 List<Cell> neighbors = new ArrayList<>();
@@ -36,8 +38,6 @@ public abstract class Simulation {
                 if(k!=grid.get(i).size()-1){
                     neighbors.add(grid.get(i).get(k+1));
                 }
-                System.out.println("Printing getting from grid");
-                System.out.println(grid.get(i).get(k));
                 myGrid.addVertex(grid.get(i).get(k),neighbors);
             }
         }
@@ -52,9 +52,19 @@ public abstract class Simulation {
             getNextState(c,myGrid.getNeighbors(c), newGrid, it);
         }
         myGrid = newGrid;
+        createGraph(returnGraph());
     }
 
-    public Graph<Cell> returnGraph(){
-        return myGrid;
+    public List<List<Cell>> returnGraph(){
+        Iterator<Cell> it = myGrid.getVertices().iterator();
+        List<List<Cell>> cartesianGrid = new ArrayList<>();
+        for(int i=0;i<gridLength;i++){
+            List<Cell> temp = new ArrayList<>();
+            cartesianGrid.add(temp);
+            for(int k=0;k<gridWidth;k++){
+                temp.add(it.next());
+            }
+        }
+        return cartesianGrid;
     }
 }

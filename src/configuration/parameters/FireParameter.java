@@ -10,7 +10,7 @@ public class FireParameter extends Parameter {
     private double probCatch;
 
     public FireParameter(){
-        this("Simulation Team 7", 25, 25, .25);
+        this("Simulation Team 7", 25, 25, .15);
     }
 
     public FireParameter(String fileAuthor, Integer length, Integer width, double prob){
@@ -18,7 +18,7 @@ public class FireParameter extends Parameter {
         gridLength = length;
         gridWidth = width;
         probCatch = prob;
-        possibleStates = new ArrayList<CellStates>(Arrays.asList(States.BURNING, States.EMPTY, States.TREE));
+        possibleStates = new ArrayList<CellStates>(Arrays.asList(States.BURNING, States.EMPTY, States.ALIVE));
     }
 
     public double getThreshold() {
