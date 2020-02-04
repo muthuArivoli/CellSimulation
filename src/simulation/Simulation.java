@@ -36,6 +36,8 @@ public abstract class Simulation {
                 if(k!=grid.get(i).size()-1){
                     neighbors.add(grid.get(i).get(k+1));
                 }
+                System.out.println("Printing getting from grid");
+                System.out.println(grid.get(i).get(k));
                 myGrid.addVertex(grid.get(i).get(k),neighbors);
             }
         }

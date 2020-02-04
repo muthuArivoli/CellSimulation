@@ -23,4 +23,9 @@ public class Cell implements Clonable {
     public Cell clone() {
         return new Cell(this.state);
     }
+
+    @Override
+    public String toString(){
+        return state.toString();
+    }
 }

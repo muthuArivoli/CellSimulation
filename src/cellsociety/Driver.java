@@ -14,6 +14,7 @@ public class Driver extends Application {
     public static final String TITLE = "Simulation";
     public static final int FRAMES_PER_SECOND = 60;
     public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    public static final int MINUTE_DELAY = 1000*100 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
     private boolean waiting;
@@ -41,7 +42,7 @@ public class Driver extends Application {
         myStage.setTitle(TITLE);
         myStage.show();
 
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
+        KeyFrame frame = new KeyFrame(Duration.millis(MINUTE_DELAY), e -> step(SECOND_DELAY));
         Timeline animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
@@ -59,6 +60,8 @@ public class Driver extends Application {
             }
         }
         else{
+            mySimulation.update();
+            myVisualization.updateGrid(mySimulation.returnGraph().graphToCollection());
         }
     }
 

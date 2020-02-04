@@ -1,12 +1,9 @@
 package simulation;
 
-import cellsociety.Cell;
-
 import java.util.*;
 
 public class Graph<T extends Clonable> {
     private Map<T, List<T> > adjList;
-    private int rowSize = 5;
     public Graph(){
         adjList = new LinkedHashMap<>();
     }
@@ -19,11 +16,9 @@ public class Graph<T extends Clonable> {
 
     public void addEdge(T source, T dest){
         adjList.putIfAbsent(source, new ArrayList<T>());
-        adjList.putIfAbsent(dest, new ArrayList<T>());
-        adjList.get(source).add(dest);
-        adjList.get(dest).add(source);
-    }
 
+        adjList.get(source).add(dest);
+    }
     public void addVertex(T c,List<T> neighbors){
         adjList.put(c, neighbors);
     }
@@ -40,12 +35,11 @@ public class Graph<T extends Clonable> {
         ArrayList<ArrayList<T>> grid = new ArrayList<ArrayList<T>>();
         for(T c : adjList.keySet()){
             ArrayList<T> row = new ArrayList<T>();
-            for(int i = 0; i < rowSize; i++){
+            for(int i = 0; i < row.size(); i++){
                 row.add(c);
             }
             grid.add(row);
         }
         return grid;
     }
-
 }

@@ -19,6 +19,7 @@ import javafx.util.Duration;
 import simulation.Simulation;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Visualization {
     public static final String TITLE = "Visualization";
@@ -91,7 +92,7 @@ public class Visualization {
         getFileButton.setTranslateY(SIZE*(2.0/10));
 
         getFileButton.setOnAction(value -> {
-            Slider mySlider = new Slider();
+            Slider mySlider = new Slider(50);
             System.out.print(mySlider.getCurrentSimulationSpeed());
         });
         return getFileButton;
@@ -127,5 +128,11 @@ public class Visualization {
          handleE();
          }
          **/
+    }
+
+    public void updateGrid(Collection graph) {
+        grid = new Grid(graph);
+        setCells(grid.getGrid());
+
     }
 }
