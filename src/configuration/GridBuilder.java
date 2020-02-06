@@ -11,6 +11,7 @@ import org.w3c.dom.Element;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class GridBuilder {
 
@@ -59,8 +60,8 @@ public class GridBuilder {
         return param;
     }
 
-    public ArrayList<ArrayList<Cell>> reconstructGrid(Collection grid) {
-        ArrayList<ArrayList<Cell>> madeGrid = new ArrayList<ArrayList<Cell>>(grid);
+    public List<List<Cell>> reconstructGrid(Collection grid) {
+        List<List<Cell>> madeGrid = new ArrayList<List<Cell>>(grid);
         return madeGrid;
     }
 

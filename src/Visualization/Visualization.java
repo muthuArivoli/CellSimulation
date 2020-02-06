@@ -11,13 +11,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import simulation.Simulation;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Visualization {
     public static final String TITLE = "Visualization";
@@ -36,13 +32,13 @@ public class Visualization {
 
     private Scene myScene;
     private Group root;
-    private ArrayList<ArrayList<Cell>> currentGrid;
+    private List<List<Cell>> currentGrid;
     private Grid grid;
-    private ArrayList<Rectangle> display;
+    private List<Rectangle> display;
     private Slider mySlider;
     private int simulationSpeed;
     private SimulationFile mySimulationFile;
-    private ArrayList<Text> myText;
+    private List<Text> myText;
     private Board myBoard;
     private Text simulationSpeedText;
     private GUITools uiBuilder;
@@ -54,6 +50,7 @@ public class Visualization {
         simulationSpeed = 50;
         display = new ArrayList<Rectangle>();
         GridBuilder gridBuilder = new GridBuilder();
+        currentGrid = new ArrayList<List<Cell>>();
         currentGrid = gridBuilder.reconstructGrid(simulation.returnGraph());
         grid = new Grid(simulation.returnGraph());
         setupGame(SIZE, SIZE, BACKGROUND);
@@ -119,7 +116,6 @@ public class Visualization {
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
-            e.printStackTrace();
         }
         return buttonNames;
     }
@@ -191,7 +187,7 @@ public class Visualization {
         currentText.setFont(Font.font(java.awt.Font.SERIF, 15));
         myText.add(currentText);
 
-        ArrayList<String> arrayOfRules = mySimulationFile.getArrayOfRules();
+        List<String> arrayOfRules = mySimulationFile.getArrayOfRules();
 
         for (int i=0; i<arrayOfRules.size(); i++) {
             currentText = new Text(25, 25, arrayOfRules.get(i));

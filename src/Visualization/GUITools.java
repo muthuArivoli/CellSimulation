@@ -1,6 +1,5 @@
 package Visualization;
 
-import cellsociety.CellStates;
 import configuration.parameters.Parameter;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
@@ -11,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
