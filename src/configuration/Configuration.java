@@ -15,11 +15,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import simulation.Simulation;
-import simulation.FireSimulation;
-import simulation.GameOfLifeSimulation;
-import simulation.PercolationSimulation;
-import simulation.SegregationSimulation;
+import simulation.*;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -168,9 +165,9 @@ public class Configuration {
         if(currentParam.toString().equals("Segregation Simulation")){
             currentSim = new SegregationSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
-//        if(currentParam.toString().equals("Wa Tor Simulation")){
-//            currentSim = new FireSimulation(this.getInitialGrid(), this.getCurrentParam());
-//        }
+        if(currentParam.toString().equals("Wa Tor Simulation")){
+            currentSim = new WatorSimulation(this.getInitialGrid());
+        }
 
     }
 
