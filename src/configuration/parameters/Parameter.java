@@ -8,11 +8,11 @@ import java.io.File;
 import java.util.ArrayList;
 
 public abstract class Parameter {
-    public String author;
-    public Integer gridLength;
-    public Integer gridWidth;
-    public double percentage;
-    public ArrayList<CellStates> possibleStates;
+    protected String author;
+    protected Integer gridLength;
+    protected Integer gridWidth;
+    protected double percentage;
+    protected ArrayList<CellStates> possibleStates;
 
     public Parameter(){}
 

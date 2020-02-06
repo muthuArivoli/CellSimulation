@@ -1,4 +1,4 @@
-package configuration;
+package Visualization;
 
 import cellsociety.CellStates;
 import configuration.parameters.Parameter;

@@ -1,5 +1,6 @@
 package configuration;
 
+import Visualization.GUITools;
 import cellsociety.Cell;
 import configuration.parameters.Parameter;
 import configuration.parameters.FireParameter;
@@ -21,7 +22,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Random;
 
 public class Configuration {
     public static final Paint BACKGROUND = Color.WHEAT;
@@ -50,7 +50,11 @@ public class Configuration {
     private boolean checkSelected;
 
     public Configuration(){
-        initializeConfiguration();
+        myLayout = new Group();
+        myScene = new Scene(myLayout, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
+        gridBuilder = new GridBuilder();
+        checkSelected = false;
+        initializeConfigurationUI();
     }
 
 
@@ -70,11 +74,7 @@ public class Configuration {
 
     public Simulation getCurrentSim() { return currentSim; }
 
-    private void initializeConfiguration(){
-        myLayout = new Group();
-        myScene = new Scene(myLayout, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
-        gridBuilder = new GridBuilder();
-        checkSelected = false;
+    private void initializeConfigurationUI(){
 
         GUITools constructor = new GUITools();
 
@@ -82,6 +82,17 @@ public class Configuration {
                 HALFWAY - INDENT - 15, myScene.getHeight()*(1.0/8.0));
         myLayout.getChildren().add(title);
 
+        makeSimulationButtons(constructor);
+
+        Button uploadFile = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(7.0/8.0),
+                "Choose a file to upload:", BUTTON_LENGTH, "-fx-base: white;");
+        uploadFile.setOnAction( event -> chooseFile());
+        myLayout.getChildren().add(uploadFile);
+
+        myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
+    }
+
+    private void makeSimulationButtons(GUITools constructor) {
         Button PercolationSimulation = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(2.0/8.0),
                 "PERCOLATION", BUTTON_LENGTH, "-fx-base: #264653;");
         PercolationSimulation.setOnAction( event -> uploadPercolation());
@@ -106,13 +117,6 @@ public class Configuration {
                 "FIRE", BUTTON_LENGTH, "-fx-base: #E76F51;");
         FireSimulation.setOnAction( event -> uploadFire());
         myLayout.getChildren().add(FireSimulation);
-
-        Button uploadFile = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(7.0/8.0),
-                "Choose a file to upload:", BUTTON_LENGTH, "-fx-base: white;");
-        uploadFile.setOnAction( event -> chooseFile());
-        myLayout.getChildren().add(uploadFile);
-
-        myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     }
 
     private void uploadFire() {
