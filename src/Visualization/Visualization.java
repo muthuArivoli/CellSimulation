@@ -61,6 +61,7 @@ public class Visualization {
         currentGrid = builder.reconstructGrid(simulation.returnGraph());
         grid = new Grid(simulation.returnGraph());
         setupGame(SIZE, SIZE, BACKGROUND);
+        mySlider = new Slider(simulationSpeed);
     }
 
     public Scene getScene(){
@@ -90,7 +91,7 @@ public class Visualization {
 
         changeSimulationSpeedButton.setOnAction(value -> {
             //watch for multiple windows
-            mySlider = new Slider(simulationSpeed);
+            //display the slider
         });
         return changeSimulationSpeedButton;
     }
@@ -146,6 +147,10 @@ public class Visualization {
         display.clear();
         grid = new Grid(graph);
         setCells(grid.getGrid());
+    }
+
+    public int getVisualizationsSpeed(){
+        return mySlider.getCurrentSimulationSpeed();
     }
 
     private Button makePauseResumeButton(String name) {
