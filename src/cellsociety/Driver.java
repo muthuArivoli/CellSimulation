@@ -16,7 +16,7 @@ import java.sql.SQLOutput;
 public class Driver extends Application {
     public static final String TITLE = "Simulation";
     public static final int FRAMES_PER_SECOND = 60;
-    public static final int MILLISECOND_DELAY = 1000*100/50 / FRAMES_PER_SECOND;
+    public static final int MILLISECOND_DELAY = 100000 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
     private boolean waiting;
