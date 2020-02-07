@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import simulation.Simulation;
 
+import java.net.SocketOption;
+import java.sql.SQLOutput;
+
 public class Driver extends Application {
     public static final String TITLE = "Simulation";
     public static final int FRAMES_PER_SECOND = 60;
@@ -66,5 +69,4 @@ public class Driver extends Application {
 //            speed = myVisualization.getCurrentSimulationSpeed();
         }
     }
-
 }

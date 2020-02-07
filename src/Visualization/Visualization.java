@@ -1,6 +1,7 @@
 package Visualization;
 
 import cellsociety.Cell;
+import cellsociety.Driver;
 import configuration.GridBuilder;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -141,12 +142,12 @@ public class Visualization {
         if (pauseResumeButton.getText().equals(RESUME)) {
             pauseResumeButton.setText(PAUSE);
             simulationSpeed = 0;
-            System.out.println(simulationSpeed);
+            System.out.println(0);
             //Pause simulation
         } else {
             pauseResumeButton.setText(RESUME);
             simulationSpeed = mySlider.getCurrentSimulationSpeed();
-            System.out.println(simulationSpeed);
+            System.out.println(mySlider.getCurrentSimulationSpeed());
             //Resume simulation
         }
     }
