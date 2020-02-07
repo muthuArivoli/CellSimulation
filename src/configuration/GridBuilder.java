@@ -15,7 +15,7 @@ import java.util.List;
 
 public class GridBuilder {
 
-    private static final double ORIGINAL_DIST = .5;
+    private static final double ORIGINAL_DIST = .15;
 
     private Parameter param;
     private String title;
@@ -36,6 +36,7 @@ public class GridBuilder {
             ArrayList<Cell> row = new ArrayList<Cell>();
             for(int j = 0; j < param.getGridLength(); j++){
                 if(Math.random() > param.getPercentage()){
+                    System.out.println(Math.random());
                     row.add(new Cell(param.getPossibleStates().get(0)));
                 }
                 else{
@@ -54,6 +55,7 @@ public class GridBuilder {
             Document doc = dBuilder.parse(file);
             doc.getDocumentElement().normalize();
             readFile(doc);
+            assignParameter();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,6 +83,8 @@ public class GridBuilder {
     }
 
     private void assignParameter(){
+        System.out.println(title);
+        System.out.println(percentage);
         if(title.equals("Fire")){
             double prob = ORIGINAL_DIST;
             param = new FireParameter(title, length, width, prob, percentage);
