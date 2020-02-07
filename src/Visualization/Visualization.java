@@ -54,6 +54,7 @@ public class Visualization {
         currentGrid = gridBuilder.reconstructGrid(simulation.returnGraph());
         grid = new Grid(simulation.returnGraph());
         setupGame(SIZE, SIZE, BACKGROUND);
+        mySlider = new Slider(simulationSpeed);
     }
 
     private void setupGame(int width, int height, Paint background) {
