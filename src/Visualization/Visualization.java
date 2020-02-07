@@ -1,31 +1,19 @@
 package Visualization;
 
 import cellsociety.Cell;
-import configuration.GUITools;
 import configuration.GridBuilder;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 import simulation.Simulation;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Visualization {
     public static final String TITLE = "Visualization";
@@ -38,37 +26,67 @@ public class Visualization {
     public static final String SIMULATION_FILE_EXAMPLE_PATH = "./resources/SimulationFileExample.txt";
     public static final int GRID_SIZE = 300;
     public static final int GRID_TOP_LEFT = 100;
+    private static final String RESUME = "Resume";
+    private static final String PAUSE = "Pause";
 
 
     private Scene myScene;
     private Group root;
-    private ArrayList<ArrayList<Cell>> currentGrid;
+    private List<List<Cell>> currentGrid;
     private Grid grid;
-    private ArrayList<Rectangle> display;
+    private List<Rectangle> display;
     private Slider mySlider;
     private int simulationSpeed;
     private SimulationFile mySimulationFile;
-    private ArrayList<Text> myText;
+    private List<Text> myText;
     private Board myBoard;
     private Text simulationSpeedText;
+    private GUITools uiBuilder;
 
 
     public Visualization(Simulation simulation){
         root = new Group();
+        uiBuilder = new GUITools();
         simulationSpeed = 50;
         display = new ArrayList<Rectangle>();
-        GridBuilder builder = new GridBuilder();
-        currentGrid = builder.reconstructGrid(simulation.returnGraph());
+        GridBuilder gridBuilder = new GridBuilder();
+        currentGrid = new ArrayList<List<Cell>>();
+        currentGrid = gridBuilder.reconstructGrid(simulation.returnGraph());
         grid = new Grid(simulation.returnGraph());
         setupGame(SIZE, SIZE, BACKGROUND);
         mySlider = new Slider(simulationSpeed);
     }
 
+    private void setupGame(int width, int height, Paint background) {
+        String[] buttonNames = getButtonNames();
+
+        Button pauseResume = uiBuilder.makeButtons(SIZE * (2.0 / 4), SIZE * (9.0 / 10), PAUSE, 25, "White");
+        pauseResume.setOnAction(value -> pauseResumeFunc(pauseResume));
+
+        Button makeStep = uiBuilder.makeButtons(SIZE * (2.35 / 4), SIZE * (9.0 / 10), buttonNames[1], 25, "White");
+        makeStep.setOnAction(value -> stepButtonFunc());
+
+        Button getFile = uiBuilder.makeButtons(SIZE * (2.6 / 4), SIZE * (9.0 / 10), buttonNames[2], 25, "White");
+        getFile.setOnAction(value -> getFileButtonHasBeenPushed());
+
+        Button changeSimulation = uiBuilder.makeButtons(SIZE * (1.0 / 4), SIZE * (9.0 / 10), buttonNames[3], 25, "White");
+        changeSimulation.setOnAction(value -> changeSimulationFunc());
+
+        root.getChildren().addAll(pauseResume, makeStep, getFile, changeSimulation);
+        placeCells(grid.getGrid());
+        simulationSpeedText = uiBuilder.makeText("Simulation Rate: 50", "Serif", 15, Color.BLACK, SIZE*(.4/5), SIZE*(9.22/10));
+
+        root.getChildren().add(simulationSpeedText);
+
+        myScene = new Scene(root, width, height, background);
+    }
+
+
     public Scene getScene(){
         return myScene;
     }
 
-    public void setCells(ArrayList<ArrayList<Cell>> grid){
+    public void placeCells(ArrayList<ArrayList<Cell>> grid){
         int length = grid.size();
         int width = GRID_SIZE/length;
         System.out.println(width);
@@ -83,35 +101,6 @@ public class Visualization {
             }
         }
     }
-
-    private Button makeChangeSimulationSpeedButton(String name) {
-        Button changeSimulationSpeedButton = new Button(name);
-        changeSimulationSpeedButton.setTranslateX(SIZE * (1.0 / 4));
-        changeSimulationSpeedButton.setTranslateY(SIZE * (9.0 / 10));
-
-        changeSimulationSpeedButton.setOnAction(value -> {
-            //watch for multiple windows
-            //display the slider
-        });
-        return changeSimulationSpeedButton;
-    }
-
-    private void setupGame(int width, int height, Paint background) {
-        String[] buttonNames = getButtonNames();
-        Button a = makePauseResumeButton(buttonNames[0]);
-        Button b = makeStepButton(buttonNames[1]);
-        Button c = makeGetFileButton(buttonNames[2]);
-        Button d = makeChangeSimulationSpeedButton(buttonNames[3]);
-        root.getChildren().addAll(a,b,c,d);
-        setCells(grid.getGrid());
-        simulationSpeedText = new Text(SIZE*(0.4/5), (SIZE * (9.22 / 10)), "Simulation Rate: 50");
-        simulationSpeedText.setFill(Color.BLACK);
-        simulationSpeedText.setFont(Font.font(java.awt.Font.SERIF, 15));
-        root.getChildren().add(simulationSpeedText);
-
-        myScene = new Scene(root, width, height, background);
-    }
-
 
     private String[] getButtonNames() {
         String[] buttonNames = new String[4];
@@ -128,7 +117,6 @@ public class Visualization {
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
-            e.printStackTrace();
         }
         return buttonNames;
     }
@@ -146,64 +134,31 @@ public class Visualization {
         }
         display.clear();
         grid = new Grid(graph);
-        setCells(grid.getGrid());
+        placeCells(grid.getGrid());
     }
 
-    public int getVisualizationsSpeed(){
-        return mySlider.getCurrentSimulationSpeed();
+    private void pauseResumeFunc(Button pauseResumeButton) {
+        if (pauseResumeButton.getText().equals(RESUME)) {
+            pauseResumeButton.setText(PAUSE);
+            simulationSpeed = 0;
+            System.out.println(simulationSpeed);
+            //Pause simulation
+        } else {
+            pauseResumeButton.setText(RESUME);
+            simulationSpeed = mySlider.getCurrentSimulationSpeed();
+            System.out.println(simulationSpeed);
+            //Resume simulation
+        }
     }
 
-    private Button makePauseResumeButton(String name) {
-        String firstName = name.substring(0, name.indexOf("/"));
-        String lastName = name.substring(name.indexOf("/")+1);
-
-        Button pauseResumeButton = new Button(firstName);
-        pauseResumeButton.setTranslateX(SIZE * (2.0 / 4));
-        pauseResumeButton.setTranslateY(SIZE * (9.0 / 10));
-
-        pauseResumeButton.setOnAction(value -> {
-            if (pauseResumeButton.getText().equals(firstName)) {
-                pauseResumeButton.setText(lastName);
-                simulationSpeed = 0;
-                System.out.println(simulationSpeed);
-                //Pause simulation
-            } else {
-                pauseResumeButton.setText(firstName);
-                simulationSpeed = mySlider.getCurrentSimulationSpeed();
-                System.out.println(simulationSpeed);
-                //Resume simulation
-            }
-        });
-
-        return pauseResumeButton;
-    }
-
-    private Button makeStepButton(String name) {
-        Button stepButton = new Button(name);
-        stepButton.setTranslateX(SIZE * (2.35 / 4));
-        stepButton.setTranslateY(SIZE * (9.0 / 10));
-
-        stepButton.setOnAction(value -> {
-            //get new status
-            try {
-                myBoard.updateBoard("102201200");
-            }
-            catch(Exception e) {
-                System.out.println("No File Loaded");
-            }
-        });
-        return stepButton;
-    }
-
-    private Button makeGetFileButton(String name) {
-        Button getFileButton = new Button(name);
-        getFileButton.setTranslateX(SIZE * (2.6 / 4));
-        getFileButton.setTranslateY(SIZE * (9.0 / 10));
-
-        getFileButton.setOnAction(value -> {
-            getFileButtonHasBeenPushed();
-        });
-        return getFileButton;
+    private void stepButtonFunc(){
+        //get new status
+        try {
+            myBoard.updateBoard("102201200");
+        }
+        catch(Exception e) {
+            System.out.println("No File Loaded");
+        }
     }
 
     private void getFileButtonHasBeenPushed() {
@@ -214,6 +169,11 @@ public class Visualization {
         Map<String, String> rulesRelatingConditionOfCellToColor = mySimulationFile.getRulesRelatingConditionOfCellToColor();
         String cellStatus = mySimulationFile.getCellStatus();
 //        myBoard = new Board(root, rulesRelatingConditionOfCellToColor, cellStatus);
+    }
+
+    private void changeSimulationFunc() {
+        //watch for multiple windows
+        mySlider = new Slider(simulationSpeed);
     }
 
 
@@ -228,7 +188,7 @@ public class Visualization {
         currentText.setFont(Font.font(java.awt.Font.SERIF, 15));
         myText.add(currentText);
 
-        ArrayList<String> arrayOfRules = mySimulationFile.getArrayOfRules();
+        List<String> arrayOfRules = mySimulationFile.getArrayOfRules();
 
         for (int i=0; i<arrayOfRules.size(); i++) {
             currentText = new Text(25, 25, arrayOfRules.get(i));
