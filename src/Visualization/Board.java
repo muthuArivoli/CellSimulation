@@ -1,6 +1,8 @@
 package Visualization;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -23,7 +25,6 @@ public class Board {
         rulesRelatingConditionOfCellToColor = rules;
         cellStatus = status;
         myCells = new ArrayList<Rectangle>();
-        printCurrentStuff();
         addCellToBoard();
     }
 
@@ -53,22 +54,5 @@ public class Board {
         deleteOldCellsFromBoard();
         cellStatus = newStatus;
         addCellToBoard();
-        printCurrentStuff();
-    }
-
-    private void printCurrentStuff(){
-        System.out.println("");
-        int length = (int) Math.sqrt(cellStatus.length());
-        for (int i=0; i<cellStatus.length(); i++) {
-            if (i%length==0){
-                System.out.println("");
-            }
-            System.out.print(cellStatus.substring(i, i+1));
-        }
-        System.out.println("");
-        for (Map.Entry<String,String> entry : rulesRelatingConditionOfCellToColor.entrySet()){
-            System.out.println("Key = " + entry.getKey() +
-                    ", Value = " + entry.getValue());
-        }
     }
 }
