@@ -19,12 +19,19 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Visualization {
+    public static final String TITLE = "Visualization";
     public static final int SIZE = 500;
+    public static final int FRAMES_PER_SECOND = 60;
+    public static final int MILLISECOND_DELAY = 1000*100000 / FRAMES_PER_SECOND;
+    public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static final Paint BACKGROUND = Color.WHEAT;
     public static final String BUTTON_NAME_PATH = "./resources/ButtonNames.txt";
     public static final String SIMULATION_FILE_EXAMPLE_PATH = "./resources/SimulationFileExample.txt";
+    public static final int GRID_SIZE = 300;
+    public static final int GRID_TOP_LEFT = 100;
     private static final String RESUME = "Resume";
     private static final String PAUSE = "Pause";
+
 
     private Scene myScene;
     private Group root;
@@ -32,8 +39,10 @@ public class Visualization {
     private Grid grid;
     private List<Rectangle> display;
     private Slider mySlider;
+    private List<Text> myText;
     private Text simulationSpeedText;
     private GUITools uiBuilder;
+
 
     public Visualization(Simulation simulation){
         root = new Group();
@@ -65,7 +74,7 @@ public class Visualization {
         root.getChildren().addAll(pauseResume, makeStep, getFile, changeSimulation);
 
 
-        simulationSpeedText = uiBuilder.makeText("Simulation Rate: 50", "Serif", 15, Color.BLACK, SIZE*(.39/5), SIZE*(8.8/10));
+        simulationSpeedText = uiBuilder.makeText("Simulation Rate: 50", "Serif", 15, Color.BLACK, SIZE*(.4/5), SIZE*(8.9/10));
 
         root.getChildren().add(simulationSpeedText);
 
@@ -94,6 +103,13 @@ public class Visualization {
             System.out.println("File not found");
         }
         return buttonNames;
+    }
+
+    private void displayArrayOfTextInScene(){
+        for (int i=0; i<myText.size(); i++) {
+            myText.get(i).setY(50+i*50);
+            root.getChildren().add(myText.get(i));
+        }
     }
 
     public void updateGrid(Collection graph) {
@@ -128,12 +144,34 @@ public class Visualization {
     }
 
     private void getFileButtonHasBeenPushed() {
+        //make way to get real path
         SimulationFile mySimulationFile = new SimulationFile(SIMULATION_FILE_EXAMPLE_PATH);
-        mySimulationFile.addArrayOfTextToScreen(root);
+        createArrayOfTextFromSimulationFile(mySimulationFile);
+        displayArrayOfTextInScene();
+        Map<String, String> rulesRelatingConditionOfCellToColor = mySimulationFile.getRulesRelatingConditionOfCellToColor();
+        String cellStatus = mySimulationFile.getCellStatus();
+//        myBoard = new Board(root, rulesRelatingConditionOfCellToColor, cellStatus);
     }
 
     private void changeSimulationFunc() {
         System.out.println("return to main screen");
+    }
+
+
+    private void createArrayOfTextFromSimulationFile(SimulationFile mySimulationFile) {
+        myText = new ArrayList<>();
+        createTextBoxWithTheFollowingInformation(mySimulationFile.getFileName());
+        createTextBoxWithTheFollowingInformation(mySimulationFile.getSimulationName());
+        List<String> arrayOfRules = mySimulationFile.getArrayOfRules();
+        for (int i=0; i<arrayOfRules.size(); i++) {
+            createTextBoxWithTheFollowingInformation(arrayOfRules.get(i));
+        }
+    }
+    private void createTextBoxWithTheFollowingInformation(String text){
+        Text currentText = new Text(25, 25, text);
+        currentText.setFill(Color.BLACK);
+        currentText.setFont(Font.font(java.awt.Font.SERIF, 15));
+        myText.add(currentText);
     }
 
 }
