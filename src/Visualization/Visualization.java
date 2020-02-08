@@ -39,7 +39,6 @@ public class Visualization {
     private Grid grid;
     private List<Rectangle> display;
     private Slider mySlider;
-    private SimulationFile mySimulationFile;
     private List<Text> myText;
     private Text simulationSpeedText;
     private GUITools uiBuilder;
@@ -141,13 +140,13 @@ public class Visualization {
     }
 
     private void stepButtonFunc(){
-        System.out.println("Step");
+        System.out.println("step");
     }
 
     private void getFileButtonHasBeenPushed() {
         //make way to get real path
-        mySimulationFile = new SimulationFile(SIMULATION_FILE_EXAMPLE_PATH);
-        createArrayOfTextFromSimulationFile();
+        SimulationFile mySimulationFile = new SimulationFile(SIMULATION_FILE_EXAMPLE_PATH);
+        createArrayOfTextFromSimulationFile(mySimulationFile);
         displayArrayOfTextInScene();
         Map<String, String> rulesRelatingConditionOfCellToColor = mySimulationFile.getRulesRelatingConditionOfCellToColor();
         String cellStatus = mySimulationFile.getCellStatus();
@@ -155,12 +154,11 @@ public class Visualization {
     }
 
     private void changeSimulationFunc() {
-        //watch for multiple windows
-        mySlider = new Slider();
+        System.out.println("return to main screen");
     }
 
 
-    private void createArrayOfTextFromSimulationFile() {
+    private void createArrayOfTextFromSimulationFile(SimulationFile mySimulationFile) {
         myText = new ArrayList<>();
         Text currentText = new Text(25, 25, mySimulationFile.getFileName());
         currentText.setFill(Color.BLACK);
