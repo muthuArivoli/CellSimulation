@@ -59,13 +59,13 @@ public class Visualization {
     private void setupGame(int width, int height, Paint background) {
         String[] buttonNames = getButtonNames();
 
-        Button pauseResume = uiBuilder.makeButtons(SIZE * (2.0 / 4), SIZE * (9.0 / 10), PAUSE, 25, "White");
+        Button pauseResume = uiBuilder.makeButtons(SIZE * (1.8 / 4), SIZE * (9.0 / 10), PAUSE, 25, "White");
         pauseResume.setOnAction(value -> pauseResumeFunc(pauseResume));
 
         Button makeStep = uiBuilder.makeButtons(SIZE * (2.35 / 4), SIZE * (9.0 / 10), buttonNames[1], 25, "White");
         makeStep.setOnAction(value -> stepButtonFunc());
 
-        Button getFile = uiBuilder.makeButtons(SIZE * (2.6 / 4), SIZE * (9.0 / 10), buttonNames[2], 25, "White");
+        Button getFile = uiBuilder.makeButtons(SIZE * (2.8 / 4), SIZE * (9.0 / 10), buttonNames[2], 25, "White");
         getFile.setOnAction(value -> getFileButtonHasBeenPushed());
 
         Button changeSimulation = uiBuilder.makeButtons(SIZE * (0.1 / 4), SIZE * (9.0 / 10), buttonNames[3], 25, "White");
