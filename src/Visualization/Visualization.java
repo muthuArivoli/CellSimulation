@@ -1,13 +1,17 @@
 package Visualization;
 
 import cellsociety.Cell;
+import cellsociety.Driver;
 import configuration.GridBuilder;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import simulation.Simulation;
 import java.io.File;
@@ -34,7 +38,9 @@ public class Visualization {
     public Visualization(Simulation simulation){
         root = new Group();
         uiBuilder = new GUITools();
+        display = new ArrayList<Rectangle>();
         GridBuilder gridBuilder = new GridBuilder();
+        currentGrid = new ArrayList<List<Cell>>();
         currentGrid = gridBuilder.reconstructGrid(simulation.returnGraph());
         grid = new Grid(simulation.returnGraph());
         setupGame(SIZE, SIZE, BACKGROUND);
@@ -42,7 +48,8 @@ public class Visualization {
     }
 
     private void setupGame(int width, int height, Paint background) {
-        String[] buttonNames = getButtonNames();
+        ButtonNames myButtonNames = new ButtonNames(BUTTON_NAME_PATH);
+        String[] buttonNames = myButtonNames.getButtonNames();
 
         Button pauseResume = uiBuilder.makeButtons(SIZE * (1.8 / 4), SIZE * (9.0 / 10), PAUSE, 25, "White");
         pauseResume.setOnAction(value -> pauseResumeFunc(pauseResume));
@@ -69,24 +76,6 @@ public class Visualization {
 
     public Scene getScene(){
         return myScene;
-    }
-
-    private String[] getButtonNames() {
-        String[] buttonNames = new String[4];
-        try {
-            File newFile = new File(BUTTON_NAME_PATH);
-            Scanner myReader = new Scanner(newFile);
-            int i=0;
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                buttonNames[i] = data;
-                i++;
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        }
-        return buttonNames;
     }
 
     public void updateGrid(Collection graph) {
