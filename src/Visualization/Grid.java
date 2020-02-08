@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class Grid {
     public static final int GRID_SIZE = 300;
-    public static final int GRID_TOP_LEFT = 100;
+    public static final int GRID_TOP_LEFT = 110;
 
     private Map<String, String> rulesRelatingConditionOfCellToColor;
     private ArrayList<ArrayList<Cell>> grid;

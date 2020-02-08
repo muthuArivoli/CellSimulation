@@ -1,4 +1,5 @@
 Simulation Name
+
 Rule 1
 Rule 2
 Rule 3
@@ -7,9 +8,3 @@ Legend:
 Alive: Green
 Fire: Red
 Dead: Black
-***
-0 GREEN
-1 RED
-2 BLACK
-***
-101221001
