@@ -1,7 +1,7 @@
 package configuration.parameters;
 
 import cellsociety.CellStates;
-import configuration.States;
+import configuration.State;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +18,7 @@ public class FireParameter extends Parameter {
         gridWidth = width;
         probCatch = prob;
         percentage = perc;
-        possibleStates = new ArrayList<CellStates>(Arrays.asList(States.BURNING, States.ALIVE, States.EMPTY));
+        possibleStates = new ArrayList<CellStates>(Arrays.asList(State.BURNING, State.ALIVE, State.EMPTY));
     }
 
     public double getThreshold() {

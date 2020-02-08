@@ -1,8 +1,7 @@
 package configuration.parameters;
 
 import cellsociety.CellStates;
-import configuration.States;
-import simulation.GameOfLifeSimulation;
+import configuration.State;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +19,7 @@ public class GameOfLifeParameter extends Parameter {
         gridLength = length;
         gridWidth = width;
         percentage = perc;
-        possibleStates = new ArrayList<CellStates>(Arrays.asList(States.ALIVE, States.DEAD, States.EMPTY));
+        possibleStates = new ArrayList<CellStates>(Arrays.asList(State.ALIVE, State.DEAD, State.EMPTY));
     }
 
     public double getThreshold(){

@@ -1,7 +1,7 @@
 package simulation;
 
 import cellsociety.Cell;
-import configuration.States;
+import configuration.State;
 import configuration.parameters.Parameter;
 
 import java.util.Collection;
@@ -19,18 +19,18 @@ public class FireSimulation extends Simulation {
 
     protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){
 
-        if(cell.getState() == States.BURNING) {
-            it.next().setState(States.EMPTY);
+        if(cell.getState() == State.BURNING) {
+            it.next().setState(State.EMPTY);
             return;
         }
         boolean neighborOnFire = false;
         for(Cell c:neighbor){
-            if(c.getState() == States.BURNING){
+            if(c.getState() == State.BURNING){
                 neighborOnFire = true;
             }
         }
-        if(cell.getState() == States.ALIVE && neighborOnFire && Math.random()>probability){
-            it.next().setState(States.BURNING);
+        if(cell.getState() == State.ALIVE && neighborOnFire && Math.random()>probability){
+            it.next().setState(State.BURNING);
             return;
         }
         it.next();

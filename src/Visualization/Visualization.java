@@ -42,6 +42,7 @@ public class Visualization {
     private List<Text> myText;
     private Text simulationSpeedText;
     private GUITools uiBuilder;
+    private boolean ready;
 
 
     public Visualization(Simulation simulation){
@@ -53,6 +54,7 @@ public class Visualization {
         currentGrid = gridBuilder.reconstructGrid(simulation.returnGraph());
         grid = new Grid(simulation.returnGraph());
         setupGame(SIZE, SIZE, BACKGROUND);
+        updateGrid(grid.getGrid());
         mySlider = new Slider();
     }
 
@@ -72,7 +74,6 @@ public class Visualization {
         changeSimulation.setOnAction(value -> changeSimulationFunc());
 
         root.getChildren().addAll(pauseResume, makeStep, getFile, changeSimulation);
-
 
         simulationSpeedText = uiBuilder.makeText("Simulation Rate: 50", "Serif", 15, Color.BLACK, SIZE*(.4/5), SIZE*(9.22/10));
 
@@ -118,6 +119,7 @@ public class Visualization {
         }
         display.clear();
         display = grid.placeCells(root, graph);
+        ready = true;
     }
 
     private void pauseResumeFunc(Button pauseResumeButton) {
@@ -140,7 +142,7 @@ public class Visualization {
     }
 
     private void stepButtonFunc(){
-        System.out.println("step");
+//        System.out.println("step");
     }
 
     private void getFileButtonHasBeenPushed() {
@@ -150,7 +152,6 @@ public class Visualization {
         displayArrayOfTextInScene();
         Map<String, String> rulesRelatingConditionOfCellToColor = mySimulationFile.getRulesRelatingConditionOfCellToColor();
         String cellStatus = mySimulationFile.getCellStatus();
-//        myBoard = new Board(root, rulesRelatingConditionOfCellToColor, cellStatus);
     }
 
     private void changeSimulationFunc() {
@@ -174,4 +175,7 @@ public class Visualization {
         myText.add(currentText);
     }
 
+    public boolean isVisualizationReady() {
+        return ready;
+    }
 }

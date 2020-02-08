@@ -1,7 +1,7 @@
 package configuration.parameters;
 
 import cellsociety.CellStates;
-import configuration.States;
+import configuration.State;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +20,7 @@ public class SegregationParameter extends Parameter {
         gridLength = length;
         gridWidth = width;
         percentage = perc;
-        possibleStates = new ArrayList<CellStates>(Arrays.asList(States.MINORITY, States.MAJORITY, States.EMPTY));
+        possibleStates = new ArrayList<CellStates>(Arrays.asList(State.MINORITY, State.MAJORITY, State.EMPTY));
     }
 
     public double getThreshold() {
