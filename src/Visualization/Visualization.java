@@ -74,7 +74,7 @@ public class Visualization {
         root.getChildren().addAll(pauseResume, makeStep, getFile, changeSimulation);
 
 
-        simulationSpeedText = uiBuilder.makeText("Simulation Rate: 50", "Serif", 15, Color.BLACK, SIZE*(.4/5), SIZE*(9.22/10));
+        simulationSpeedText = uiBuilder.makeText("Simulation Rate: 50", "Serif", 15, Color.BLACK, SIZE*(.4/5), SIZE*(8.9/10));
 
         root.getChildren().add(simulationSpeedText);
 
