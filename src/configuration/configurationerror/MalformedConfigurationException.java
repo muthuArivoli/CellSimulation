@@ -1,4 +1,4 @@
 package configuration.configurationerror;
 
-public class MalformedConfigurationException {
+public class MalformedConfigurationException extends ConfigurationError {
 }

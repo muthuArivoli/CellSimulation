@@ -1,4 +1,7 @@
 package configuration.configurationerror;
 
-public class NullParameterException {
+public class NullParameterException extends ConfigurationError{
+    public NullParameterException(String message){
+        super(message);
+    }
 }
