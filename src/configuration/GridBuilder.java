@@ -119,23 +119,21 @@ public class GridBuilder {
     }
 
     private void assignParameter(){
-        System.out.println(title);
-        System.out.println(percentage);
         if(title.equals("Fire")){
             double prob = ORIGINAL_DIST;
             param = new FireParameter(title, length, width, prob, percentage);
         }
-        if(title.equals("Game of Life")){
+        else if(title.equals("Game of Life")){
             param = new GameOfLifeParameter(title, length, width, percentage);
         }
-        if(title.equals("Percolation")){
+        else if(title.equals("Percolation")){
             param = new PercolationParameter(title, length, width, percentage);
         }
-        if(title.equals("Segregation")){
+        else if(title.equals("Segregation")){
             double prob = ORIGINAL_DIST;
             param = new SegregationParameter(title, length, width, prob, percentage);
         }
-        if(title.equals("WaTor")){
+        else if(title.equals("WaTor")){
             double prob = ORIGINAL_DIST;
             param = new WaTorParameter(title, length, width, prob, percentage);
         }

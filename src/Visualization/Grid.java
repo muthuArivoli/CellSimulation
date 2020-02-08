@@ -44,8 +44,6 @@ public class Grid {
                     }
                 });
                 Paint color = row.get(j).getState().getColor();
-                System.out.println(row.get(j).getState());
-                System.out.println(color);
                 currentRect.setFill(color);
                 display.add(currentRect);
                 root.getChildren().add(currentRect);

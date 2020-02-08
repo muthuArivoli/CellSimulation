@@ -46,7 +46,7 @@ public class Driver extends Application {
         myStage.setTitle(TITLE);
         myStage.show();
 
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY*speed), e -> step(SECOND_DELAY));
+        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
         Timeline animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
@@ -64,10 +64,12 @@ public class Driver extends Application {
             }
         }
         else {
-            mySimulation.update();
-            myVisualization.updateGrid(mySimulation.returnGraph());
-            speed = myVisualization.getCurrentSimulationSpeed();
-            System.out.println(speed);
+            if(myVisualization.isVisualizationReady()) {
+                mySimulation.update();
+                myVisualization.updateGrid(mySimulation.returnGraph());
+                speed = myVisualization.getCurrentSimulationSpeed();
+                System.out.println(speed);
+            }
         }
     }
 }
