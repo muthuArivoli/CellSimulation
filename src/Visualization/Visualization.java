@@ -3,9 +3,11 @@ package Visualization;
 import cellsociety.Cell;
 import cellsociety.Driver;
 import configuration.GridBuilder;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -37,10 +39,8 @@ public class Visualization {
     private Grid grid;
     private List<Rectangle> display;
     private Slider mySlider;
-    private int simulationSpeed;
     private SimulationFile mySimulationFile;
     private List<Text> myText;
-    private Board myBoard;
     private Text simulationSpeedText;
     private GUITools uiBuilder;
 
@@ -48,14 +48,13 @@ public class Visualization {
     public Visualization(Simulation simulation){
         root = new Group();
         uiBuilder = new GUITools();
-        simulationSpeed = 50;
         display = new ArrayList<Rectangle>();
         GridBuilder gridBuilder = new GridBuilder();
         currentGrid = new ArrayList<List<Cell>>();
         currentGrid = gridBuilder.reconstructGrid(simulation.returnGraph());
         grid = new Grid(simulation.returnGraph());
         setupGame(SIZE, SIZE, BACKGROUND);
-        mySlider = new Slider(simulationSpeed);
+        mySlider = new Slider();
     }
 
     private void setupGame(int width, int height, Paint background) {
@@ -70,11 +69,12 @@ public class Visualization {
         Button getFile = uiBuilder.makeButtons(SIZE * (2.6 / 4), SIZE * (9.0 / 10), buttonNames[2], 25, "White");
         getFile.setOnAction(value -> getFileButtonHasBeenPushed());
 
-        Button changeSimulation = uiBuilder.makeButtons(SIZE * (1.0 / 4), SIZE * (9.0 / 10), buttonNames[3], 25, "White");
+        Button changeSimulation = uiBuilder.makeButtons(SIZE * (0.1 / 4), SIZE * (9.0 / 10), buttonNames[3], 25, "White");
         changeSimulation.setOnAction(value -> changeSimulationFunc());
 
         root.getChildren().addAll(pauseResume, makeStep, getFile, changeSimulation);
-        placeCells(grid.getGrid());
+
+
         simulationSpeedText = uiBuilder.makeText("Simulation Rate: 50", "Serif", 15, Color.BLACK, SIZE*(.4/5), SIZE*(9.22/10));
 
         root.getChildren().add(simulationSpeedText);
@@ -85,22 +85,6 @@ public class Visualization {
 
     public Scene getScene(){
         return myScene;
-    }
-
-    public void placeCells(ArrayList<ArrayList<Cell>> grid){
-        int length = grid.size();
-        int width = GRID_SIZE/length;
-        System.out.println(width);
-        for (int i=0; i<length; i++) {
-            ArrayList<Cell> row = grid.get(i);
-            for(int j = 0; j < row.size(); j++) {
-                Rectangle currentRect = new Rectangle(GRID_TOP_LEFT + width*j, GRID_TOP_LEFT + width*i, width, width);
-                Paint color = row.get(j).getState().getColor();
-                currentRect.setFill(color);
-                display.add(currentRect);
-                root.getChildren().add(currentRect);
-            }
-        }
     }
 
     private String[] getButtonNames() {
@@ -134,32 +118,30 @@ public class Visualization {
             root.getChildren().remove(r);
         }
         display.clear();
-        grid = new Grid(graph);
-        placeCells(grid.getGrid());
+        display = grid.placeCells(root, graph);
     }
 
     private void pauseResumeFunc(Button pauseResumeButton) {
         if (pauseResumeButton.getText().equals(RESUME)) {
             pauseResumeButton.setText(PAUSE);
-            simulationSpeed = 0;
-            System.out.println(0);
-            //Pause simulation
+            mySlider.setSimulationSpeed(true);
+            System.out.println(mySlider.getCurrentSimulationSpeed());
         } else {
             pauseResumeButton.setText(RESUME);
-            simulationSpeed = mySlider.getCurrentSimulationSpeed();
+            mySlider.setSimulationSpeed(false);
             System.out.println(mySlider.getCurrentSimulationSpeed());
-            //Resume simulation
         }
     }
 
+    public int getCurrentSimulationSpeed(){
+        if (mySlider.getCurrentSimulationSpeed()==0){
+            return 10000;
+        }
+        return 1;
+    }
+
     private void stepButtonFunc(){
-        //get new status
-        try {
-            myBoard.updateBoard("102201200");
-        }
-        catch(Exception e) {
-            System.out.println("No File Loaded");
-        }
+        System.out.println("Step");
     }
 
     private void getFileButtonHasBeenPushed() {
@@ -174,7 +156,7 @@ public class Visualization {
 
     private void changeSimulationFunc() {
         //watch for multiple windows
-        mySlider = new Slider(simulationSpeed);
+        mySlider = new Slider();
     }
 
 

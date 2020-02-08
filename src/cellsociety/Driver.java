@@ -63,10 +63,11 @@ public class Driver extends Application {
                 myStage.setScene(myVisualization.getScene());
             }
         }
-        else{
+        else {
             mySimulation.update();
             myVisualization.updateGrid(mySimulation.returnGraph());
-//            speed = myVisualization.getCurrentSimulationSpeed();
+            speed = myVisualization.getCurrentSimulationSpeed();
+            System.out.println(speed);
         }
     }
 }
