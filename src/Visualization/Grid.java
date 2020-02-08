@@ -60,7 +60,7 @@ public class Grid {
         y = (y - GRID_TOP_LEFT)/(GRID_SIZE/grid.size());
         System.out.println(x);
         System.out.println(y);
-        //tell the simulation which ones were clicked
+        //tell the simulation which ones were clicked!
         System.out.println("");
     }
 }
