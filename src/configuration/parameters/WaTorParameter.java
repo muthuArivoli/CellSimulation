@@ -1,7 +1,7 @@
 package configuration.parameters;
 
 import cellsociety.CellStates;
-import configuration.States;
+import configuration.State;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +20,7 @@ public class WaTorParameter extends Parameter {
         gridLength = length;
         gridWidth = width;
         percentage = perc;
-        possibleStates = new ArrayList<CellStates>(Arrays.asList(States.DEAD, States.PREY, States.PREDATOR));
+        possibleStates = new ArrayList<CellStates>(Arrays.asList(State.DEAD, State.PREY, State.PREDATOR));
     }
 
     public double getThreshold() {

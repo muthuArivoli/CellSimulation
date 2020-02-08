@@ -3,7 +3,10 @@ package configuration;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import cellsociety.Cell;
+import configuration.configurationerror.IncorrectFileTypeError;
+import configuration.configurationerror.MalformedConfigurationException;
 import configuration.configurationerror.NullParameterException;
+import configuration.configurationerror.IncorrectFileTypeError;
 import configuration.parameters.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -17,6 +20,7 @@ import java.util.List;
 public class GridBuilder {
 
     private static final double ORIGINAL_DIST = .15;
+    private static final File BLANK_FILE = new File("./resources/BLANK.xml");
 
     private Parameter param;
     private String title;
@@ -31,6 +35,7 @@ public class GridBuilder {
         int length = 0;
         double percentage = 0;
     }
+
     public ArrayList<ArrayList<Cell>> makeGrid(Parameter param) throws NullParameterException {
         ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
         try {
@@ -38,7 +43,6 @@ public class GridBuilder {
                 ArrayList<Cell> row = new ArrayList<Cell>();
                 for (int j = 0; j < param.getGridLength(); j++) {
                     if (Math.random() > param.getPercentage()) {
-                        System.out.println(Math.random());
                         row.add(new Cell(param.getPossibleStates().get(0)));
                     } else {
                         row.add(new Cell(param.getPossibleStates().get(1)));
@@ -47,10 +51,9 @@ public class GridBuilder {
                 grid.add(row);
             }
         }
-        catch{
-            throw NullParameterException();
+        catch(Error e){
             try{
-                for (int i = 0; i < 100; i++) {
+                for(int i = 0; i < 100; i++) {
                     ArrayList<Cell> row = new ArrayList<Cell>();
                     for (int j = 0; j < 100; j++) {
                         if (Math.random() > .8) {
@@ -61,6 +64,9 @@ public class GridBuilder {
                         }
                     }
                 }
+                throw new NullParameterException("No parameter found");
+            } catch (Exception ex) {
+                throw new MalformedConfigurationException("This should not be reached");
             }
         }
         return grid;
@@ -75,7 +81,13 @@ public class GridBuilder {
             readFile(doc);
             assignParameter();
         } catch (Exception e) {
-            e.printStackTrace();
+            try{
+                makeParameter(BLANK_FILE);
+                throw new IncorrectFileTypeError("Wrong file type imported");
+            }
+            catch (Error ex){
+                throw new IncorrectFileTypeError("Wrong file type imported");
+            }
         }
         return param;
     }
@@ -85,18 +97,24 @@ public class GridBuilder {
         return madeGrid;
     }
 
-    private void readFile(Document doc){
-        NodeList nList = doc.getElementsByTagName("Configuration");
-        for (int temp = 0; temp < nList.getLength(); temp++) {
-            Node nNode = nList.item(temp);
-            System.out.println("\nCurrent Element :" + nNode.getNodeName());
-            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element eElement = (Element) nNode;
-                title =  eElement.getElementsByTagName("title").item(0).getTextContent();
-                width = Integer.parseInt(eElement.getElementsByTagName("gridWidth").item(0).getTextContent());
-                length =  Integer.parseInt(eElement.getElementsByTagName("gridLength").item(0).getTextContent());
-                percentage =  Integer.parseInt(eElement.getElementsByTagName("percentage").item(0).getTextContent())/10.0;
+    private void readFile(Document doc) throws MalformedConfigurationException {
+        try {
+            NodeList nList = doc.getElementsByTagName("Configuration");
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+                Node nNode = nList.item(temp);
+                System.out.println("\nCurrent Element :" + nNode.getNodeName());
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                    title = eElement.getElementsByTagName("title").item(0).getTextContent();
+                    width = Integer.parseInt(eElement.getElementsByTagName("gridWidth").item(0).getTextContent());
+                    length = Integer.parseInt(eElement.getElementsByTagName("gridLength").item(0).getTextContent());
+                    percentage = Integer.parseInt(eElement.getElementsByTagName("percentage").item(0).getTextContent()) / 10.0;
+                    System.out.println(title);
+                }
             }
+        }
+        catch(Error e){
+            throw new MalformedConfigurationException("Configuration File is incorrect");
         }
     }
 

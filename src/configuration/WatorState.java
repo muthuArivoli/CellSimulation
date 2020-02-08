@@ -5,10 +5,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 public class WatorState implements CellStates {
-    private States myState;
+    private State myState;
     private int energy;
     private int birth;
-    public WatorState(States myState){
+    public WatorState(State myState){
         this.myState = myState;
         energy = 5;
         birth = 7;
@@ -26,7 +26,7 @@ public class WatorState implements CellStates {
     public void decrementEnergy(){
         energy--;
     }
-    public States getState(){
+    public State getState(){
         return myState;
     }
     public Paint getColor(){

@@ -1,7 +1,7 @@
 package simulation;
 
 import cellsociety.Cell;
-import configuration.States;
+import configuration.State;
 import configuration.parameters.Parameter;
 
 import java.util.Collection;
@@ -17,7 +17,7 @@ public class SegregationSimulation extends Simulation {
     }
 
     protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){
-        if(cell.getState() == States.EMPTY){
+        if(cell.getState() == State.EMPTY){
             it.next();
             return;
         }
@@ -32,9 +32,9 @@ public class SegregationSimulation extends Simulation {
             Iterator<Cell> initialIt = newGrid.getVertices().iterator();
             for(Cell c:myGrid.getVertices()){
                 Cell thisCell = initialIt.next();
-                if(c.getState() == States.EMPTY && thisCell.getState() == States.EMPTY){
+                if(c.getState() == State.EMPTY && thisCell.getState() == State.EMPTY){
                     thisCell.setState(cell.getState());
-                    it.next().setState(States.EMPTY);
+                    it.next().setState(State.EMPTY);
                     return;
                 }
             }

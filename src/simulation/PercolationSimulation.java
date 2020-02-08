@@ -1,7 +1,7 @@
 package simulation;
 
 import cellsociety.Cell;
-import configuration.States;
+import configuration.State;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -13,10 +13,10 @@ public class PercolationSimulation extends Simulation{
     }
 
     protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){
-        if(cell.getState() == States.OPEN) {
+        if(cell.getState() == State.OPEN) {
             boolean percolatedCell = false;
             for (Cell c : neighbor) {
-                if (c.getState() == States.FULL) {
+                if (c.getState() == State.FULL) {
                     percolatedCell = true;
                 }
             }
@@ -24,7 +24,7 @@ public class PercolationSimulation extends Simulation{
                 percolatedCell = true;
             }
             if (percolatedCell) {
-                it.next().setState(States.FULL);
+                it.next().setState(State.FULL);
                 return;
             }
             it.next();

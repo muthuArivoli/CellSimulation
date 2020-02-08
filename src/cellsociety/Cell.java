@@ -1,6 +1,5 @@
 package cellsociety;
 
-import configuration.States;
 import simulation.Clonable;
 
 public class Cell implements Clonable {

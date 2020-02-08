@@ -140,7 +140,7 @@ public class Visualization {
     }
 
     private void stepButtonFunc(){
-        System.out.println("step");
+//        System.out.println("step");
     }
 
     private void getFileButtonHasBeenPushed() {
@@ -150,7 +150,6 @@ public class Visualization {
         displayArrayOfTextInScene();
         Map<String, String> rulesRelatingConditionOfCellToColor = mySimulationFile.getRulesRelatingConditionOfCellToColor();
         String cellStatus = mySimulationFile.getCellStatus();
-//        myBoard = new Board(root, rulesRelatingConditionOfCellToColor, cellStatus);
     }
 
     private void changeSimulationFunc() {
