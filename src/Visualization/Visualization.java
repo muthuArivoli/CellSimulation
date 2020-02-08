@@ -1,17 +1,13 @@
 package Visualization;
 
 import cellsociety.Cell;
-import cellsociety.Driver;
 import configuration.GridBuilder;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import simulation.Simulation;
 import java.io.File;
@@ -38,9 +34,7 @@ public class Visualization {
     public Visualization(Simulation simulation){
         root = new Group();
         uiBuilder = new GUITools();
-        display = new ArrayList<Rectangle>();
         GridBuilder gridBuilder = new GridBuilder();
-        currentGrid = new ArrayList<List<Cell>>();
         currentGrid = gridBuilder.reconstructGrid(simulation.returnGraph());
         grid = new Grid(simulation.returnGraph());
         setupGame(SIZE, SIZE, BACKGROUND);
@@ -79,7 +73,6 @@ public class Visualization {
 
     private String[] getButtonNames() {
         String[] buttonNames = new String[4];
-        //change hard coding
         try {
             File newFile = new File(BUTTON_NAME_PATH);
             Scanner myReader = new Scanner(newFile);
