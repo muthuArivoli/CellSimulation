@@ -160,22 +160,18 @@ public class Visualization {
 
     private void createArrayOfTextFromSimulationFile(SimulationFile mySimulationFile) {
         myText = new ArrayList<>();
-        Text currentText = new Text(25, 25, mySimulationFile.getFileName());
-        currentText.setFill(Color.BLACK);
-        currentText.setFont(Font.font(java.awt.Font.SERIF, 15));
-        myText.add(currentText);
-        currentText = new Text(25, 25, mySimulationFile.getSimulationName());
-        currentText.setFill(Color.BLACK);
-        currentText.setFont(Font.font(java.awt.Font.SERIF, 15));
-        myText.add(currentText);
-
+        createTextBoxWithTheFollowingInformation(mySimulationFile.getFileName());
+        createTextBoxWithTheFollowingInformation(mySimulationFile.getSimulationName());
         List<String> arrayOfRules = mySimulationFile.getArrayOfRules();
-
         for (int i=0; i<arrayOfRules.size(); i++) {
-            currentText = new Text(25, 25, arrayOfRules.get(i));
-            currentText.setFill(Color.BLACK);
-            currentText.setFont(Font.font(java.awt.Font.SERIF, 15));
-            myText.add(currentText);
+            createTextBoxWithTheFollowingInformation(arrayOfRules.get(i));
         }
     }
+    private void createTextBoxWithTheFollowingInformation(String text){
+        Text currentText = new Text(25, 25, text);
+        currentText.setFill(Color.BLACK);
+        currentText.setFont(Font.font(java.awt.Font.SERIF, 15));
+        myText.add(currentText);
+    }
+
 }

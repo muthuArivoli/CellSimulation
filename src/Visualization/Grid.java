@@ -40,10 +40,7 @@ public class Grid {
                 {
                     @Override
                     public void handle(MouseEvent t) {
-                        System.out.println("");
-                        System.out.println(currentRect.getX());
-                        System.out.println(currentRect.getY());
-                        System.out.println("");
+                        determineAndSendRectangleThatWasPushed(currentRect);
                     }
                 });
                 Paint color = row.get(j).getState().getColor();
@@ -53,6 +50,18 @@ public class Grid {
             }
         }
         return display;
+    }
+
+    private void determineAndSendRectangleThatWasPushed(Rectangle currentRect) {
+        System.out.println("");
+        int x = (int)(currentRect.getX());
+        int y = (int)(currentRect.getY());
+        x = (x - GRID_TOP_LEFT)/(GRID_SIZE/grid.size());
+        y = (y - GRID_TOP_LEFT)/(GRID_SIZE/grid.size());
+        System.out.println(x);
+        System.out.println(y);
+        //tell the simulation which ones were clicked
+        System.out.println("");
     }
 }
 
