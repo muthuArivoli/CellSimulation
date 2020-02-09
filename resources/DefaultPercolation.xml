@@ -6,5 +6,6 @@
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
         <percentage>8</percentage>
+        <shape>Rectangle</shape>
     </Configuration>
 </General>

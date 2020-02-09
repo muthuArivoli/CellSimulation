@@ -1,8 +1,8 @@
 package simulation;
 
 import cellsociety.Cell;
-import configuration.State;
-import configuration.WatorState;
+import cellsociety.cellstate.State;
+import cellsociety.cellstate.WatorCell;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,12 +17,12 @@ public class WatorSimulation extends Simulation {
 
     protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){
         Cell myTemp = it.next();
-        if(((WatorState)myTemp.getState()).getState() == State.EMPTY){
+        if(((WatorCell)myTemp.getState()).getState() == State.EMPTY){
             return;
         }
-        ((WatorState)cell.getState()).decrementEnergy();
-        ((WatorState)cell.getState()).decrementBirth();
-        if(((WatorState)cell.getState()).getState()== State.PREY){
+        ((WatorCell)cell.getState()).decrementEnergy();
+        ((WatorCell)cell.getState()).decrementBirth();
+        if(((WatorCell)cell.getState()).getState()== State.PREY){
             Cell currCell = myTemp;
             List<Integer> available = new ArrayList<>();
             for(int i=0;i<newGrid.getAdjList().get(currCell).size();i++){
@@ -32,14 +32,14 @@ public class WatorSimulation extends Simulation {
             }
             int randValue =(int) Math.random()*neighbor.size();
             neighbor.get(randValue).setState(cell.getState());
-            if(((WatorState)cell.getState()).getBirth()!=0){
-                cell.setState(new WatorState(State.EMPTY));
+            if(((WatorCell)cell.getState()).getBirth()!=0){
+                cell = new WatorCell(State.EMPTY);
             }
 
         }
-        else if (((WatorState)cell.getState()).getState() == State.PREDATOR){
-            if(((WatorState)cell.getState()).getEnergy()<=0){
-                cell.setState(new WatorState(State.EMPTY));
+        else if (((WatorCell)cell.getState()).getState() == State.PREDATOR){
+            if(((WatorCell)cell.getState()).getEnergy()<=0){
+                cell = new WatorCell(State.EMPTY);
                 return;
             }
             boolean move = false;
@@ -58,8 +58,8 @@ public class WatorSimulation extends Simulation {
                     }
                 }
             }
-            if(((WatorState)cell.getState()).getBirth()!=0){
-                cell.setState(new WatorState(State.EMPTY));
+            if(((WatorCell)cell.getState()).getBirth()!=0){
+                cell = new WatorCell(State.EMPTY);
             }
         }
     }

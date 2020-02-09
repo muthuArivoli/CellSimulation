@@ -5,7 +5,7 @@ import cellsociety.Cell;
 import configuration.parameters.Parameter;
 import configuration.parameters.FireParameter;
 import configuration.parameters.PercolationParameter;
-import configuration.parameters.WaTorParameter;
+import configuration.parameters.WatorParameter;
 import configuration.parameters.SegregationParameter;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import simulation.*;
 import java.io.File;
@@ -24,11 +25,11 @@ import java.util.Collection;
 
 public class Configuration {
     public static final Paint BACKGROUND = Color.WHEAT;
-    public static final double SCREEN_WIDTH = 600.0;
-    public static final double SCREEN_HEIGHT = 600.0;
+    public static final double SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
+    public static final double SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
     private static final Paint TEXT_COLOR = Color.DARKSLATEGRAY;
     private static final ArrayList<Parameter> possible_simulations = new ArrayList<Parameter>(Arrays.asList(new FireParameter(),
-            new PercolationParameter(), new WaTorParameter(), new SegregationParameter()));
+            new PercolationParameter(), new WatorParameter(), new SegregationParameter()));
     private static final double HALFWAY = SCREEN_WIDTH/2.0;
     private static final int FONT_SIZE = 30;
     private static final double INDENT = 100.0;
@@ -47,6 +48,8 @@ public class Configuration {
     private ArrayList<ArrayList<Cell>> initialGrid;
     private Simulation currentSim;
     private boolean checkSelected;
+    private int screenWidth;
+    private int screenHeight;
 
     public Configuration(){
         myLayout = new Group();

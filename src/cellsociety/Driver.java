@@ -55,21 +55,33 @@ public class Driver extends Application {
 
 
     private void step (double elapsedTime) {
-        if(waiting){
-            if(myConfig.isSimulationSelected()){
+        if (waiting) {
+            if (myConfig.isSimulationSelected()) {
                 waiting = false;
                 mySimulation = myConfig.getCurrentSim();
                 myVisualization = new Visualization(mySimulation);
                 myStage.setScene(myVisualization.getScene());
             }
         }
-        else {
-            if(myVisualization.isVisualizationReady()) {
+        else if(!myVisualization.checkPaused()){
+            if (myVisualization.isVisualizationReady()) {
                 mySimulation.update();
                 myVisualization.updateGrid(mySimulation.returnGraph());
                 speed = myVisualization.getCurrentSimulationSpeed();
                 System.out.println(speed);
             }
         }
+        else if(myVisualization.stepped()) {
+            mySimulation.update();
+            myVisualization.updateGrid(mySimulation.returnGraph());
+            myVisualization.setStep();
+        }
+        else if(myVisualization.checkReset()) {
+            waiting = true;
+            myConfig = new Configuration();
+            myScene = myConfig.getConfigurationScene();
+            myStage.setScene(myScene);
+        }
     }
 }
+

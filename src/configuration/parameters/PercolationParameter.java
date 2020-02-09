@@ -1,7 +1,6 @@
 package configuration.parameters;
 
-import cellsociety.CellStates;
-import configuration.State;
+import cellsociety.cellstate.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +18,18 @@ public class PercolationParameter extends Parameter {
         gridLength = length;
         gridWidth = width;
         percentage = perc;
-        possibleStates = new ArrayList<CellStates>(Arrays.asList(State.OPEN, State.BLOCKED, State.FULL));
+        possibleStates = new ArrayList<CellState>(Arrays.asList(State.OPEN, State.BLOCKED, State.FULL));
+    }
+
+    public PercolationCell makeCell(double prob){
+        CellState state;
+        if(Math.random() < prob){
+            state = possibleStates.get(1);
+        }
+        else{
+            state = possibleStates.get(0);
+        }
+        return new PercolationCell(state);
     }
 
     public double getThreshold(){

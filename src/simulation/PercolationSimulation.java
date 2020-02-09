@@ -1,7 +1,7 @@
 package simulation;
 
 import cellsociety.Cell;
-import configuration.State;
+import cellsociety.cellstate.State;
 
 import java.util.Collection;
 import java.util.Iterator;

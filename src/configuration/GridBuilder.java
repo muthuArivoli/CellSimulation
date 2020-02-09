@@ -6,7 +6,6 @@ import cellsociety.Cell;
 import configuration.configurationerror.IncorrectFileTypeError;
 import configuration.configurationerror.MalformedConfigurationException;
 import configuration.configurationerror.NullParameterException;
-import configuration.configurationerror.IncorrectFileTypeError;
 import configuration.parameters.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -20,7 +19,7 @@ import java.util.List;
 public class GridBuilder {
 
     private static final double ORIGINAL_DIST = .15;
-    private static final File BLANK_FILE = new File("./resources/BLANK.xml");
+    private static final File BLANK_FILE = new File("./resources/DefaultFire.xml");
 
     private Parameter param;
     private String title;
@@ -42,11 +41,7 @@ public class GridBuilder {
             for (int i = 0; i < param.getGridWidth(); i++) {
                 ArrayList<Cell> row = new ArrayList<Cell>();
                 for (int j = 0; j < param.getGridLength(); j++) {
-                    if (Math.random() > param.getPercentage()) {
-                        row.add(new Cell(param.getPossibleStates().get(0)));
-                    } else {
-                        row.add(new Cell(param.getPossibleStates().get(1)));
-                    }
+                    row.add(param.makeCell(param.getPercentage()));
                 }
                 grid.add(row);
             }
@@ -56,12 +51,7 @@ public class GridBuilder {
                 for(int i = 0; i < 100; i++) {
                     ArrayList<Cell> row = new ArrayList<Cell>();
                     for (int j = 0; j < 100; j++) {
-                        if (Math.random() > .8) {
-                            System.out.println(Math.random());
-                            row.add(new Cell(param.getPossibleStates().get(0)));
-                        } else {
-                            row.add(new Cell(param.getPossibleStates().get(1)));
-                        }
+                        row.add(param.makeCell(.8));
                     }
                 }
                 throw new NullParameterException("No parameter found");
@@ -135,7 +125,7 @@ public class GridBuilder {
         }
         else if(title.equals("WaTor")){
             double prob = ORIGINAL_DIST;
-            param = new WaTorParameter(title, length, width, prob, percentage);
+            param = new WatorParameter(title, length, width, prob, percentage);
         }
         else{
             param = new FireParameter();

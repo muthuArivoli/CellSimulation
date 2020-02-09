@@ -1,5 +1,7 @@
 package configuration.parameters;
-import cellsociety.CellStates;
+import cellsociety.Cell;
+import cellsociety.cellstate.CellState;
+import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 
@@ -8,11 +10,14 @@ public abstract class Parameter {
     protected Integer gridLength;
     protected Integer gridWidth;
     protected double percentage;
-    protected ArrayList<CellStates> possibleStates;
+    protected ArrayList<CellState> possibleStates;
+    protected Shape shape;
 
     public Parameter(){}
 
     public abstract double getThreshold();
+
+    public abstract Cell makeCell(double prob);
 
     public String getAuthor(){ return author; }
     public Integer getGridLength(){
@@ -21,7 +26,7 @@ public abstract class Parameter {
     public Integer getGridWidth(){
         return gridWidth;
     }
-    public ArrayList<CellStates> getPossibleStates(){
+    public ArrayList<CellState> getPossibleStates(){
         return possibleStates;
     }
     public double getPercentage(){ return percentage; }
