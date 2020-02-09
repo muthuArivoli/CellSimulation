@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-public class FireSimulation extends Simulation {
+public class FireSimulation extends CurrStateSimulation {
 
     private double probability;
 
@@ -18,10 +18,9 @@ public class FireSimulation extends Simulation {
         gridType = param.getGridType();
     }
 
-    protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){
-
-        if(cell.getState() == State.BURNING) {
-            it.next().setState(State.EMPTY);
+    protected void getNextState(Cell cell, Collection<Cell> neighbor, Grid newGrid, Iterator<Cell> it){
+        if(cell.getState() == States.BURNING) {
+            it.next().setState(States.EMPTY);
             return;
         }
         boolean neighborOnFire = false;

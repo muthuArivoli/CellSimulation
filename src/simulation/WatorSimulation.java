@@ -17,7 +17,7 @@ public class WatorSimulation extends Simulation {
         gridType = param.getGridType();
     }
 
-    protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){
+    protected void getNextState(Cell cell, Collection neighbor, Grid newGrid, Iterator<Cell> it){
         Cell myTemp = it.next();
         if(((WatorCell)myTemp.getState()).getState() == State.EMPTY){
             return;

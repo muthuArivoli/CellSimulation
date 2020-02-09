@@ -6,15 +6,14 @@ import configuration.parameters.Parameter;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
-public class GameOfLifeSimulation extends Simulation {
-    public GameOfLifeSimulation(Collection grid, Parameter param) {
+public class GameOfLifeSimulation extends CurrStateSimulation {
+    public GameOfLifeSimulation(Collection<Cell> grid) {
         super(grid);
         gridType = param.getGridType();
     }
 
-    protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){
+    protected void getNextState(Cell cell, Collection<Cell> neighbor,  Grid newGrid, Iterator<Cell> it){
         int liveNeighbors = 0;
         for(Cell c: neighbor){
             if(c.getState() == State.ALIVE){
