@@ -11,8 +11,8 @@ import java.util.List;
 public class SegregationSimulation extends CurrStateSimulation {
     private double threshold;
 
-    public SegregationSimulation(Collection grid, Parameter param) {
-        super(grid);
+    public SegregationSimulation(Collection grid, Parameter param, int gridLength, int gridWidth) {
+        super(grid, gridLength, gridWidth);
         threshold = param.getThreshold();
     }
 

@@ -1,6 +1,5 @@
 package cellsociety;
 
-import configuration.States;
 import simulation.Clonable;
 
 public class Cell implements Clonable {
@@ -9,6 +8,10 @@ public class Cell implements Clonable {
 
     public Cell(CellStates state){
         this.state = state;
+    }
+
+    public Cell(Cell c){
+        state = c.getState();
     }
 
     public CellStates getState(){
@@ -20,12 +23,12 @@ public class Cell implements Clonable {
     }
 
     @Override
-    public Cell clone() {
-        return new Cell(this.state);
+    public String toString(){
+        return state.toString();
     }
 
     @Override
-    public String toString(){
-        return state.toString();
+    public Object clones() {
+        return new Cell(state);
     }
 }

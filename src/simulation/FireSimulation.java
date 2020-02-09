@@ -12,8 +12,8 @@ public class FireSimulation extends CurrStateSimulation {
 
     private double probability;
 
-    public FireSimulation(Collection grid, Parameter param){
-        super(grid);
+    public FireSimulation(Collection grid, Parameter param, int gridLength, int gridWidth){
+        super(grid,gridLength,gridWidth);
         probability = param.getThreshold();
     }
 

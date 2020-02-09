@@ -1,8 +1,10 @@
 package simulation;
 
 import cellsociety.Cell;
+import cellsociety.WatorCell;
 import configuration.States;
 import configuration.WatorState;
+import configuration.parameters.Parameter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,18 +13,19 @@ import java.util.List;
 
 public class WatorSimulation extends Simulation {
 
-    public WatorSimulation(Collection grid) {
-        super(grid);
+    public WatorSimulation(Collection<Cell> grid, Parameter param, int gridLength, int gridWidth) {
+        super(grid, gridLength, gridWidth);
     }
 
-    protected void getNextState(Cell cell, Collection neighbor, Grid newGrid, Iterator<Cell> it){
+    protected void getNextState(Cell cell, Collection neighbors, Grid newGrid, Iterator<Cell> it){
+        List<Cell> neighbor= new ArrayList<>(neighbors);
         Cell myTemp = it.next();
         if(((WatorState)myTemp.getState()).getState() == States.EMPTY){
             return;
         }
-        ((WatorState)cell.getState()).decrementEnergy();
-        ((WatorState)cell.getState()).decrementBirth();
-        if(((WatorState)cell.getState()).getState()== States.PREY){
+        cell.decrementEnergy();
+        cell.decrementBirth();
+        if(cell.getState()== States.PREY){
             Cell currCell = myTemp;
             List<Integer> available = new ArrayList<>();
             for(int i=0;i<newGrid.getAdjList().get(currCell).size();i++){
@@ -62,5 +65,16 @@ public class WatorSimulation extends Simulation {
                 cell.setState(new WatorState(States.EMPTY));
             }
         }
+    }
+
+    @Override
+    public void update() {
+        Grid newGrid = new RectangularGrid(returnGraph(),gridLength,gridWidth);
+        Iterator it = newGrid.getVertices().iterator();
+        for(Cell c:myGrid.getVertices()){
+            getNextState(c,myGrid.getNeighbors(c), newGrid, it);
+        }
+        myGrid = newGrid;
+        newGrid.createGraph(returnGraph());
     }
 }

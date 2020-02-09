@@ -6,8 +6,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public abstract class CurrStateSimulation extends Simulation {
-    public CurrStateSimulation(Collection grid){
-        super(grid);
+    public CurrStateSimulation(Collection grid, int gridLength, int gridWidth){
+        super(grid,gridLength, gridWidth);
     }
 
     @Override

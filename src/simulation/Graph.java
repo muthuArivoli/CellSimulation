@@ -11,7 +11,7 @@ public class Graph<T extends Clonable> {
     public Graph(Graph<T> myGraph){
         this();
         for(T myVertex:myGraph.getVertices()){
-            addVertex((T)myVertex.clone(),new ArrayList<>(myGraph.getAdjList().get(myVertex)));
+            addVertex((T)myVertex.clones(),new ArrayList<>(myGraph.getAdjList().get(myVertex)));
 //            System.out.println(myVertex.toString());
         }
     }

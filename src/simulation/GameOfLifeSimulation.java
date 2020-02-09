@@ -7,8 +7,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class GameOfLifeSimulation extends CurrStateSimulation {
-    public GameOfLifeSimulation(Collection<Cell> grid) {
-        super(grid);
+    public GameOfLifeSimulation(Collection<Cell> grid, int gridLength, int gridWidth) {
+        super(grid,gridLength,gridWidth);
     }
 
     protected void getNextState(Cell cell, Collection<Cell> neighbor,  Grid newGrid, Iterator<Cell> it){

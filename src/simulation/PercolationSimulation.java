@@ -8,8 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 
 public class PercolationSimulation extends CurrStateSimulation{
-    public PercolationSimulation(Collection grid) {
-        super(grid);
+    public PercolationSimulation(Collection grid, int gridLength, int gridWidth) {
+        super(grid,gridLength,gridWidth);
     }
 
     protected void getNextState(Cell cell, Collection<Cell> neighbor, Grid newGrid, Iterator<Cell> it){

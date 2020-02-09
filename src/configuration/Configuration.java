@@ -15,11 +15,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import simulation.Simulation;
-import simulation.FireSimulation;
-import simulation.GameOfLifeSimulation;
-import simulation.PercolationSimulation;
-import simulation.SegregationSimulation;
+import simulation.*;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -156,21 +153,21 @@ public class Configuration {
 
     private void createSimulation(){
         if(currentParam.toString().equals("Fire Simulation")){
-            currentSim = new FireSimulation(this.getInitialGrid(), this.getCurrentParam());
+            currentSim = new FireSimulation(this.getInitialGrid(), this.getCurrentParam(), initialGrid.size(), initialGrid.get(0).size());
         }
 
         if(currentParam.toString().equals("Game of Life Simulation")){
-            currentSim = new GameOfLifeSimulation(this.getInitialGrid());
+            currentSim = new GameOfLifeSimulation(this.getInitialGrid(), initialGrid.size(), initialGrid.get(0).size());
         }
         if(currentParam.toString().equals("Percolation Simulation")){
-            currentSim = new PercolationSimulation(this.getInitialGrid());
+            currentSim = new PercolationSimulation(this.getInitialGrid(), initialGrid.size(), initialGrid.get(0).size());
         }
         if(currentParam.toString().equals("Segregation Simulation")){
-            currentSim = new SegregationSimulation(this.getInitialGrid(), this.getCurrentParam());
+            currentSim = new SegregationSimulation(this.getInitialGrid(), this.getCurrentParam(), initialGrid.size(), initialGrid.get(0).size());
         }
-//        if(currentParam.toString().equals("Wa Tor Simulation")){
-//            currentSim = new FireSimulation(this.getInitialGrid(), this.getCurrentParam());
-//        }
+        if(currentParam.toString().equals("Wa Tor Simulation")){
+            currentSim = new WatorSimulation(this.getInitialGrid(), this.getCurrentParam(), initialGrid.size(), initialGrid.get(0).size());
+        }
 
     }
 

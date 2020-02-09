@@ -17,6 +17,7 @@ public abstract class Simulation {
     public Simulation(Collection<Cell> grid, int gridLength, int gridWidth){
         this.gridWidth = gridWidth;
         this.gridLength = gridLength;
+        this.gridWidth = grid.size();
         myGrid = new RectangularGrid(grid, gridLength, gridWidth);
     }
 

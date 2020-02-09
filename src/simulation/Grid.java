@@ -13,6 +13,7 @@ public abstract class Grid {
     protected int gridWidth;
     private NeighborBehavior myNeighbors;
     public Grid(Collection grid, int gridLength, int gridWidth, NeighborBehavior myNeighbors){
+        myGrid = new Graph<>();
         this.myNeighbors = myNeighbors;
         this.gridLength = gridLength;
         this.gridWidth = gridWidth;
@@ -46,6 +47,7 @@ public abstract class Grid {
         return cartesianGrid;
     }
 
+    public
     public Collection<Cell> getVertices(){
         return myGrid.getVertices();
     }
