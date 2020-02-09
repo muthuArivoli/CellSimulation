@@ -25,4 +25,8 @@ public abstract class Simulation {
     public Collection returnGraph(){
         return myGrid.returnGraph();
     }
+
+    public String getGridType(){
+        return gridType;
+    }
 }

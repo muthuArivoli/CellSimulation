@@ -1,4 +1,4 @@
 Pause/Resume
 Step
 Get File
-Change Simulation Speed
+Change Simulation

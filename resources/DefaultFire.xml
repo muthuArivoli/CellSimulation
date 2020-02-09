@@ -3,9 +3,11 @@
     <Configuration>
         <author>"Dennis Harrsch"</author>
         <title>Fire</title>
+        <type>Square</type>
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
         <percentage>8</percentage>
+        <shape>Rectangle</shape>
     </Configuration>
     <Fire>
         <probability>.5</probability>

@@ -1,9 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <General>
     <Configuration>
         <author>"Dennis Harrsch"</author>
         <title>Game of Life</title>
+        <type>Square</type>
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
         <percentage>8</percentage>
+        <shape>Rectangle</shape>
     </Configuration>
 </General>

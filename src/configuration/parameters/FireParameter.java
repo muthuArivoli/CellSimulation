@@ -1,7 +1,9 @@
 package configuration.parameters;
 
-import cellsociety.CellStates;
-import configuration.States;
+import cellsociety.Cell;
+import cellsociety.cellstate.CellState;
+import cellsociety.cellstate.FireCell;
+import cellsociety.cellstate.State;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,13 +14,24 @@ public class FireParameter extends Parameter {
         this("Simulation Team 7", 25, 25, .15, .7);
     }
 
-    public FireParameter(String fileAuthor, Integer length, Integer width, double prob, double perc){
-        author = fileAuthor;
+    public FireParameter(String type, Integer length, Integer width, double prob, double perc){
+        gridType = type;
         gridLength = length;
         gridWidth = width;
         probCatch = prob;
         percentage = perc;
-        possibleStates = new ArrayList<CellStates>(Arrays.asList(States.BURNING, States.ALIVE, States.EMPTY));
+        possibleStates = new ArrayList<CellState>(Arrays.asList(State.BURNING, State.ALIVE, State.EMPTY));
+    }
+
+    public FireCell makeCell(double prob){
+        CellState state;
+        if(Math.random() < prob){
+            state = possibleStates.get(1);
+        }
+        else{
+            state = possibleStates.get(0);
+        }
+        return new FireCell(state);
     }
 
     public double getThreshold() {

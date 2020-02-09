@@ -20,9 +20,11 @@ public class Slider {
 
 
     private int currentSimulationSpeed;
+    private int speedBeforePause;
 
-    public Slider(int oldSimulationSpeed) {
-        currentSimulationSpeed = oldSimulationSpeed;
+    public Slider() {
+        currentSimulationSpeed = 50;
+        speedBeforePause = 50;
         JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frame = new JFrame("Simulation Rate");
         frame.setSize(200, 200);
@@ -54,6 +56,16 @@ public class Slider {
             ticks.put(currentValue, new JLabel(String.valueOf(currentValue)));
         }
         return ticks;
+    }
+
+    public void setSimulationSpeed(boolean setLastSpeed){
+        if (setLastSpeed){
+            currentSimulationSpeed = speedBeforePause;
+        }
+        else {
+            speedBeforePause = currentSimulationSpeed;
+            currentSimulationSpeed = 0;
+        }
     }
 
     public int getCurrentSimulationSpeed() {

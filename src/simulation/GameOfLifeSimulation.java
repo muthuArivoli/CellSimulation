@@ -1,7 +1,8 @@
 package simulation;
 
 import cellsociety.Cell;
-import configuration.States;
+import cellsociety.cellstate.State;
+import configuration.parameters.Parameter;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -9,20 +10,21 @@ import java.util.Iterator;
 public class GameOfLifeSimulation extends CurrStateSimulation {
     public GameOfLifeSimulation(Collection<Cell> grid) {
         super(grid);
+        gridType = param.getGridType();
     }
 
     protected void getNextState(Cell cell, Collection<Cell> neighbor,  Grid newGrid, Iterator<Cell> it){
         int liveNeighbors = 0;
         for(Cell c: neighbor){
-            if(c.getState() == States.ALIVE){
+            if(c.getState() == State.ALIVE){
                 liveNeighbors++;
             }
         }
-        if((liveNeighbors>=3 && cell.getState() == States.DEAD) || (liveNeighbors==2 && cell.getState() == States.ALIVE)){
-            it.next().setState(States.ALIVE);
+        if((liveNeighbors>=3 && cell.getState() == State.DEAD) || (liveNeighbors==2 && cell.getState() == State.ALIVE)){
+            it.next().setState(State.ALIVE);
         }
         else{
-            it.next().setState(States.DEAD);
+            it.next().setState(State.DEAD);
         }
     }
 }

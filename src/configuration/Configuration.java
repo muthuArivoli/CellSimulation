@@ -1,10 +1,11 @@
 package configuration;
 
+import Visualization.GUITools;
 import cellsociety.Cell;
 import configuration.parameters.Parameter;
 import configuration.parameters.FireParameter;
 import configuration.parameters.PercolationParameter;
-import configuration.parameters.WaTorParameter;
+import configuration.parameters.WatorParameter;
 import configuration.parameters.SegregationParameter;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -14,25 +15,21 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
-import simulation.Simulation;
-import simulation.FireSimulation;
-import simulation.GameOfLifeSimulation;
-import simulation.PercolationSimulation;
-import simulation.SegregationSimulation;
+import simulation.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Random;
 
 public class Configuration {
     public static final Paint BACKGROUND = Color.WHEAT;
-    public static final double SCREEN_WIDTH = 600.0;
-    public static final double SCREEN_HEIGHT = 600.0;
+    public static final double SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
+    public static final double SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
     private static final Paint TEXT_COLOR = Color.DARKSLATEGRAY;
     private static final ArrayList<Parameter> possible_simulations = new ArrayList<Parameter>(Arrays.asList(new FireParameter(),
-            new PercolationParameter(), new WaTorParameter(), new SegregationParameter()));
+            new PercolationParameter(), new WatorParameter(), new SegregationParameter()));
     private static final double HALFWAY = SCREEN_WIDTH/2.0;
     private static final int FONT_SIZE = 30;
     private static final double INDENT = 100.0;
@@ -51,9 +48,15 @@ public class Configuration {
     private ArrayList<ArrayList<Cell>> initialGrid;
     private Simulation currentSim;
     private boolean checkSelected;
+    private int screenWidth;
+    private int screenHeight;
 
     public Configuration(){
-        initializeConfiguration();
+        myLayout = new Group();
+        myScene = new Scene(myLayout, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
+        gridBuilder = new GridBuilder();
+        checkSelected = false;
+        initializeConfigurationUI();
     }
 
 
@@ -73,11 +76,7 @@ public class Configuration {
 
     public Simulation getCurrentSim() { return currentSim; }
 
-    private void initializeConfiguration(){
-        myLayout = new Group();
-        myScene = new Scene(myLayout, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
-        gridBuilder = new GridBuilder();
-        checkSelected = false;
+    private void initializeConfigurationUI(){
 
         GUITools constructor = new GUITools();
 
@@ -85,6 +84,17 @@ public class Configuration {
                 HALFWAY - INDENT - 15, myScene.getHeight()*(1.0/8.0));
         myLayout.getChildren().add(title);
 
+        makeSimulationButtons(constructor);
+
+        Button uploadFile = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(7.0/8.0),
+                "Choose a file to upload:", BUTTON_LENGTH, "-fx-base: white;");
+        uploadFile.setOnAction( event -> chooseFile());
+        myLayout.getChildren().add(uploadFile);
+
+        myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
+    }
+
+    private void makeSimulationButtons(GUITools constructor) {
         Button PercolationSimulation = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(2.0/8.0),
                 "PERCOLATION", BUTTON_LENGTH, "-fx-base: #264653;");
         PercolationSimulation.setOnAction( event -> uploadPercolation());
@@ -109,13 +119,6 @@ public class Configuration {
                 "FIRE", BUTTON_LENGTH, "-fx-base: #E76F51;");
         FireSimulation.setOnAction( event -> uploadFire());
         myLayout.getChildren().add(FireSimulation);
-
-        Button uploadFile = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(7.0/8.0),
-                "Choose a file to upload:", BUTTON_LENGTH, "-fx-base: white;");
-        uploadFile.setOnAction( event -> chooseFile());
-        myLayout.getChildren().add(uploadFile);
-
-        myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     }
 
     private void uploadFire() {
@@ -160,17 +163,17 @@ public class Configuration {
         }
 
         if(currentParam.toString().equals("Game of Life Simulation")){
-            currentSim = new GameOfLifeSimulation(this.getInitialGrid());
+            currentSim = new GameOfLifeSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
         if(currentParam.toString().equals("Percolation Simulation")){
-            currentSim = new PercolationSimulation(this.getInitialGrid());
+            currentSim = new PercolationSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
         if(currentParam.toString().equals("Segregation Simulation")){
             currentSim = new SegregationSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
-//        if(currentParam.toString().equals("Wa Tor Simulation")){
-//            currentSim = new FireSimulation(this.getInitialGrid(), this.getCurrentParam());
-//        }
+        if(currentParam.toString().equals("Wa Tor Simulation")){
+            currentSim = new WatorSimulation(this.getInitialGrid(), this.getCurrentParam());
+        }
 
     }
 
