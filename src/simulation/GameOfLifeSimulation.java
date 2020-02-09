@@ -5,10 +5,9 @@ import configuration.States;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 public class GameOfLifeSimulation extends CurrStateSimulation {
-    public GameOfLifeSimulation(Collection grid) {
+    public GameOfLifeSimulation(Collection<Cell> grid) {
         super(grid);
     }
 

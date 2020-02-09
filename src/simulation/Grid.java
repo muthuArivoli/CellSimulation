@@ -23,7 +23,6 @@ public abstract class Grid {
         List<List<Cell>> grid = new ArrayList<List<Cell>>(array);
         for(int i=0; i<grid.size();i++){
             for(int k=0; k<grid.get(i).size();k++){
-                //List<int[]> neighbors = new ArrayList<>(myNeighbors.getNeighbors(i,k,gridWidth,gridLength));
                 Collection c = myNeighbors.getNeighbors(i,k,gridWidth,gridLength);
                 Iterator<int[]> it = c.iterator();
                 while(it.hasNext()){

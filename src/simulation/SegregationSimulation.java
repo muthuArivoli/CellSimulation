@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-public class SegregationSimulation extends Simulation {
+public class SegregationSimulation extends CurrStateSimulation {
     private double threshold;
 
     public SegregationSimulation(Collection grid, Parameter param) {
@@ -16,7 +16,7 @@ public class SegregationSimulation extends Simulation {
         threshold = param.getThreshold();
     }
 
-    protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){
+    protected void getNextState(Cell cell, Collection<Cell> neighbor, Grid newGrid, Iterator<Cell> it){
         if(cell.getState() == States.EMPTY){
             it.next();
             return;
