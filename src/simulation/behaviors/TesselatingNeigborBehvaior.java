@@ -1,4 +1,6 @@
-package simulation;
+package simulation.behaviors;
+
+import simulation.behaviors.NeighborBehavior;
 
 import java.util.Collection;
 

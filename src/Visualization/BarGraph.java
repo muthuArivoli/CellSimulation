@@ -34,7 +34,7 @@ public class BarGraph {
         XYChart.Series series = new XYChart.Series();
         series.setName(state.toString());
         XYChart.Data data = new XYChart.Data(state.toString(), amount);
-        data.getNode().setStyle(state.getColor().toString());
+        //data.getNode().setStyle(state.getColor().toString());
         series.getData().add(data);
         bc.getData().addAll(series);
     }

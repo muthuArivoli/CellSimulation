@@ -3,22 +3,22 @@ package simulation;
 import cellsociety.Cell;
 import cellsociety.cellstate.State;
 import configuration.parameters.Parameter;
+import simulation.grid.Grid;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 public class SegregationSimulation extends CurrStateSimulation {
     private double threshold;
 
     public SegregationSimulation(Collection grid, Parameter param) {
-        super(grid);
+        super(grid, param);
         threshold = param.getThreshold();
         gridType = param.getGridType();
     }
 
     protected void getNextState(Cell cell, Collection<Cell> neighbor, Grid newGrid, Iterator<Cell> it){
-        if(cell.getState() == States.EMPTY){
+        if(cell.getState() == State.EMPTY){
             it.next();
             return;
         }

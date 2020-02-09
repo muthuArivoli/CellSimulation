@@ -1,18 +1,14 @@
-package Visualization.grid;
+package Visualization.board;
 
-import Visualization.Visualization;
 import cellsociety.Cell;
 import cellsociety.cellstate.CellState;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 
 import java.util.*;
 
-public abstract class Grid {
+public abstract class Board {
     public static final double SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
     public static final double SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
     public static final double GRID_SIZE = SCREEN_HEIGHT;
@@ -23,7 +19,7 @@ public abstract class Grid {
     protected Map<CellState, Double> numStates;
     protected ArrayList<ArrayList<Cell>> grid;
 
-    public Grid(){}
+    public Board(){}
 
     public ArrayList<ArrayList<Cell>> getGrid(){
         return grid;

@@ -1,13 +1,16 @@
 package simulation;
 
 import cellsociety.Cell;
+import configuration.parameters.Parameter;
+import simulation.grid.Grid;
+import simulation.grid.RectangularGrid;
 
 import java.util.Collection;
 import java.util.Iterator;
 
 public abstract class CurrStateSimulation extends Simulation {
-    public CurrStateSimulation(Collection grid){
-        super(grid);
+    public CurrStateSimulation(Collection grid, Parameter param){
+        super(grid, param);
     }
 
     @Override

@@ -1,8 +1,7 @@
-package Visualization.grid;
+package Visualization.board;
 
 import cellsociety.Cell;
 import javafx.scene.Group;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
@@ -11,9 +10,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class SquareGrid extends Grid {
-
-    public SquareGrid(Collection array){
+public class HexagonalBoard extends Board {
+    public HexagonalBoard(Collection array){
         grid = new ArrayList<ArrayList<Cell>>(array);
         numStates = new HashMap<>();
     }
@@ -38,5 +36,4 @@ public class SquareGrid extends Grid {
         }
         return display;
     }
-
 }

@@ -1,4 +1,4 @@
-package Visualization.grid;
+package Visualization.board;
 
 import cellsociety.Cell;
 import javafx.scene.Group;
@@ -10,8 +10,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class HexagonalGrid extends Grid {
-    public HexagonalGrid(Collection array){
+public class SquareBoard extends Board {
+
+    public SquareBoard(Collection array){
         grid = new ArrayList<ArrayList<Cell>>(array);
         numStates = new HashMap<>();
     }
@@ -36,4 +37,5 @@ public class HexagonalGrid extends Grid {
         }
         return display;
     }
+
 }

@@ -1,6 +1,8 @@
-package simulation;
+package simulation.grid;
 
 import cellsociety.Cell;
+import simulation.Graph;
+import simulation.behaviors.NeighborBehavior;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,7 +14,9 @@ public abstract class Grid {
     protected int gridLength;
     protected int gridWidth;
     private NeighborBehavior myNeighbors;
+
     public Grid(Collection grid, int gridLength, int gridWidth, NeighborBehavior myNeighbors){
+        myGrid = new Graph<Cell>();
         this.myNeighbors = myNeighbors;
         this.gridLength = gridLength;
         this.gridWidth = gridWidth;

@@ -44,12 +44,12 @@ public class Configuration {
     private Scene myScene;
     private Group myLayout;
     private GridBuilder gridBuilder;
+    private int gridLength;
+    private int gridWidth;
     private Parameter currentParam;
     private ArrayList<ArrayList<Cell>> initialGrid;
     private Simulation currentSim;
     private boolean checkSelected;
-    private int screenWidth;
-    private int screenHeight;
 
     public Configuration(){
         myLayout = new Group();

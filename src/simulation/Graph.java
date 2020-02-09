@@ -22,9 +22,9 @@ public class Graph<T extends Clonable> {
 
     public void addEdge(T source, T dest){
         adjList.putIfAbsent(source, new ArrayList<T>());
-
         adjList.get(source).add(dest);
     }
+
     public void addVertex(T c,List<T> neighbors){
         adjList.put(c, neighbors);
     }

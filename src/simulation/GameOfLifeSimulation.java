@@ -3,17 +3,18 @@ package simulation;
 import cellsociety.Cell;
 import cellsociety.cellstate.State;
 import configuration.parameters.Parameter;
+import simulation.grid.Grid;
 
 import java.util.Collection;
 import java.util.Iterator;
 
 public class GameOfLifeSimulation extends CurrStateSimulation {
-    public GameOfLifeSimulation(Collection<Cell> grid) {
-        super(grid);
+    public GameOfLifeSimulation(Collection<Cell> grid, Parameter param) {
+        super(grid, param);
         gridType = param.getGridType();
     }
 
-    protected void getNextState(Cell cell, Collection<Cell> neighbor,  Grid newGrid, Iterator<Cell> it){
+    protected void getNextState(Cell cell, Collection<Cell> neighbor, Grid newGrid, Iterator<Cell> it){
         int liveNeighbors = 0;
         for(Cell c: neighbor){
             if(c.getState() == State.ALIVE){

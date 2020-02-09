@@ -1,10 +1,9 @@
 package Visualization;
 
-import Visualization.grid.Grid;
-import Visualization.grid.HexagonalGrid;
-import Visualization.grid.SquareGrid;
-import Visualization.grid.TriangularGrid;
-import cellsociety.Cell;
+import Visualization.board.Board;
+import Visualization.board.HexagonalBoard;
+import Visualization.board.SquareBoard;
+import Visualization.board.TriangularBoard;
 import configuration.GridBuilder;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -44,7 +43,7 @@ public class Visualization {
 
     private Scene myScene;
     private Group root;
-    private Grid grid;
+    private Board grid;
     private List<Rectangle> display;
     private Slider mySlider;
     private List<Text> myText;
@@ -80,13 +79,13 @@ public class Visualization {
     private void initializeGrid(Simulation simulation) {
         String gridType = simulation.getGridType();
         if(gridType.equals(HEXAGON)){
-            grid = new HexagonalGrid(simulation.returnGraph());
+            grid = new HexagonalBoard(simulation.returnGraph());
         }
         else if(gridType.equals(TRIANGULAR)){
-            grid = new TriangularGrid(simulation.returnGraph());
+            grid = new TriangularBoard(simulation.returnGraph());
         }
         else{
-            grid = new SquareGrid(simulation.returnGraph());
+            grid = new SquareBoard(simulation.returnGraph());
         }
     }
 

@@ -1,7 +1,6 @@
 package configuration.parameters;
 
 import cellsociety.cellstate.CellState;
-import cellsociety.cellstate.FireCell;
 import cellsociety.cellstate.SegregationCell;
 import cellsociety.cellstate.State;
 

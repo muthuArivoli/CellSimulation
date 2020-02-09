@@ -1,4 +1,4 @@
-package Visualization.grid;
+package Visualization.board;
 
 import cellsociety.Cell;
 import javafx.scene.Group;
@@ -10,9 +10,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class TriangularGrid extends Grid{
+public class TriangularBoard extends Board {
 
-    public TriangularGrid(Collection array){
+    public TriangularBoard(Collection array){
         grid = new ArrayList<ArrayList<Cell>>(array);
         numStates = new HashMap<>();
     }
