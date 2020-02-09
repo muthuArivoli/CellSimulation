@@ -13,14 +13,13 @@ import java.util.List;
 import java.util.Map;
 
 public class BarGraph {
-    private List<CellState> possibleStates;
     BarChart<String,Number> bc;
 
-    public BarGraph(List<CellState> screenStates) {
-        possibleStates = screenStates;
+    public BarGraph(Map<CellState, Double> numStates) {
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
         bc = new BarChart<String, Number>(xAxis, yAxis);
+        updateChart(numStates);
         bc.setTitle("State Summary");
         xAxis.setLabel("State");
         yAxis.setLabel("Number on Screen");

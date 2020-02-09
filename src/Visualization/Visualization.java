@@ -1,9 +1,10 @@
 package Visualization;
 
+import Visualization.grid.Grid;
+import Visualization.grid.SquareGrid;
 import cellsociety.Cell;
 import configuration.GridBuilder;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.Button;
@@ -15,7 +16,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import simulation.Simulation;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -36,8 +36,6 @@ public class Visualization {
     private static final String DISPLAY = "Display Graph";
     private static final String HIDE = "Hide Graph";
 
-
-
     private Scene myScene;
     private Group root;
     private List<List<Cell>> currentGrid;
@@ -52,10 +50,12 @@ public class Visualization {
     private boolean paused;
     private boolean step;
     private boolean reset;
+    private boolean showGraph;
 
     public Visualization(Simulation simulation){
         paused = false;
         reset = false;
+        showGraph = false;
 
         uiBuilder = new GUITools();
         GridBuilder gridBuilder = new GridBuilder();
@@ -65,9 +65,9 @@ public class Visualization {
         currentGrid = new ArrayList<List<Cell>>();
 
         currentGrid = gridBuilder.reconstructGrid(simulation.returnGraph());
-        grid = new Grid(simulation.returnGraph());
+        grid = new SquareGrid(simulation.returnGraph());
 
-        barChart = new BarGraph(grid.getPossibleStates());
+        barChart = new BarGraph(grid.getNumStates());
 
         setupGame(SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
         updateGrid(grid.getGrid());
@@ -77,7 +77,7 @@ public class Visualization {
     private void setupGame(double width, double height, Paint background) {
         String[] buttonNames = getButtonNames();
 
-        Button displayGraph = uiBuilder.makeButtons(width * (0.5 / 4), height * (9.0 / 10), DISPLAY, width/10.0, "White");
+        Button displayGraph = uiBuilder.makeButtons(width * (0.5 / 4), height * (9.0/10), DISPLAY, width/10.0, "White");
         displayGraph.setOnAction(value -> displayGraphFunc(displayGraph));
 
         Button pauseResume = uiBuilder.makeButtons(width * (2.0 / 4), height * (9.0 / 10), PAUSE, width/10.0, "White");
@@ -89,9 +89,9 @@ public class Visualization {
         Button changeSimulation = uiBuilder.makeButtons(width * (3.0 / 4), height * (9.0 / 10), buttonNames[3], width/10.0, "White");
         changeSimulation.setOnAction(value -> changeSimulationFunc());
 
-        root.getChildren().addAll(pauseResume, makeStep, changeSimulation);
+        root.getChildren().addAll(displayGraph, pauseResume, makeStep, changeSimulation);
 
-        simulationSpeedText = uiBuilder.makeText("Simulation Rate: 50", "Serif", 15, Color.BLACK, width*(.4/5), height*(9.22/10));
+        simulationSpeedText = uiBuilder.makeText("Simulation Rate: 50", "Serif", 15, Color.BLACK, width*(0.5/4), height*(1.0/10));
 
         root.getChildren().add(simulationSpeedText);
 
@@ -101,19 +101,22 @@ public class Visualization {
     private void displayGraphFunc(Button displayGraph) {
         if (displayGraph.getText().equals(DISPLAY)) {
             displayGraph.setText(HIDE);
-            handleGraphDisplay(DISPLAY);
+            showGraph = true;
+            handleGraphDisplay();
         } else {
             displayGraph.setText(RESUME);
-            handleGraphDisplay(HIDE);
+            showGraph = false;
+            handleGraphDisplay();
         }
     }
 
-    private void handleGraphDisplay(String toDo) {
-        if(toDo.equals(HIDE)){
+    private void handleGraphDisplay() {
+        if(!showGraph){
             root.getChildren().remove(barChart.getBarGraph());
         }
         else{
-            barChart = new BarGraph(grid.getPossibleStates());
+            root.getChildren().remove(barChart.getBarGraph());
+            barChart = new BarGraph(grid.getNumStates());
             BarChart bc = barChart.getBarGraph();
             bc.setLayoutX(SCREEN_WIDTH*(0.5/4));
             bc.setLayoutY(SCREEN_HEIGHT*(2.0/4));
@@ -158,7 +161,7 @@ public class Visualization {
         }
         display.clear();
         display = grid.placeCells(root, graph);
-        barChart.updateChart(grid.getNumStates());
+        handleGraphDisplay();
         ready = true;
     }
 
@@ -186,19 +189,9 @@ public class Visualization {
         step = true;
     }
 
-    private void getFileButtonHasBeenPushed() {
-        //make way to get real path
-        SimulationFile mySimulationFile = new SimulationFile(SIMULATION_FILE_EXAMPLE_PATH);
-        createArrayOfTextFromSimulationFile(mySimulationFile);
-        displayArrayOfTextInScene();
-        Map<String, String> rulesRelatingConditionOfCellToColor = mySimulationFile.getRulesRelatingConditionOfCellToColor();
-        String cellStatus = mySimulationFile.getCellStatus();
-    }
-
     private void changeSimulationFunc() {
         reset = true;
     }
-
 
     private void createArrayOfTextFromSimulationFile(SimulationFile mySimulationFile) {
         myText = new ArrayList<>();
@@ -227,6 +220,7 @@ public class Visualization {
     public boolean stepped() {
         return step;
     }
+
     public void setStep(){
         step = false;
     }
