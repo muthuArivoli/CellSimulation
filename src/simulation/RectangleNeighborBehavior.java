@@ -1,7 +1,5 @@
 package simulation;
 
-import cellsociety.Cell;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -9,7 +7,7 @@ import java.util.List;
 public class RectangleNeighborBehavior implements NeighborBehavior {
 
     @Override
-    public Collection myNeighbors(int row, int col, int gridWidth, int gridLength) {
+    public List<int[]> getNeighbors(int row, int col, int gridWidth, int gridLength) {
         List<int[]> neighbors = new ArrayList<>();
         if(row!=0){
             neighbors.add(new int[] {row-1,col});

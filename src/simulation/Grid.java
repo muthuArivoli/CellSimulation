@@ -11,8 +11,8 @@ public abstract class Grid {
     protected Graph<Cell> myGrid;
     protected int gridLength;
     protected int gridWidth;
-    private EdgeBehavior myEdges;
-    private NeighborFinder myNeighbors
+    //private EdgeBehavior myEdges;
+    protected NeighborBehavior myNeighbors;
     public Grid(Collection grid, int gridLength, int gridWidth){
         this.gridLength = gridLength;
         this.gridWidth = gridWidth;
@@ -23,7 +23,20 @@ public abstract class Grid {
 
     }
 
-    protected abstract void createGraph(Collection array);
+    public void createGraph(Collection array){
+        List<List<Cell>> grid = new ArrayList<List<Cell>>(array);
+        for(int i=0; i<grid.size();i++){
+            for(int k=0; k<grid.get(i).size();k++){
+                //List<int[]> neighbors = new ArrayList<>(myNeighbors.getNeighbors(i,k,gridWidth,gridLength));
+                Collection c = myNeighbors.getNeighbors(i,k,gridWidth,gridLength);
+                Iterator<int[]> it = c.iterator();
+                while(it.hasNext()){
+                    int[] neighbor = it.next();
+                    myGrid.addEdge(grid.get(neighbor[0]).get(neighbor[1]),grid.get(i).get(k));
+                }
+            }
+        }
+    }
 
     public Collection returnGraph(){
         Iterator<Cell> it = myGrid.getVertices().iterator();
@@ -36,6 +49,10 @@ public abstract class Grid {
             }
         }
         return cartesianGrid;
+    }
+
+    private void addNeighbors(Cell myCell,Collection c){
+
     }
 
     public Collection getVertices(){
