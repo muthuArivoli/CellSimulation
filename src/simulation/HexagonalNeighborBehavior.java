@@ -3,6 +3,11 @@ package simulation;
 import java.util.Collection;
 
 public class HexagonalNeighborBehavior extends TesselatingNeigborBehvaior {
+
+    public HexagonalNeighborBehavior(NeighborBehavior myNeighborBehavior){
+        super(myNeighborBehavior);
+    }
+
     @Override
     public Collection<int[]> getNeighbors(int row, int col, int gridWidth, int gridLength) {
         Collection<int[]> c = super.getNeighbors(row,col,gridWidth,gridLength);
