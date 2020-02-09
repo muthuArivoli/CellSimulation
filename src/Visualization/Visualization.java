@@ -77,16 +77,16 @@ public class Visualization {
     private void setupGame(double width, double height, Paint background) {
         String[] buttonNames = getButtonNames();
 
-        Button displayGraph = uiBuilder.makeButtons(width * (0.5 / 4), height * (9.0/10), DISPLAY, width/10.0, "White");
+        Button displayGraph = uiBuilder.makeButtons(width * (0.5 / 4), height * (2.0/10), DISPLAY, width/10.0, "White");
         displayGraph.setOnAction(value -> displayGraphFunc(displayGraph));
 
-        Button pauseResume = uiBuilder.makeButtons(width * (2.0 / 4), height * (9.0 / 10), PAUSE, width/10.0, "White");
+        Button pauseResume = uiBuilder.makeButtons(width * (1.0 / 4), height * (2.0 / 10), PAUSE, width/10.0, "White");
         pauseResume.setOnAction(value -> pauseResumeFunc(pauseResume));
 
-        Button makeStep = uiBuilder.makeButtons(width * (2.5 / 4), height * (9.0 / 10), buttonNames[1], width/10.0, "White");
+        Button makeStep = uiBuilder.makeButtons(width * (0.5 / 4), height * (9.0 / 10), buttonNames[1], width/10.0, "White");
         makeStep.setOnAction(value -> stepButtonFunc());
 
-        Button changeSimulation = uiBuilder.makeButtons(width * (3.0 / 4), height * (9.0 / 10), buttonNames[3], width/10.0, "White");
+        Button changeSimulation = uiBuilder.makeButtons(width * (1.0 / 4), height * (9.0 / 10), buttonNames[3], width/10.0, "White");
         changeSimulation.setOnAction(value -> changeSimulationFunc());
 
         root.getChildren().addAll(displayGraph, pauseResume, makeStep, changeSimulation);
@@ -118,8 +118,8 @@ public class Visualization {
             root.getChildren().remove(barChart.getBarGraph());
             barChart = new BarGraph(grid.getNumStates());
             BarChart bc = barChart.getBarGraph();
-            bc.setLayoutX(SCREEN_WIDTH*(0.5/4));
-            bc.setLayoutY(SCREEN_HEIGHT*(2.0/4));
+            bc.setLayoutX(0);
+            bc.setLayoutY(SCREEN_HEIGHT*(1.0/4));
             root.getChildren().add(barChart.getBarGraph());
         }
     }

@@ -20,6 +20,7 @@ public class SquareGrid extends Grid {
 
     public List<Rectangle> placeCells(Group root, Collection newGraph) {
         grid = new ArrayList<ArrayList<Cell>>(newGraph);
+        numStates = new HashMap<>();
         ArrayList<Rectangle> display = new ArrayList<Rectangle>();
         int length = grid.size();
         double width = GRID_SIZE/length;

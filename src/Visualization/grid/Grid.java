@@ -15,9 +15,9 @@ import java.util.*;
 public abstract class Grid {
     public static final double SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
     public static final double SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
-    public static final double GRID_SIZE = SCREEN_HEIGHT/2.0;
-    public static final double X_START_POS = SCREEN_WIDTH/2.0;
-    public static final double Y_START_POS = SCREEN_WIDTH/15.0;
+    public static final double GRID_SIZE = SCREEN_HEIGHT;
+    public static final double X_START_POS = SCREEN_WIDTH - SCREEN_HEIGHT;
+    public static final double Y_START_POS = 0;
 
     protected Map<String, String> rulesRelatingConditionOfCellToColor;
     protected Map<CellState, Double> numStates;
