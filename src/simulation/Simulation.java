@@ -15,21 +15,21 @@ public abstract class Simulation {
     protected int gridWidth;
 
     public Simulation(Collection grid){
-        createGraph(grid);
+        myGrid=new Grid(grid);
     }
 
 
 
-    protected abstract void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it);
+    protected abstract void getNextState(Cell cell, Collection neighbor, Grid newGrid, Iterator<Cell> it);
 
     public void update(){
-        Graph<Cell> newGrid = new Graph<>(myGrid);
+        Grid newGrid = new Grid();
         Iterator it = newGrid.getVertices().iterator();
         for(Cell c:myGrid.getVertices()){
             getNextState(c,myGrid.getNeighbors(c), newGrid, it);
         }
         myGrid = newGrid;
-        createGraph(returnGraph());
+        newGrid.createGraph(returnGraph());
     }
 
     public Collection returnGraph(){
