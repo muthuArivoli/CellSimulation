@@ -11,16 +11,12 @@ public abstract class Grid {
     protected Graph<Cell> myGrid;
     protected int gridLength;
     protected int gridWidth;
-    //private EdgeBehavior myEdges;
-    protected NeighborBehavior myNeighbors;
-    public Grid(Collection grid, int gridLength, int gridWidth){
+    private NeighborBehavior myNeighbors;
+    public Grid(Collection grid, int gridLength, int gridWidth, NeighborBehavior myNeighbors){
+        this.myNeighbors = myNeighbors;
         this.gridLength = gridLength;
         this.gridWidth = gridWidth;
         createGraph(grid);
-    }
-
-    public void update(){
-
     }
 
     public void createGraph(Collection array){
@@ -49,10 +45,6 @@ public abstract class Grid {
             }
         }
         return cartesianGrid;
-    }
-
-    private void addNeighbors(Cell myCell,Collection c){
-
     }
 
     public Collection<Cell> getVertices(){
