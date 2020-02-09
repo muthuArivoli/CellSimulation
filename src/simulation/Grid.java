@@ -55,7 +55,7 @@ public abstract class Grid {
 
     }
 
-    public Collection getVertices(){
+    public Collection<Cell> getVertices(){
         return myGrid.getVertices();
     }
     public Collection getNeighbors(Cell c){

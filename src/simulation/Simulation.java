@@ -15,24 +15,23 @@ public abstract class Simulation {
     protected int gridWidth;
 
     public Simulation(Collection grid){
-        myGrid=new Grid(grid);
+        myGrid=new RectangularGrid(grid, gridLength, gridWidth);
     }
 
 
 
-    protected abstract void getNextState(Cell cell, Collection neighbor, Grid newGrid, Iterator<Cell> it);
+    //protected abstract void getNextState(Cell cell, Collection neighbor, Grid newGrid, Iterator<Cell> it);
 
-    public void update(){
-        Grid newGrid = new Grid();
+    public abstract void update();
+        /*Grid newGrid = new RectangularGrid(gridLength,gridWidth);
         Iterator it = newGrid.getVertices().iterator();
         for(Cell c:myGrid.getVertices()){
             getNextState(c,myGrid.getNeighbors(c), newGrid, it);
         }
         myGrid = newGrid;
-        newGrid.createGraph(returnGraph());
-    }
+        newGrid.createGraph(returnGraph());*/
 
     public Collection returnGraph(){
-        myGrid.returnGraph();
+        return myGrid.returnGraph();
     }
 }
