@@ -10,10 +10,13 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import simulation.Simulation;
 
+import java.net.SocketOption;
+import java.sql.SQLOutput;
+
 public class Driver extends Application {
     public static final String TITLE = "Simulation";
     public static final int FRAMES_PER_SECOND = 60;
-    public static final int MILLISECOND_DELAY = 1000*100 / FRAMES_PER_SECOND;
+    public static final int MILLISECOND_DELAY = 100000 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
     private boolean waiting;
@@ -23,6 +26,7 @@ public class Driver extends Application {
     private Configuration myConfig;
     private Simulation mySimulation;
     private Visualization myVisualization;
+    private int speed;
 
     /**
      * Start of the program.
@@ -34,6 +38,7 @@ public class Driver extends Application {
     @Override
     public void start(Stage currentStage){
         waiting = true;
+        speed = 1;
         myConfig = new Configuration();
         myStage = currentStage;
         myScene = myConfig.getConfigurationScene();
@@ -50,18 +55,33 @@ public class Driver extends Application {
 
 
     private void step (double elapsedTime) {
-        if(waiting){
-            if(myConfig.isSimulationSelected()){
+        if (waiting) {
+            if (myConfig.isSimulationSelected()) {
                 waiting = false;
                 mySimulation = myConfig.getCurrentSim();
                 myVisualization = new Visualization(mySimulation);
                 myStage.setScene(myVisualization.getScene());
             }
         }
-        else{
+        else if(!myVisualization.checkPaused()){
+            if (myVisualization.isVisualizationReady()) {
+                mySimulation.update();
+                myVisualization.updateGrid(mySimulation.returnGraph());
+                speed = myVisualization.getCurrentSimulationSpeed();
+                System.out.println(speed);
+            }
+        }
+        else if(myVisualization.stepped()) {
             mySimulation.update();
             myVisualization.updateGrid(mySimulation.returnGraph());
+            myVisualization.setStep();
+        }
+        else if(myVisualization.checkReset()) {
+            waiting = true;
+            myConfig = new Configuration();
+            myScene = myConfig.getConfigurationScene();
+            myStage.setScene(myScene);
         }
     }
-
 }
+

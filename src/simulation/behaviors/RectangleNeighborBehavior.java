@@ -1,4 +1,6 @@
-package simulation;
+package simulation.behaviors;
+
+import simulation.behaviors.NeighborBehavior;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +20,7 @@ public class RectangleNeighborBehavior implements NeighborBehavior {
         if(col!=0){
             neighbors.add(new int[] {row,col-1});
         }
-        if(col!=gridLength-1){
+        if(col!=gridLength - 1){
             neighbors.add(new int[] {row,col+1});
         }
         return neighbors;

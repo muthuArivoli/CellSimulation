@@ -1,23 +1,25 @@
 package simulation;
 
 import cellsociety.Cell;
-import configuration.States;
+import cellsociety.cellstate.State;
 import configuration.parameters.Parameter;
+import simulation.grid.Grid;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 public class SegregationSimulation extends CurrStateSimulation {
     private double threshold;
 
-    public SegregationSimulation(Collection grid, Parameter param, int gridLength, int gridWidth) {
-        super(grid, gridLength, gridWidth);
+
+    public SegregationSimulation(Collection grid, Parameter param) {
+        super(grid, param);
         threshold = param.getThreshold();
+        gridType = param.getGridType();
     }
 
     protected void getNextState(Cell cell, Collection<Cell> neighbor, Grid newGrid, Iterator<Cell> it){
-        if(cell.getState() == States.EMPTY){
+        if(cell.getState() == State.EMPTY){
             it.next();
             return;
         }
@@ -32,9 +34,9 @@ public class SegregationSimulation extends CurrStateSimulation {
             Iterator<Cell> initialIt = newGrid.getVertices().iterator();
             for(Cell c:myGrid.getVertices()){
                 Cell thisCell = initialIt.next();
-                if(c.getState() == States.EMPTY && thisCell.getState() == States.EMPTY){
+                if(c.getState() == State.EMPTY && thisCell.getState() == State.EMPTY){
                     thisCell.setState(cell.getState());
-                    it.next().setState(States.EMPTY);
+                    it.next().setState(State.EMPTY);
                     return;
                 }
             }

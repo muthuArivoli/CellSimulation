@@ -1,4 +1,4 @@
-package simulation;
+package simulation.behaviors;
 
 import java.util.Collection;
 @Deprecated

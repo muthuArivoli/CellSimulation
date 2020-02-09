@@ -2,22 +2,23 @@ package simulation;
 
 
 import cellsociety.Cell;
+import configuration.parameters.Parameter;
+import simulation.grid.Grid;
+import simulation.grid.RectangularGrid;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 
 public abstract class Simulation {
 
     protected Grid myGrid;
     protected int gridLength;
     protected int gridWidth;
+    protected String gridType;
 
-    public Simulation(Collection<Cell> grid, int gridLength, int gridWidth){
-        this.gridWidth = gridWidth;
-        this.gridLength = gridLength;
-        this.gridWidth = grid.size();
+
+    public Simulation(Collection<Cell> grid, Parameter param){
+        this.gridWidth = param.getGridWidth();
+        this.gridLength = param.getGridLength();
         myGrid = new RectangularGrid(grid, gridLength, gridWidth);
     }
 
@@ -25,5 +26,9 @@ public abstract class Simulation {
 
     public Collection returnGraph(){
         return myGrid.returnGraph();
+    }
+
+    public String getGridType(){
+        return gridType;
     }
 }

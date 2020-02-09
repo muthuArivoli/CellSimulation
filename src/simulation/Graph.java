@@ -11,7 +11,7 @@ public class Graph<T extends Clonable> {
     public Graph(Graph<T> myGraph){
         this();
         for(T myVertex:myGraph.getVertices()){
-            addVertex((T)myVertex.clones(),new ArrayList<>(myGraph.getAdjList().get(myVertex)));
+            addVertex((T)myVertex.clone(),new ArrayList<>(myGraph.getAdjList().get(myVertex)));
 //            System.out.println(myVertex.toString());
         }
     }
@@ -22,9 +22,9 @@ public class Graph<T extends Clonable> {
 
     public void addEdge(T source, T dest){
         adjList.putIfAbsent(source, new ArrayList<T>());
-
         adjList.get(source).add(dest);
     }
+
     public void addVertex(T c,List<T> neighbors){
         adjList.put(c, neighbors);
     }

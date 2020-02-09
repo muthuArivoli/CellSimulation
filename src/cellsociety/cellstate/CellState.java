@@ -1,8 +1,8 @@
-package cellsociety;
+package cellsociety.cellstate;
 
 
 import javafx.scene.paint.Paint;
 
-public interface CellStates {
+public interface CellState {
     Paint getColor();
 }

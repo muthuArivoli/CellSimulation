@@ -1,10 +1,12 @@
 package simulation;
 
 import cellsociety.Cell;
-import cellsociety.WatorCell;
-import configuration.States;
-import configuration.WatorState;
+
+import cellsociety.cellstate.State;
+import cellsociety.cellstate.WatorCell;
 import configuration.parameters.Parameter;
+import simulation.grid.Grid;
+import simulation.grid.RectangularGrid;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,58 +15,58 @@ import java.util.List;
 
 public class WatorSimulation extends Simulation {
 
-    public WatorSimulation(Collection<Cell> grid, Parameter param, int gridLength, int gridWidth) {
-        super(grid, gridLength, gridWidth);
+    public WatorSimulation(Collection grid, Parameter param) {
+        super(grid, param);
+        gridType = param.getGridType();
     }
 
-    protected void getNextState(Cell cell, Collection neighbors, Grid newGrid, Iterator<Cell> it){
-        List<Cell> neighbor= new ArrayList<>(neighbors);
-        Cell myTemp = it.next();
-        if(((WatorState)myTemp.getState()).getState() == States.EMPTY){
-            return;
-        }
-        cell.decrementEnergy();
-        cell.decrementBirth();
-        if(cell.getState()== States.PREY){
-            Cell currCell = myTemp;
-            List<Integer> available = new ArrayList<>();
-            for(int i=0;i<newGrid.getAdjList().get(currCell).size();i++){
-                if(neighbor.get(i).getState() == States.EMPTY){
-                    available.add(Integer.valueOf(i));
-                }
-            }
-            int randValue =(int) Math.random()*neighbor.size();
-            neighbor.get(randValue).setState(cell.getState());
-            if(((WatorState)cell.getState()).getBirth()!=0){
-                cell.setState(new WatorState(States.EMPTY));
-            }
-
-        }
-        else if (((WatorState)cell.getState()).getState() == States.PREDATOR){
-            if(((WatorState)cell.getState()).getEnergy()<=0){
-                cell.setState(new WatorState(States.EMPTY));
-                return;
-            }
-            boolean move = false;
-            for(int i=0;i<neighbor.size();i++){
-                if(neighbor.get(i).getState()==States.PREY){
-                    neighbor.get(i).setState(cell.getState());
-                    move = true;
-                    break;
-                }
-            }
-            if(!move){
-                for(int i=0;i<neighbor.size();i++){
-                    if(neighbor.get(i).getState()==States.EMPTY){
-                        neighbor.get(i).setState(cell.getState());
-                        break;
-                    }
-                }
-            }
-            if(((WatorState)cell.getState()).getBirth()!=0){
-                cell.setState(new WatorState(States.EMPTY));
-            }
-        }
+    protected void getNextState(Cell cell, Collection neighbor, Grid newGrid, Iterator<Cell> it){
+//        Cell myTemp = it.next();
+//        if(((WatorCell)myTemp.getState()).getState() == State.EMPTY){
+//            return;
+//        }
+//        ((WatorCell)cell.getState()).decrementEnergy();
+//        ((WatorCell)cell.getState()).decrementBirth();
+//        if(((WatorCell)cell.getState()).getState()== State.PREY){
+//            Cell currCell = myTemp;
+//            List<Integer> available = new ArrayList<>();
+//            for(int i=0;i<newGrid.getAdjList().get(currCell).size();i++){
+//                if(neighbor.get(i).getState() == State.EMPTY){
+//                    available.add(Integer.valueOf(i));
+//                }
+//            }
+//            int randValue =(int) Math.random()*neighbor.size();
+//            neighbor.get(randValue).setState(cell.getState());
+//            if(((WatorCell)cell.getState()).getBirth()!=0){
+//                cell = new WatorCell(State.EMPTY);
+//            }
+//
+//        }
+//        else if (((WatorCell)cell.getState()).getState() == State.PREDATOR){
+//            if(((WatorCell)cell.getState()).getEnergy()<=0){
+//                cell = new WatorCell(State.EMPTY);
+//                return;
+//            }
+//            boolean move = false;
+//            for(int i=0;i<neighbor.size();i++){
+//                if(neighbor.get(i).getState()== State.PREY){
+//                    neighbor.get(i).setState(cell.getState());
+//                    move = true;
+//                    break;
+//                }
+//            }
+//            if(!move){
+//                for(int i=0;i<neighbor.size();i++){
+//                    if(neighbor.get(i).getState()== State.EMPTY){
+//                        neighbor.get(i).setState(cell.getState());
+//                        break;
+//                    }
+//                }
+//            }
+//            if(((WatorCell)cell.getState()).getBirth()!=0){
+//                cell = new WatorCell(State.EMPTY);
+//            }
+//        }
     }
 
     @Override
