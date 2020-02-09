@@ -16,8 +16,8 @@ public class SegregationParameter extends Parameter {
     }
 
 
-    public SegregationParameter(String fileAuthor, Integer length, Integer width, Double prob, Double perc){
-        author = fileAuthor;
+    public SegregationParameter(String type, Integer length, Integer width, Double prob, Double perc){
+        gridType = type;
         probEaten = prob;
         gridLength = length;
         gridWidth = width;

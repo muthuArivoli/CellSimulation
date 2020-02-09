@@ -13,8 +13,8 @@ public class PercolationParameter extends Parameter {
         this("Simulation Team 7", 25, 25, .7);
     }
 
-    public PercolationParameter(String fileAuthor, Integer length, Integer width, double perc){
-        author = fileAuthor;
+    public PercolationParameter(String type, Integer length, Integer width, double perc){
+        gridType = type;
         gridLength = length;
         gridWidth = width;
         percentage = perc;

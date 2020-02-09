@@ -12,6 +12,7 @@ public abstract class Parameter {
     protected double percentage;
     protected ArrayList<CellState> possibleStates;
     protected Shape shape;
+    protected String gridType;
 
     public Parameter(){}
 
@@ -33,4 +34,8 @@ public abstract class Parameter {
 
     @Override
     public abstract String toString();
+
+    public String getGridType(){
+        return gridType;
+    }
 }

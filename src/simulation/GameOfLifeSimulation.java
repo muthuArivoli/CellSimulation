@@ -2,14 +2,16 @@ package simulation;
 
 import cellsociety.Cell;
 import cellsociety.cellstate.State;
+import configuration.parameters.Parameter;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 public class GameOfLifeSimulation extends Simulation {
-    public GameOfLifeSimulation(Collection grid) {
+    public GameOfLifeSimulation(Collection grid, Parameter param) {
         super(grid);
+        gridType = param.getGridType();
     }
 
     protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){

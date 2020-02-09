@@ -163,16 +163,16 @@ public class Configuration {
         }
 
         if(currentParam.toString().equals("Game of Life Simulation")){
-            currentSim = new GameOfLifeSimulation(this.getInitialGrid());
+            currentSim = new GameOfLifeSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
         if(currentParam.toString().equals("Percolation Simulation")){
-            currentSim = new PercolationSimulation(this.getInitialGrid());
+            currentSim = new PercolationSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
         if(currentParam.toString().equals("Segregation Simulation")){
             currentSim = new SegregationSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
         if(currentParam.toString().equals("Wa Tor Simulation")){
-            currentSim = new WatorSimulation(this.getInitialGrid());
+            currentSim = new WatorSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
 
     }

@@ -3,6 +3,7 @@ package simulation;
 import cellsociety.Cell;
 import cellsociety.cellstate.State;
 import cellsociety.cellstate.WatorCell;
+import configuration.parameters.Parameter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,8 +12,9 @@ import java.util.List;
 
 public class WatorSimulation extends Simulation {
 
-    public WatorSimulation(Collection grid) {
+    public WatorSimulation(Collection grid, Parameter param) {
         super(grid);
+        gridType = param.getGridType();
     }
 
     protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){

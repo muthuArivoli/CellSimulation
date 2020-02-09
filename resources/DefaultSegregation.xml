@@ -3,6 +3,7 @@
     <Configuration>
         <author>"Dennis Harrsch"</author>
         <title>Segregation</title>
+        <type>Square</type>
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
         <percentage>8</percentage>

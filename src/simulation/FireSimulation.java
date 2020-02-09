@@ -15,6 +15,7 @@ public class FireSimulation extends Simulation {
     public FireSimulation(Collection grid, Parameter param){
         super(grid);
         probability = param.getThreshold();
+        gridType = param.getGridType();
     }
 
     protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){

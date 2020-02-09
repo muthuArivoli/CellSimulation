@@ -1,7 +1,9 @@
 package Visualization;
 
 import Visualization.grid.Grid;
+import Visualization.grid.HexagonalGrid;
 import Visualization.grid.SquareGrid;
+import Visualization.grid.TriangularGrid;
 import cellsociety.Cell;
 import configuration.GridBuilder;
 import javafx.scene.Group;
@@ -35,10 +37,13 @@ public class Visualization {
     private static final String PAUSE = "Pause";
     private static final String DISPLAY = "Display Graph";
     private static final String HIDE = "Hide Graph";
+    private static final String HEXAGON = "Hexagon";
+    private static final String TRIANGULAR = "TRIANGLE";
+    private static final String SQUARE = "Square";
+
 
     private Scene myScene;
     private Group root;
-    private List<List<Cell>> currentGrid;
     private Grid grid;
     private List<Rectangle> display;
     private Slider mySlider;
@@ -62,16 +67,27 @@ public class Visualization {
 
         root = new Group();
         display = new ArrayList<Rectangle>();
-        currentGrid = new ArrayList<List<Cell>>();
 
-        currentGrid = gridBuilder.reconstructGrid(simulation.returnGraph());
-        grid = new SquareGrid(simulation.returnGraph());
+        initializeGrid(simulation);
 
         barChart = new BarGraph(grid.getNumStates());
 
         setupGame(SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
         updateGrid(grid.getGrid());
         mySlider = new Slider();
+    }
+
+    private void initializeGrid(Simulation simulation) {
+        String gridType = simulation.getGridType();
+        if(gridType.equals(HEXAGON)){
+            grid = new HexagonalGrid(simulation.returnGraph());
+        }
+        else if(gridType.equals(TRIANGULAR)){
+            grid = new TriangularGrid(simulation.returnGraph());
+        }
+        else{
+            grid = new SquareGrid(simulation.returnGraph());
+        }
     }
 
     private void setupGame(double width, double height, Paint background) {

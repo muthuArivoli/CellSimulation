@@ -11,6 +11,7 @@ import java.util.List;
 public abstract class Simulation {
 
     protected Graph<Cell> myGrid;
+    protected String gridType;
     private int gridLength;
     private int gridWidth;
 
@@ -66,5 +67,9 @@ public abstract class Simulation {
             }
         }
         return cartesianGrid;
+    }
+
+    public String getGridType(){
+        return gridType;
     }
 }

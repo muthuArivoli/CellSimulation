@@ -13,8 +13,8 @@ public class WatorParameter extends Parameter {
     }
 
 
-    public WatorParameter(String fileAuthor, Integer length, Integer width, Double prob, Double perc){
-        author = fileAuthor;
+    public WatorParameter(String type, Integer length, Integer width, Double prob, Double perc){
+        gridType = type;
         probEaten = prob;
         gridLength = length;
         gridWidth = width;

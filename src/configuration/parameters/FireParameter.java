@@ -14,8 +14,8 @@ public class FireParameter extends Parameter {
         this("Simulation Team 7", 25, 25, .15, .7);
     }
 
-    public FireParameter(String fileAuthor, Integer length, Integer width, double prob, double perc){
-        author = fileAuthor;
+    public FireParameter(String type, Integer length, Integer width, double prob, double perc){
+        gridType = type;
         gridLength = length;
         gridWidth = width;
         probCatch = prob;

@@ -26,10 +26,12 @@ public class GridBuilder {
     private int width;
     private int length;
     private double percentage;
+    private String type;
 
     public GridBuilder(){
         Parameter param;
         String title = "";
+        String type = "";
         int width = 0;
         int length = 0;
         double percentage = 0;
@@ -96,6 +98,7 @@ public class GridBuilder {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
                     title = eElement.getElementsByTagName("title").item(0).getTextContent();
+                    type = eElement.getElementsByTagName("type").item(0).getTextContent();
                     width = Integer.parseInt(eElement.getElementsByTagName("gridWidth").item(0).getTextContent());
                     length = Integer.parseInt(eElement.getElementsByTagName("gridLength").item(0).getTextContent());
                     percentage = Integer.parseInt(eElement.getElementsByTagName("percentage").item(0).getTextContent()) / 10.0;
@@ -111,21 +114,21 @@ public class GridBuilder {
     private void assignParameter(){
         if(title.equals("Fire")){
             double prob = ORIGINAL_DIST;
-            param = new FireParameter(title, length, width, prob, percentage);
+            param = new FireParameter(type, length, width, prob, percentage);
         }
         else if(title.equals("Game of Life")){
-            param = new GameOfLifeParameter(title, length, width, percentage);
+            param = new GameOfLifeParameter(type, length, width, percentage);
         }
         else if(title.equals("Percolation")){
-            param = new PercolationParameter(title, length, width, percentage);
+            param = new PercolationParameter(type, length, width, percentage);
         }
         else if(title.equals("Segregation")){
             double prob = ORIGINAL_DIST;
-            param = new SegregationParameter(title, length, width, prob, percentage);
+            param = new SegregationParameter(type, length, width, prob, percentage);
         }
         else if(title.equals("WaTor")){
             double prob = ORIGINAL_DIST;
-            param = new WatorParameter(title, length, width, prob, percentage);
+            param = new WatorParameter(type, length, width, prob, percentage);
         }
         else{
             param = new FireParameter();

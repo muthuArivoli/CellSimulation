@@ -2,6 +2,7 @@ package Visualization;
 
 import cellsociety.cellstate.CellState;
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -29,16 +30,18 @@ public class BarGraph {
         return bc;
     }
 
-    public void addSeries(String name, double amount){
+    public void addSeries(CellState state, double amount){
         XYChart.Series series = new XYChart.Series();
-        series.setName(name);
-        series.getData().add(new XYChart.Data(name, amount));
+        series.setName(state.toString());
+        XYChart.Data data = new XYChart.Data(state.toString(), amount);
+        data.getNode().setStyle(state.getColor().toString());
+        series.getData().add(data);
         bc.getData().addAll(series);
     }
 
     public void updateChart(Map<CellState, Double> numStates) {
         for(CellState s  : numStates.keySet()){
-            addSeries(s.toString(), numStates.get(s));
+            addSeries(s, numStates.get(s));
         }
     }
 }

@@ -14,6 +14,7 @@ public class SegregationSimulation extends Simulation {
     public SegregationSimulation(Collection grid, Parameter param) {
         super(grid);
         threshold = param.getThreshold();
+        gridType = param.getGridType();
     }
 
     protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){
