@@ -25,13 +25,13 @@ public class WatorParameter extends Parameter {
         gridWidth = width;
         percentage = percentPrey;
         percPredator = percentPredator;
-        possibleStates = new ArrayList<CellState>(Arrays.asList(State.PREY, State.PREDATOR, State.DEAD));
+        possibleStates = new ArrayList<CellState>(Arrays.asList(State.PREY, State.PREDATOR, State.EMPTY, State.DEAD));
     }
 
     public WatorCell makeCell(){
         CellState state;
         double roll = Math.random();
-        if(roll < percentage){
+        if(roll < percentage) {
             state = possibleStates.get(0);
         }
         else if(roll < percentage + percPredator){

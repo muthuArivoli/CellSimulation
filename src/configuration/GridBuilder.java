@@ -30,14 +30,7 @@ public class GridBuilder {
     private String type;
     private Document doc;
 
-    public GridBuilder(){
-        Parameter param;
-        String title = "";
-        String type = "";
-        int width = 0;
-        int length = 0;
-        double percentage = 0;
-    }
+    public GridBuilder(){}
 
     public Parameter makeParameter(File file) throws IncorrectFileTypeError{
         try {

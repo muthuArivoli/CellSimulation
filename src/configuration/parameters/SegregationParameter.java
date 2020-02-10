@@ -38,7 +38,7 @@ public class SegregationParameter extends Parameter {
             state = possibleStates.get(1);
         }
         else{
-            state = possibleStates.get(0);
+            state = possibleStates.get(2);
         }
         return new SegregationCell(state);
     }

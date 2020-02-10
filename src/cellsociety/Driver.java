@@ -71,7 +71,6 @@ public class Driver extends Application {
             updateSimulations(v, sim);
             stepSimulation(v, sim);
         }
-
     }
 
     private void updateSimulations(Visualization v, Simulation sim) {
