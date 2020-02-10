@@ -9,7 +9,7 @@
     </Configuration>
     <Segregation>
         <percentMinority>30</percentMinority>
-        <percentTolerance>20</percentTolerance>
+        <percentTolerance>30</percentTolerance>
         <percentOpen>20</percentOpen>
     </Segregation>
 </General>

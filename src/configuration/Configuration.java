@@ -4,10 +4,6 @@ import Visualization.GUITools;
 import cellsociety.Cell;
 import configuration.configurationerror.IncorrectFileTypeError;
 import configuration.parameters.Parameter;
-import configuration.parameters.FireParameter;
-import configuration.parameters.PercolationParameter;
-import configuration.parameters.WatorParameter;
-import configuration.parameters.SegregationParameter;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,20 +15,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import simulation.*;
-
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class Configuration {
     public static final Paint BACKGROUND = Color.WHEAT;
     public static final double SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
     public static final double SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
     private static final Paint TEXT_COLOR = Color.DARKSLATEGRAY;
-    private static final ArrayList<Parameter> possible_simulations = new ArrayList<Parameter>(Arrays.asList(new FireParameter(),
-            new PercolationParameter(), new WatorParameter(), new SegregationParameter()));
     private static final double HALFWAY = SCREEN_WIDTH/2.0;
     private static final int FONT_SIZE = 30;
     private static final double INDENT = 100.0;
@@ -43,6 +34,9 @@ public class Configuration {
     private static final String DEFAULT_SEGREGATION = "./resources/DefaultSegregation.xml";
     private static final String DEFAULT_GAMEOFLIFE = "./resources/DefaultGameofLife.xml";
     private static final String DEFAULT_WATOR = "./resources/DefaultWaTor.xml";
+    private static final String DEFAULT_RESOURCES_PACKAGE = "configuration.ConfigurationProperties";
+
+    private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCES_PACKAGE);
 
     private Scene myScene;
     private Group myLayout;
@@ -69,28 +63,20 @@ public class Configuration {
         return myScene;
     }
 
-    public Collection getInitialGrid() {
-        return initialGrid;
-    }
-
-    public Parameter getCurrentParam() {
-        return currentParam;
-    }
-
     public Simulation getCurrentSim() { return currentSim; }
 
     private void initializeConfigurationUI(){
 
         GUITools constructor = new GUITools();
 
-        Text title = constructor.makeText("LETS SIMULATE!", "Times New Roman", FONT_SIZE, TEXT_COLOR,
+        Text title = constructor.makeText(myResources.getString("LETSSIMULATE"), myResources.getString("Font"), FONT_SIZE, TEXT_COLOR,
                 HALFWAY - INDENT - 15, myScene.getHeight()*(1.0/8.0));
         myLayout.getChildren().add(title);
 
         makeSimulationButtons(constructor);
 
         Button uploadFile = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(7.0/8.0),
-                "Choose a file to upload:", BUTTON_LENGTH, "-fx-base: white;");
+                myResources.getString("Chooseafiletoupload"), BUTTON_LENGTH, myResources.getString("Color6"));
         uploadFile.setOnAction( event -> chooseFile());
         myLayout.getChildren().add(uploadFile);
 
@@ -99,27 +85,28 @@ public class Configuration {
 
     private void makeSimulationButtons(GUITools constructor) {
         Button PercolationSimulation = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(2.0/8.0),
-                "PERCOLATION", BUTTON_LENGTH, "-fx-base: #264653;");
+                myResources.getString("PERCOLATION"), BUTTON_LENGTH, myResources.getString("Color1"));
         PercolationSimulation.setOnAction( event -> uploadPercolation());
         myLayout.getChildren().add(PercolationSimulation);
 
         Button WaTorSimulation = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(3.0/8.0),
-                "WATOR", BUTTON_LENGTH, "-fx-base: #2A9D8F;");
+                myResources.getString("WATOR"), BUTTON_LENGTH, myResources.getString("Color2"));
         WaTorSimulation.setOnAction( event -> uploadWaTor());
         myLayout.getChildren().add(WaTorSimulation);
 
         Button GameofLifeSimulation = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(4.0/8.0),
-                "GAME OF LIFE", BUTTON_LENGTH, "-fx-base: #E9C46A;");
+                myResources.getString("GAMEOFLIFE"), BUTTON_LENGTH, myResources.getString("Color3"));
         GameofLifeSimulation.setOnAction( event -> uploadGameofLife());
         myLayout.getChildren().add(GameofLifeSimulation);
 
         Button SegregationSimulation = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(5.0/8.0),
-                "SEGREGATION", BUTTON_LENGTH, "-fx-base:  #F4A261;");
+                myResources.getString("SEGREGATION"), BUTTON_LENGTH, myResources.getString("Color4"));
         SegregationSimulation.setOnAction( event -> uploadSegregation());
         myLayout.getChildren().add(SegregationSimulation);
 
         Button FireSimulation = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(6.0/8.0),
-                "FIRE", BUTTON_LENGTH, "-fx-base: #E76F51;");
+                myResources.getString("FIRE"), BUTTON_LENGTH, myResources.getString("Color5"));
+
         FireSimulation.setOnAction( event -> uploadFire());
         myLayout.getChildren().add(FireSimulation);
     }
