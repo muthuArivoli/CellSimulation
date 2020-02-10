@@ -47,7 +47,7 @@ Features implemented:
 ### Notes/Assumptions
 
 Assumptions or Simplifications: 
-Simulation Speed Slider changes the speed of all simulations. All simulations run in one window
+Simulation Speed Slider changes the speed of all simulations. All simulations run in one window. The pause and step buttons only effect the corresponding simulation.
 
 Interesting data files:
 
