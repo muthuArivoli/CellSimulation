@@ -59,4 +59,4 @@ Extra credit:
 ### Impressions
 
 Muthu Arivoli: This project has been my first major software project with a team. Navigating through team dynamics and implementing a large software project has definetly been a challenge, and has taught me many useful skills for my future in software development.
-
+Luke Peterson: Working in a team was new to me and presented many challenges. Navigating Git and working together cause lots of frustration but proved to be a valuable asset in the end. I have learned a lot about working on code at the same time as team members and about inheritance.
