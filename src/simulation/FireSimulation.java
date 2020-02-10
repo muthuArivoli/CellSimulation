@@ -1,24 +1,24 @@
 package simulation;
 
 import cellsociety.Cell;
-import configuration.State;
+import cellsociety.cellstate.State;
 import configuration.parameters.Parameter;
+import simulation.grid.Grid;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
-public class FireSimulation extends Simulation {
+public class FireSimulation extends CurrStateSimulation {
 
     private double probability;
 
     public FireSimulation(Collection grid, Parameter param){
-        super(grid);
+        super(grid, param);
         probability = param.getThreshold();
+        gridType = param.getGridType();
     }
 
-    protected void getNextState(Cell cell, List<Cell> neighbor, Graph<Cell> newGrid, Iterator<Cell> it){
-
+    protected void getNextState(Cell cell, Collection<Cell> neighbor, Grid newGrid, Iterator<Cell> it){
         if(cell.getState() == State.BURNING) {
             it.next().setState(State.EMPTY);
             return;

@@ -1,10 +1,9 @@
-package configuration;
+package cellsociety.cellstate;
 
-import cellsociety.CellStates;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-public enum State implements CellStates {
+public enum State implements CellState {
     EMPTY (Color.GRAY),
     BURNING (Color.RED),
     PREDATOR (Color.BLUE),

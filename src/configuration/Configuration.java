@@ -5,7 +5,7 @@ import cellsociety.Cell;
 import configuration.parameters.Parameter;
 import configuration.parameters.FireParameter;
 import configuration.parameters.PercolationParameter;
-import configuration.parameters.WaTorParameter;
+import configuration.parameters.WatorParameter;
 import configuration.parameters.SegregationParameter;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -15,8 +15,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import simulation.*;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,11 +26,11 @@ import java.util.Collection;
 
 public class Configuration {
     public static final Paint BACKGROUND = Color.WHEAT;
-    public static final double SCREEN_WIDTH = 600.0;
-    public static final double SCREEN_HEIGHT = 600.0;
+    public static final double SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
+    public static final double SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
     private static final Paint TEXT_COLOR = Color.DARKSLATEGRAY;
     private static final ArrayList<Parameter> possible_simulations = new ArrayList<Parameter>(Arrays.asList(new FireParameter(),
-            new PercolationParameter(), new WaTorParameter(), new SegregationParameter()));
+            new PercolationParameter(), new WatorParameter(), new SegregationParameter()));
     private static final double HALFWAY = SCREEN_WIDTH/2.0;
     private static final int FONT_SIZE = 30;
     private static final double INDENT = 100.0;
@@ -43,16 +45,20 @@ public class Configuration {
     private Scene myScene;
     private Group myLayout;
     private GridBuilder gridBuilder;
+    private int gridLength;
+    private int gridWidth;
     private Parameter currentParam;
     private ArrayList<ArrayList<Cell>> initialGrid;
     private Simulation currentSim;
     private boolean checkSelected;
+    private boolean waiting;
 
     public Configuration(){
         myLayout = new Group();
         myScene = new Scene(myLayout, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
         gridBuilder = new GridBuilder();
         checkSelected = false;
+        waiting = true;
         initializeConfigurationUI();
     }
 
@@ -160,16 +166,19 @@ public class Configuration {
         }
 
         if(currentParam.toString().equals("Game of Life Simulation")){
-            currentSim = new GameOfLifeSimulation(this.getInitialGrid());
+            currentSim = new GameOfLifeSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
         if(currentParam.toString().equals("Percolation Simulation")){
-            currentSim = new PercolationSimulation(this.getInitialGrid());
+            currentSim = new PercolationSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
         if(currentParam.toString().equals("Segregation Simulation")){
             currentSim = new SegregationSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
         if(currentParam.toString().equals("Wa Tor Simulation")){
-            currentSim = new WatorSimulation(this.getInitialGrid());
+            currentSim = new WatorSimulation(this.getInitialGrid(), this.getCurrentParam());
+        }
+        if(currentParam.toString().equals("Wa Tor Simulation")){
+            currentSim = new WatorSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
 
     }
@@ -178,5 +187,13 @@ public class Configuration {
         if (code == KeyCode.ESCAPE){
             System.exit(0);
         }
+    }
+
+    public boolean isWaiting() {
+        return waiting;
+    }
+
+    public void notWaiting() {
+        waiting = false;
     }
 }

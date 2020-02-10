@@ -10,8 +10,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import simulation.Simulation;
 
-import java.net.SocketOption;
-import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Driver extends Application {
     public static final String TITLE = "Simulation";
@@ -21,11 +21,11 @@ public class Driver extends Application {
 
     private boolean waiting;
 
-    private Stage myStage;
-    private Scene myScene;
-    private Configuration myConfig;
-    private Simulation mySimulation;
-    private Visualization myVisualization;
+    private List<Stage> myStages;
+    private List<Scene> myScenes;
+    private List<Configuration> myConfigs;
+    private List<Simulation> mySimulations;
+    private List<Visualization> myVisualizations;
     private int speed;
 
     /**
@@ -37,14 +37,26 @@ public class Driver extends Application {
 
     @Override
     public void start(Stage currentStage){
+        myStages = new ArrayList<Stage>();
+        myScenes = new ArrayList<Scene>();
+        myConfigs = new ArrayList<Configuration>();
+        mySimulations = new ArrayList<Simulation>();
+        myVisualizations = new ArrayList<Visualization>();
+
         waiting = true;
         speed = 1;
-        myConfig = new Configuration();
-        myStage = currentStage;
-        myScene = myConfig.getConfigurationScene();
-        myStage.setScene(myScene);
-        myStage.setTitle(TITLE);
-        myStage.show();
+
+        Configuration myConfig = new Configuration();
+        myConfigs.add(myConfig);
+
+        myStages.add(currentStage);
+        myScenes.add(myConfig.getConfigurationScene());
+
+        for(int i = 0; i < myStages.size(); i++){
+            myStages.get(i).setScene(myScenes.get(i));
+            myStages.get(i).setTitle(TITLE);
+            myStages.get(i).show();
+        }
 
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
         Timeline animation = new Timeline();
@@ -55,21 +67,63 @@ public class Driver extends Application {
 
 
     private void step (double elapsedTime) {
-        if(waiting){
-            if(myConfig.isSimulationSelected()){
-                waiting = false;
-                mySimulation = myConfig.getCurrentSim();
-                myVisualization = new Visualization(mySimulation);
-                myStage.setScene(myVisualization.getScene());
-            }
+        handleConfigurations();
+        for(int j = 0; j < myVisualizations.size(); j++){
+            Visualization v = myVisualizations.get(j);
+            Simulation sim = mySimulations.get(j);
+            startNewSimulations(v);
+            updateSimulations(v, sim);
+            stepSimulation(v, sim);
         }
-        else {
-            if(myVisualization.isVisualizationReady()) {
-                mySimulation.update();
-                myVisualization.updateGrid(mySimulation.returnGraph());
-                speed = myVisualization.getCurrentSimulationSpeed();
+
+    }
+
+    private void updateSimulations(Visualization v, Simulation sim) {
+        if(!v.checkPaused()){
+            if (v.isVisualizationReady()) {
+                sim.update();
+                v.updateGrid(sim.returnGraph());
+                speed = v.getCurrentSimulationSpeed();
                 System.out.println(speed);
             }
         }
     }
+
+    private void stepSimulation(Visualization v, Simulation sim) {
+        if(v.stepped()) {
+            sim.update();
+            v.updateGrid(sim.returnGraph());
+            v.setStep();
+        }
+    }
+
+    private void startNewSimulations(Visualization v) {
+        if(v.checkStartNewSim()) {
+            v.newSimStarted();
+            Configuration myConfig = new Configuration();
+            myConfigs.add(myConfig);
+            Stage myStage = new Stage();
+            Scene myScene = myConfig.getConfigurationScene();
+            myStage.setScene(myScene);
+            myStage.show();
+            myStages.add(myStage);
+        }
+    }
+
+    private void handleConfigurations() {
+        for(Configuration c : myConfigs){
+            if(c.isWaiting()) {
+                if (c.isSimulationSelected()) {
+                    c.notWaiting();
+                    Simulation mySimulation = c.getCurrentSim();
+                    mySimulations.add(mySimulation);
+                    myVisualizations.add(new Visualization(mySimulation));
+                    for (int i = 0; i < myVisualizations.size(); i++) {
+                        myStages.get(i).setScene(myVisualizations.get(i).getScene());
+                    }
+                }
+            }
+        }
+    }
 }
+

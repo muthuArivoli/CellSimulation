@@ -6,7 +6,6 @@ import cellsociety.Cell;
 import configuration.configurationerror.IncorrectFileTypeError;
 import configuration.configurationerror.MalformedConfigurationException;
 import configuration.configurationerror.NullParameterException;
-import configuration.configurationerror.IncorrectFileTypeError;
 import configuration.parameters.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -19,18 +18,20 @@ import java.util.List;
 
 public class GridBuilder {
 
-    private static final double ORIGINAL_DIST = .15;
-    private static final File BLANK_FILE = new File("./resources/BLANK.xml");
+    private static final double ORIGINAL_DIST = .3;
+    private static final File BLANK_FILE = new File("./resources/DefaultFire.xml");
 
     private Parameter param;
     private String title;
     private int width;
     private int length;
     private double percentage;
+    private String type;
 
     public GridBuilder(){
         Parameter param;
         String title = "";
+        String type = "";
         int width = 0;
         int length = 0;
         double percentage = 0;
@@ -42,11 +43,7 @@ public class GridBuilder {
             for (int i = 0; i < param.getGridWidth(); i++) {
                 ArrayList<Cell> row = new ArrayList<Cell>();
                 for (int j = 0; j < param.getGridLength(); j++) {
-                    if (Math.random() > param.getPercentage()) {
-                        row.add(new Cell(param.getPossibleStates().get(0)));
-                    } else {
-                        row.add(new Cell(param.getPossibleStates().get(1)));
-                    }
+                    row.add(param.makeCell(param.getPercentage()));
                 }
                 grid.add(row);
             }
@@ -56,12 +53,7 @@ public class GridBuilder {
                 for(int i = 0; i < 100; i++) {
                     ArrayList<Cell> row = new ArrayList<Cell>();
                     for (int j = 0; j < 100; j++) {
-                        if (Math.random() > .8) {
-                            System.out.println(Math.random());
-                            row.add(new Cell(param.getPossibleStates().get(0)));
-                        } else {
-                            row.add(new Cell(param.getPossibleStates().get(1)));
-                        }
+                        row.add(param.makeCell(.8));
                     }
                 }
                 throw new NullParameterException("No parameter found");
@@ -106,6 +98,7 @@ public class GridBuilder {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
                     title = eElement.getElementsByTagName("title").item(0).getTextContent();
+                    type = eElement.getElementsByTagName("type").item(0).getTextContent();
                     width = Integer.parseInt(eElement.getElementsByTagName("gridWidth").item(0).getTextContent());
                     length = Integer.parseInt(eElement.getElementsByTagName("gridLength").item(0).getTextContent());
                     percentage = Integer.parseInt(eElement.getElementsByTagName("percentage").item(0).getTextContent()) / 10.0;
@@ -121,21 +114,21 @@ public class GridBuilder {
     private void assignParameter(){
         if(title.equals("Fire")){
             double prob = ORIGINAL_DIST;
-            param = new FireParameter(title, length, width, prob, percentage);
+            param = new FireParameter(type, length, width, prob, percentage);
         }
         else if(title.equals("Game of Life")){
-            param = new GameOfLifeParameter(title, length, width, percentage);
+            param = new GameOfLifeParameter(type, length, width, percentage);
         }
         else if(title.equals("Percolation")){
-            param = new PercolationParameter(title, length, width, percentage);
+            param = new PercolationParameter(type, length, width, percentage);
         }
         else if(title.equals("Segregation")){
             double prob = ORIGINAL_DIST;
-            param = new SegregationParameter(title, length, width, prob, percentage);
+            param = new SegregationParameter(type, length, width, prob, percentage);
         }
         else if(title.equals("WaTor")){
             double prob = ORIGINAL_DIST;
-            param = new WaTorParameter(title, length, width, prob, percentage);
+            param = new WatorParameter(type, length, width, prob, percentage);
         }
         else{
             param = new FireParameter();

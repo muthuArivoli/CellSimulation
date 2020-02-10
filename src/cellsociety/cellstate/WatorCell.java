@@ -1,18 +1,26 @@
-package configuration;
+package cellsociety.cellstate;
 
-import cellsociety.CellStates;
+import cellsociety.Cell;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-public class WatorState implements CellStates {
-    private State myState;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class WatorCell extends Cell {
+    private CellState myState;
     private int energy;
     private int birth;
-    public WatorState(State myState){
+    private List<CellState> possibleStates;
+
+    public WatorCell(CellState myState){
         this.myState = myState;
         energy = 5;
         birth = 7;
+        possibleStates = new ArrayList<CellState>(Arrays.asList(State.DEAD, State.PREY, State.PREDATOR));
     }
+
     public int getEnergy(){
         return energy;
     }
@@ -26,10 +34,15 @@ public class WatorState implements CellStates {
     public void decrementEnergy(){
         energy--;
     }
-    public State getState(){
+    public CellState getState(){
         return myState;
     }
     public Paint getColor(){
         return Color.GREEN;
+    }
+
+    @Override
+    public Cell clone() {
+        return new WatorCell(this.state);
     }
 }
