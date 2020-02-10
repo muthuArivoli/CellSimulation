@@ -1,27 +1,26 @@
 package Visualization;
 
-import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class SimulationFile {
     private String myPath;
     private String myFileName;
     private String mySimulationName;
     private ArrayList<String> arrayOfRules;
-    private List<Text> myText;
+    private Map<String, String> rulesRelatingConditionOfCellToColor;
+    private String cellStatus;
 
     public SimulationFile(String path){
         myPath = path;
         arrayOfRules = new ArrayList<String>();
+        rulesRelatingConditionOfCellToColor = new HashMap<String, String>();
         findFileName();
         readFileAndCreateVariables();
-        createArrayOfTextFromSimulationFile();
     }
 
     private void readFileAndCreateVariables() {
@@ -38,27 +37,21 @@ public class SimulationFile {
                 }
                 arrayOfRules.add(nextLine);
             }
+            while (myReader.hasNextLine()) {
+                String nextLine = myReader.nextLine();
+                if (nextLine.equals("***")){
+                    break;
+                }
+                rulesRelatingConditionOfCellToColor.put(nextLine.substring(0, nextLine.indexOf(" ")), nextLine.substring(nextLine.indexOf(" ")+1));
+            }
+            if (myReader.hasNextLine()) {
+                cellStatus = myReader.nextLine();
+            }
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
             e.printStackTrace();
         }
-    }
-
-    private void createArrayOfTextFromSimulationFile() {
-        myText = new ArrayList<>();
-        createTextBoxWithTheFollowingInformation(getFileName());
-        createTextBoxWithTheFollowingInformation(getSimulationName());
-        for (int i=0; i<arrayOfRules.size(); i++) {
-            createTextBoxWithTheFollowingInformation(arrayOfRules.get(i));
-        }
-    }
-
-    private void createTextBoxWithTheFollowingInformation(String text){
-        Text currentText = new Text(25, 25, text);
-        currentText.setFill(Color.BLACK);
-        currentText.setFont(Font.font(java.awt.Font.SERIF, 15));
-        myText.add(currentText);
     }
 
     private void findFileName() {
@@ -67,10 +60,6 @@ public class SimulationFile {
             tempPath = tempPath.substring(tempPath.indexOf("/")+1);
         }
         myFileName = tempPath;
-    }
-
-    public List<Text> getArrayOfText(){
-        return myText;
     }
 
     public String getFileName() {
@@ -85,10 +74,11 @@ public class SimulationFile {
         return arrayOfRules;
     }
 
-    public void addArrayOfTextToScreen(Group root) {
-        for (int i=0; i<myText.size(); i++) {
-            myText.get(i).setY(50+i*25);
-            root.getChildren().add(myText.get(i));
-        }
+    public Map<String, String> getRulesRelatingConditionOfCellToColor() {
+        return rulesRelatingConditionOfCellToColor;
+    }
+
+    public String getCellStatus() {
+        return cellStatus;
     }
 }
