@@ -24,6 +24,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class Configuration {
     public static final Paint BACKGROUND = Color.WHEAT;
@@ -49,7 +50,7 @@ public class Configuration {
     private int gridLength;
     private int gridWidth;
     private Parameter currentParam;
-    private ArrayList<ArrayList<Cell>> initialGrid;
+    private List<List<Cell>> initialGrid;
     private Simulation currentSim;
     private boolean checkSelected;
     private boolean waiting;

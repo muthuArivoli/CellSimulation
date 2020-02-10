@@ -11,17 +11,10 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class GUITools {
-
-    public GUITools(){}
-
-    public ImageView getImageView(String filename){
-        Image img =  new Image(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream(filename)));
-        ImageView img_v = new ImageView(img);
-        return img_v;
-    }
 
     public Text makeText(String txt, String font, int size, Paint textColor, double x, double y) {
         Text text = new Text(txt);
@@ -42,7 +35,7 @@ public class GUITools {
         return button;
     }
 
-    public ComboBox makeDropDown(String txt, double x, double y, ArrayList<Parameter> possible){
+    public ComboBox makeDropDown(String txt, double x, double y, List<Parameter> possible){
         ComboBox combo_box = new ComboBox(FXCollections.observableArrayList(possible));
         combo_box.setEffect(new DropShadow());
         combo_box.setPromptText(txt);
@@ -51,22 +44,4 @@ public class GUITools {
         return combo_box;
     }
 
-    public Button makePauseResumeButton(int size){
-        Button pauseResumeButton = new Button("PAUSE");
-        pauseResumeButton.setTranslateX(size*(3.0/4));
-        pauseResumeButton.setTranslateY(size*(9.0/10));
-
-        pauseResumeButton.setOnAction(value -> {
-            if (pauseResumeButton.getText().equals("PAUSE")){
-                pauseResumeButton.setText("RESUME");
-                //Pause simulation
-            }
-            else{
-                pauseResumeButton.setText("PAUSE");
-                //Resume simulation
-            }
-        });
-
-        return pauseResumeButton;
-    }
 }

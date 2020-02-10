@@ -44,6 +44,6 @@ public abstract class Cell implements Clonable {
     public CellState getNextState(){
         return state;
     }
-    public abstract Cell clone();
+    public abstract Cell clones();
 
 }

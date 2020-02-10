@@ -1,7 +1,7 @@
 package simulation.behaviors;
 
 import java.util.Collection;
-@Deprecated
+
 public class TriangularNeighborBehavior extends TesselatingNeigborBehvaior {
     public TriangularNeighborBehavior(NeighborBehavior myNeighborBehavior){
         super(myNeighborBehavior);

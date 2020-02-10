@@ -7,6 +7,7 @@ import simulation.WatorSimulation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class WatorParameter extends Parameter {
     private int energy;
@@ -47,7 +48,7 @@ public class WatorParameter extends Parameter {
         return birthRate;
     }
 
-    public Simulation makeSimulation(ArrayList<ArrayList<Cell>> initialGrid, Parameter currentParam){
+    public Simulation makeSimulation(List<List<Cell>> initialGrid, Parameter currentParam){
         return new WatorSimulation(initialGrid, currentParam);
     }
 

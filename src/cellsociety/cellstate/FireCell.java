@@ -15,7 +15,7 @@ public class FireCell extends Cell {
 
 
     @Override
-    public Cell clone() {
+    public Cell clones() {
         return new FireCell(this.state);
     }
 

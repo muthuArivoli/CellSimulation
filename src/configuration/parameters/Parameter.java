@@ -5,6 +5,7 @@ import javafx.scene.shape.Shape;
 import simulation.Simulation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Parameter {
     protected String author;
@@ -28,7 +29,7 @@ public abstract class Parameter {
     public Integer getGridWidth(){
         return gridWidth;
     }
-    public ArrayList<CellState> getPossibleStates(){
+    public List<CellState> getPossibleStates(){
         return possibleStates;
     }
     public double getPercentage(){ return percentage; }
@@ -40,5 +41,5 @@ public abstract class Parameter {
         return gridType;
     }
 
-    public abstract Simulation makeSimulation(ArrayList<ArrayList<Cell>> initialGrid, Parameter currentParam);
+    public abstract Simulation makeSimulation(List<List<Cell>> initialGrid, Parameter currentParam);
 }
