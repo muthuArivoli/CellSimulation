@@ -112,10 +112,10 @@ public class Driver extends Application {
                     Simulation mySimulation = c.getCurrentSim();
                     mySimulations.add(mySimulation);
                     myVisualizations.add(new Visualization(mySimulation));
-                    for (int i = 0; i < myVisualizations.size(); i++) {
-                        myStages.get(i).setScene(myVisualizations.get(i).getScene());
-                    }
                 }
+            }
+            for (int i = 0; i < myVisualizations.size(); i++) {
+                myStages.get(i).setScene(myVisualizations.get(i).getScene());
             }
         }
     }

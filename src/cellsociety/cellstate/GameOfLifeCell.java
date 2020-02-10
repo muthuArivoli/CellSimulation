@@ -18,7 +18,7 @@ public class GameOfLifeCell extends Cell {
 
 
     @Override
-    public Cell clone() {
+    public Cell clones() {
         return new GameOfLifeCell(this.state);
     }
 

@@ -7,6 +7,7 @@ import simulation.Simulation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class PercolationParameter extends Parameter {
     private double threshold;
@@ -39,7 +40,7 @@ public class PercolationParameter extends Parameter {
         return threshold;
     }
 
-    public Simulation makeSimulation(ArrayList<ArrayList<Cell>> initialGrid, Parameter currentParam){
+    public Simulation makeSimulation(List<List<Cell>> initialGrid, Parameter currentParam){
         return new PercolationSimulation(initialGrid, currentParam);
     }
 

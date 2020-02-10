@@ -16,12 +16,12 @@ import java.util.List;
 public class TriangularBoard extends Board {
 
     public TriangularBoard(Collection array){
-        grid = new ArrayList<ArrayList<Cell>>(array);
+        grid = new ArrayList<List<Cell>>(array);
         numStates = new HashMap<>();
     }
 
     public List<Shape> placeCells(Group root, Collection newGraph) {
-        grid = new ArrayList<ArrayList<Cell>>(newGraph);
+        grid = new ArrayList<List<Cell>>(newGraph);
         numStates = new HashMap<>();
         boolean flip = false;
         display = new ArrayList<Shape>();

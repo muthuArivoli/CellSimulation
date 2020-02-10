@@ -9,6 +9,7 @@ import simulation.Simulation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class SegregationParameter extends Parameter {
     private double tolerance;
@@ -47,7 +48,7 @@ public class SegregationParameter extends Parameter {
         return tolerance;
     }
 
-    public Simulation makeSimulation(ArrayList<ArrayList<Cell>> initialGrid, Parameter currentParam){
+    public Simulation makeSimulation(List<List<Cell>> initialGrid, Parameter currentParam){
         return new SegregationSimulation(initialGrid, currentParam);
     }
 

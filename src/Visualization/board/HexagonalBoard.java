@@ -14,12 +14,12 @@ import java.util.List;
 
 public class HexagonalBoard extends Board {
     public HexagonalBoard(Collection array){
-        grid = new ArrayList<ArrayList<Cell>>(array);
+        grid = new ArrayList<List<Cell>>(array);
         numStates = new HashMap<>();
     }
 
     public List<Shape> placeCells(Group root, Collection newGraph) {
-        grid = new ArrayList<ArrayList<Cell>>(newGraph);
+        grid = new ArrayList<List<Cell>>(newGraph);
         numStates = new HashMap<>();
         display = new ArrayList<Shape>();
         double width = GRID_SIZE/grid.size();

@@ -9,6 +9,7 @@ import simulation.Simulation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class FireParameter extends Parameter {
     private double probCatch;
@@ -41,7 +42,7 @@ public class FireParameter extends Parameter {
         return probCatch;
     }
 
-    public Simulation makeSimulation(ArrayList<ArrayList<Cell>> initialGrid, Parameter currentParam){
+    public Simulation makeSimulation(List<List<Cell>> initialGrid, Parameter currentParam){
         return new FireSimulation(initialGrid, currentParam);
     }
 

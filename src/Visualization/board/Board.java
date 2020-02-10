@@ -18,12 +18,10 @@ public abstract class  Board {
 
     protected Map<String, String> rulesRelatingConditionOfCellToColor;
     protected Map<CellState, Double> numStates;
-    protected List<ArrayList<Cell>> grid;
+    protected List<List<Cell>> grid;
     protected List<Shape> display;
 
-    public Board(){}
-
-    public List<ArrayList<Cell>> getGrid(){
+    public List<List<Cell>> getGrid(){
         return grid;
     }
 

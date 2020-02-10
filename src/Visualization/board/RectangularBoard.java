@@ -15,13 +15,13 @@ import java.util.List;
 public class RectangularBoard extends Board {
 
     public RectangularBoard(Collection array){
-        grid = new ArrayList<ArrayList<Cell>>(array);
+        grid = new ArrayList<List<Cell>>(array);
         numStates = new HashMap<>();
     }
 
     public List<Shape> placeCells(Group root, Collection newGraph) {
 
-        grid = new ArrayList<ArrayList<Cell>>(newGraph);
+        grid = new ArrayList<List<Cell>>(newGraph);
         numStates = new HashMap<>();
 
         display = new ArrayList<Shape>();

@@ -45,8 +45,8 @@ public class GridBuilder {
         return param;
     }
 
-    public ArrayList<ArrayList<Cell>> makeGrid(Parameter param) throws NullParameterException {
-        ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
+    public List<List<Cell>> makeGrid(Parameter param) throws NullParameterException {
+        List<List<Cell>> grid = new ArrayList<List<Cell>>();
         try {
             for (int i = 0; i < param.getGridWidth(); i++) {
                 ArrayList<Cell> row = new ArrayList<Cell>();
