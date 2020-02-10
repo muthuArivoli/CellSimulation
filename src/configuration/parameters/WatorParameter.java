@@ -53,6 +53,6 @@ public class WatorParameter extends Parameter {
 
     @Override
     public String toString(){
-        return "Wa Tor Simulation";
+        return "Wator Simulation";
     }
 }
