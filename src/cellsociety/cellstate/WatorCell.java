@@ -51,7 +51,7 @@ public class WatorCell extends Cell implements CellState {
     }
 
     @Override
-    public Cell clones() {
+    public Cell copy() {
         return new WatorCell(this.state, energy, birth);
     }
 }

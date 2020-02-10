@@ -2,7 +2,6 @@ package simulation.grid;
 
 import simulation.behaviors.RectangleNeighborBehavior;
 import simulation.behaviors.TriangularNeighborBehavior;
-import simulation.grid.Grid;
 
 import java.util.Collection;
 

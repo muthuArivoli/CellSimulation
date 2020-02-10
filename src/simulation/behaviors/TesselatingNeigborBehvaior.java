@@ -1,7 +1,5 @@
 package simulation.behaviors;
 
-import simulation.behaviors.NeighborBehavior;
-
 import java.util.Collection;
 
 public abstract class TesselatingNeigborBehvaior implements NeighborBehavior {

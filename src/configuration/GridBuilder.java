@@ -18,19 +18,14 @@ import java.util.Collection;
 import java.util.List;
 
 public class GridBuilder {
-    private static final double ORIGINAL_DIST = .3;
-    private static final File BLANK_FILE = new File("./resources/DefaultFire.xml");
     private static final List<String> possibleTypes = new ArrayList<String>(Arrays.asList("Square", "Hexagon", "Triangle"));
 
     private Parameter param;
     private String title;
     private int width;
     private int length;
-    private double percentage;
     private String type;
     private Document doc;
-
-    public GridBuilder(){}
 
     public Parameter makeParameter(File file) throws IncorrectFileTypeError{
         try {
@@ -70,11 +65,6 @@ public class GridBuilder {
             }
         }
         return grid;
-    }
-
-    public List<List<Cell>> reconstructGrid(Collection grid) {
-        List<List<Cell>> madeGrid = new ArrayList<List<Cell>>(grid);
-        return madeGrid;
     }
 
     private void readFile(Document doc) throws MalformedConfigurationException {
@@ -169,7 +159,7 @@ public class GridBuilder {
 
     private void readGameOfLifeParam() throws MalformedConfigurationException{
         try{
-            NodeList nList = doc.getElementsByTagName(title);
+            NodeList nList = doc.getElementsByTagName("GameofLife");
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -184,6 +174,7 @@ public class GridBuilder {
                     "Missing values set to default.");
         }
     }
+
     private void readPercolationParam() throws MalformedConfigurationException{
         try{
             NodeList nList = doc.getElementsByTagName(title);
