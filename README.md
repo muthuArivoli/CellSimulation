@@ -1,4 +1,4 @@
-simulation
+Simulation
 ====
 
 This project implements a cellular automata simulator.
@@ -53,6 +53,7 @@ DefaultWaTor.xml
 
 Features implemented:
 
+In terms of Simulation, 5 cellular automata (Fire, Game of Life, Percolation, Segregation, Wator) were implemented. There were implemented such that various grids including a hexagonal and rectangular grid were used. Boundary conditions include a finite boundary and a torus boundary. Multiple neighborhoods are also easily implementable, with the 8 edge square being implemented.
 
 
 ### Notes/Assumptions
