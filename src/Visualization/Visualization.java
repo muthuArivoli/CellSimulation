@@ -103,9 +103,11 @@ public class Visualization {
 
         root.getChildren().addAll(displayGraph, pauseResume, makeStep, changeSimulation);
 
-        simulationSpeedText = uiBuilder.makeText("Simulation Rate: 50", "Serif", 15, Color.BLACK, width*(0.5/4), height*(1.0/10));
+        String simulationSpeedTextString = barChart.getSimulationSpeedText();
+        simulationSpeedText = uiBuilder.makeText(simulationSpeedTextString + " 50", "Serif", 15, Color.BLACK, width*(0.5/4), height*(1.0/10));
 
         root.getChildren().add(simulationSpeedText);
+
 
         myScene = new Scene(root, width, height, background);
     }
@@ -160,13 +162,6 @@ public class Visualization {
         return buttonNames;
     }
 
-    private void displayArrayOfTextInScene(){
-        for (int i=0; i<myText.size(); i++) {
-            myText.get(i).setY(50+i*50);
-            root.getChildren().add(myText.get(i));
-        }
-    }
-
     public void updateGrid(Collection graph) {
         for(Rectangle r : display){
             root.getChildren().remove(r);
@@ -203,22 +198,6 @@ public class Visualization {
 
     private void changeSimulationFunc() {
         newSimulation = true;
-    }
-
-    private void createArrayOfTextFromSimulationFile(SimulationFile mySimulationFile) {
-        myText = new ArrayList<>();
-        createTextBoxWithTheFollowingInformation(mySimulationFile.getFileName());
-        createTextBoxWithTheFollowingInformation(mySimulationFile.getSimulationName());
-        List<String> arrayOfRules = mySimulationFile.getArrayOfRules();
-        for (int i=0; i<arrayOfRules.size(); i++) {
-            createTextBoxWithTheFollowingInformation(arrayOfRules.get(i));
-        }
-    }
-    private void createTextBoxWithTheFollowingInformation(String text){
-        Text currentText = new Text(25, 25, text);
-        currentText.setFill(Color.BLACK);
-        currentText.setFont(Font.font(java.awt.Font.SERIF, 15));
-        myText.add(currentText);
     }
 
     public boolean isVisualizationReady() {

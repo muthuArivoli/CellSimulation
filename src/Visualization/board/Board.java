@@ -42,8 +42,8 @@ public abstract class  Board {
         double y = (currentRect.getY());
         double x_index = (x - X_START_POS)/(GRID_SIZE/grid.size());
         double y_index = (y - Y_START_POS)/(GRID_SIZE/grid.size());
-        System.out.println(x);
-        System.out.println(y);
+        System.out.println(x_index);
+        System.out.println(y_index);
         //tell the simulation which ones were clicked!
     }
 

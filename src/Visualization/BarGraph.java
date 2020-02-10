@@ -31,6 +31,7 @@ public class BarGraph {
         bc.setTitle(myInformation[1]);
         xAxis.setLabel(myInformation[2]);
         yAxis.setLabel(myInformation[3]);
+
     }
 
     public BarChart getBarGraph(){
@@ -59,11 +60,16 @@ public class BarGraph {
         myInformation[1] = (myResources.getString("StateSummary"));
         myInformation[2] = (myResources.getString("State"));
         myInformation[3] = (myResources.getString("NumberonScreen"));
+        myInformation[4] = (myResources.getString("SimulationSpeedText"));
     }
 
     private void printForDebugging(){
         for (int i=0; i<myInformation.length; i++){
             System.out.println(myInformation[i]);
         }
+    }
+
+    public String getSimulationSpeedText() {
+        return myInformation[4];
     }
 }
