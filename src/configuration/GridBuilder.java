@@ -113,7 +113,7 @@ public class GridBuilder {
 
     private void assignParameter(){
         if(title.equals("Fire")){
-            double prob = ORIGINAL_DIST;
+            double prob = .8;
             param = new FireParameter(type, length, width, prob, percentage);
         }
         else if(title.equals("Game of Life")){

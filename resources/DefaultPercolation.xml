@@ -3,9 +3,9 @@
     <Configuration>
         <author>"Dennis Harrsch"</author>
         <title>Percolation</title>
-        <type>Square</type>
+        <type>Hexagon</type>
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
-        <percentage>8</percentage>
+        <percentage>4</percentage>
     </Configuration>
 </General>

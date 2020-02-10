@@ -46,17 +46,8 @@ public abstract class Grid {
             for(int k=0;k<gridWidth;k++){
                 cartesianGrid.get(i).add(it.next());
                 //temp.add(it.next());
-
             }
         }
-
-        for(int i = 0; i < cartesianGrid.size(); i++) {
-            for(int j = 0; j < cartesianGrid.get(0).size(); j++) {
-                System.out.print(cartesianGrid.get(i).get(j) + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
         return cartesianGrid;
     }
 
