@@ -3,26 +3,23 @@ package Visualization;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.ResourceBundle;
 
 public class ButtonNames {
+    private static final String DEFAULT_RESOURCES_PACKAGE = "Visualization.ButtonNames";
 
     String[] buttonNames;
+    private ResourceBundle myResources;
 
-    public ButtonNames(String path){
-        buttonNames = new String[4];
-        try {
-            File newFile = new File(path);
-            Scanner myReader = new Scanner(newFile);
-            int i=0;
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                buttonNames[i] = data;
-                i++;
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        }
+    public ButtonNames(){
+        buttonNames = new String[6];
+        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCES_PACKAGE);
+        buttonNames[0] = (myResources.getString("DisplayGraph"));
+        buttonNames[1] = (myResources.getString("HideGraph"));
+        buttonNames[2] = (myResources.getString("Pause"));
+        buttonNames[3] = (myResources.getString("Resume"));
+        buttonNames[4] = (myResources.getString("Step"));
+        buttonNames[5] = (myResources.getString("ChangeSimulation"));
     }
 
     public String[] getButtonNames(){

@@ -27,15 +27,8 @@ public class Visualization {
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
     public static final double SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
-    public static final int MILLISECOND_DELAY = 1000*100000 / FRAMES_PER_SECOND;
-    public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static final Paint BACKGROUND = Color.WHEAT;
     public static final String BUTTON_NAME_PATH = "./resources/ButtonNames.txt";
-    public static final String SIMULATION_FILE_EXAMPLE_PATH = "./resources/SimulationFileExample.txt";
-    private static final String RESUME = "Resume";
-    private static final String PAUSE = "Pause";
-    private static final String DISPLAY = "Display Graph";
-    private static final String HIDE = "Hide Graph";
     private static final String HEXAGON = "Hexagon";
     private static final String TRIANGULAR = "TRIANGLE";
     private static final String SQUARE = "Square";
@@ -55,6 +48,8 @@ public class Visualization {
     private boolean step;
     private boolean newSimulation;
     private boolean showGraph;
+    private ResourceBundle myResources;
+    private String[] myButtonNames;
 
     public Visualization(Simulation simulation){
         paused = false;
@@ -90,18 +85,20 @@ public class Visualization {
     }
 
     private void setupGame(double width, double height, Paint background) {
-        String[] buttonNames = getButtonNames();
+        //String[] buttonNames = getButtonNames();
+        ButtonNames myButtons = new ButtonNames();
+        myButtonNames = myButtons.getButtonNames();
 
-        Button displayGraph = uiBuilder.makeButtons(width * (0.5 / 4), height * (2.0/10), DISPLAY, width/10.0, "White");
+        Button displayGraph = uiBuilder.makeButtons(width * (0.5 / 4), height * (2.0/10), myButtonNames[0], width/10.0, "White");
         displayGraph.setOnAction(value -> displayGraphFunc(displayGraph));
 
-        Button pauseResume = uiBuilder.makeButtons(width * (1.0 / 4), height * (2.0 / 10), PAUSE, width/10.0, "White");
+        Button pauseResume = uiBuilder.makeButtons(width * (1.0 / 4), height * (2.0 / 10), myButtonNames[2], width/10.0, "White");
         pauseResume.setOnAction(value -> pauseResumeFunc(pauseResume));
 
-        Button makeStep = uiBuilder.makeButtons(width * (0.5 / 4), height * (9.0 / 10), buttonNames[1], width/10.0, "White");
+        Button makeStep = uiBuilder.makeButtons(width * (0.5 / 4), height * (9.0 / 10), myButtonNames[4], width/10.0, "White");
         makeStep.setOnAction(value -> stepButtonFunc());
 
-        Button changeSimulation = uiBuilder.makeButtons(width * (1.0 / 4), height * (9.0 / 10), buttonNames[3], width/10.0, "White");
+        Button changeSimulation = uiBuilder.makeButtons(width * (1.0 / 4), height * (9.0 / 10), myButtonNames[5], width/10.0, "White");
         changeSimulation.setOnAction(value -> changeSimulationFunc());
 
         root.getChildren().addAll(displayGraph, pauseResume, makeStep, changeSimulation);
@@ -114,12 +111,12 @@ public class Visualization {
     }
 
     private void displayGraphFunc(Button displayGraph) {
-        if (displayGraph.getText().equals(DISPLAY)) {
-            displayGraph.setText(HIDE);
+        if (displayGraph.getText().equals(myButtonNames[0])) {
+            displayGraph.setText(myButtonNames[1]);
             showGraph = true;
             handleGraphDisplay();
         } else {
-            displayGraph.setText(RESUME);
+            displayGraph.setText(myButtonNames[0]);
             showGraph = false;
             handleGraphDisplay();
         }
@@ -182,12 +179,12 @@ public class Visualization {
 
     private void pauseResumeFunc(Button pauseResumeButton) {
         paused = !paused;
-        if (pauseResumeButton.getText().equals(RESUME)) {
-            pauseResumeButton.setText(PAUSE);
+        if (pauseResumeButton.getText().equals(myButtonNames[3])) {
+            pauseResumeButton.setText(myButtonNames[2]);
             mySlider.setSimulationSpeed(true);
             System.out.println(mySlider.getCurrentSimulationSpeed());
         } else {
-            pauseResumeButton.setText(RESUME);
+            pauseResumeButton.setText(myButtonNames[3]);
             mySlider.setSimulationSpeed(false);
             System.out.println(mySlider.getCurrentSimulationSpeed());
         }
