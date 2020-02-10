@@ -46,7 +46,7 @@ public class Driver extends Application {
         myStage.setTitle(TITLE);
         myStage.show();
 
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY*speed), e -> step(SECOND_DELAY));
+        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
         Timeline animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
@@ -55,19 +55,33 @@ public class Driver extends Application {
 
 
     private void step (double elapsedTime) {
-        if(waiting){
-            if(myConfig.isSimulationSelected()){
+        if (waiting) {
+            if (myConfig.isSimulationSelected()) {
                 waiting = false;
                 mySimulation = myConfig.getCurrentSim();
                 myVisualization = new Visualization(mySimulation);
                 myStage.setScene(myVisualization.getScene());
             }
         }
-        else {
+        else if(!myVisualization.checkPaused()){
+            if (myVisualization.isVisualizationReady()) {
+                mySimulation.update();
+                myVisualization.updateGrid(mySimulation.returnGraph());
+                speed = myVisualization.getCurrentSimulationSpeed();
+                System.out.println(speed);
+            }
+        }
+        else if(myVisualization.stepped()) {
             mySimulation.update();
             myVisualization.updateGrid(mySimulation.returnGraph());
-            speed = myVisualization.getCurrentSimulationSpeed();
-            System.out.println(speed);
+            myVisualization.setStep();
+        }
+        else if(myVisualization.checkReset()) {
+            waiting = true;
+            myConfig = new Configuration();
+            myScene = myConfig.getConfigurationScene();
+            myStage.setScene(myScene);
         }
     }
 }
+

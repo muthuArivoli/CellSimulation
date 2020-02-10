@@ -1,31 +1,36 @@
 package cellsociety;
 
-import configuration.States;
+
+import cellsociety.cellstate.CellState;
+
 import simulation.Clonable;
 
-public class Cell implements Clonable {
+public abstract class Cell implements Clonable {
 
-    private CellStates state;
+    protected CellState state;
 
-    public Cell(CellStates state){
-        this.state = state;
+    public Cell(){}
+
+
+    public Cell(Cell c){
+        state = c.getState();
     }
 
-    public CellStates getState(){
+
+    public CellState getState(){
         return state;
     }
 
-    public void setState(CellStates state) {
+    public void setState(CellState state) {
         this.state = state;
     }
 
     @Override
-    public Cell clone() {
-        return new Cell(this.state);
-    }
 
-    @Override
     public String toString(){
         return state.toString();
     }
+
+    public abstract Cell clone();
+
 }

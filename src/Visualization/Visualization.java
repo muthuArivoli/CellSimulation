@@ -1,85 +1,142 @@
 package Visualization;
 
-import cellsociety.Cell;
-import cellsociety.Driver;
+import Visualization.board.Board;
+import Visualization.board.HexagonalBoard;
+import Visualization.board.SquareBoard;
+import Visualization.board.TriangularBoard;
 import configuration.GridBuilder;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import simulation.Simulation;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.List;
 
 public class Visualization {
     public static final String TITLE = "Visualization";
-    public static final int SIZE = 500;
     public static final int FRAMES_PER_SECOND = 60;
+    public static final double SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
+    public static final double SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
     public static final int MILLISECOND_DELAY = 1000*100000 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static final Paint BACKGROUND = Color.WHEAT;
     public static final String BUTTON_NAME_PATH = "./resources/ButtonNames.txt";
     public static final String SIMULATION_FILE_EXAMPLE_PATH = "./resources/SimulationFileExample.txt";
-    public static final int GRID_SIZE = 300;
-    public static final int GRID_TOP_LEFT = 100;
     private static final String RESUME = "Resume";
     private static final String PAUSE = "Pause";
+    private static final String DISPLAY = "Display Graph";
+    private static final String HIDE = "Hide Graph";
+    private static final String HEXAGON = "Hexagon";
+    private static final String TRIANGULAR = "TRIANGLE";
+    private static final String SQUARE = "Square";
 
 
     private Scene myScene;
     private Group root;
-    private List<List<Cell>> currentGrid;
-    private Grid grid;
+    private Board grid;
     private List<Rectangle> display;
     private Slider mySlider;
     private List<Text> myText;
     private Text simulationSpeedText;
     private GUITools uiBuilder;
-
+    private BarGraph barChart;
+    private boolean ready;
+    private boolean paused;
+    private boolean step;
+    private boolean newSimulation;
+    private boolean showGraph;
 
     public Visualization(Simulation simulation){
-        root = new Group();
+        paused = false;
+        newSimulation = false;
+        showGraph = false;
+
         uiBuilder = new GUITools();
-        display = new ArrayList<Rectangle>();
         GridBuilder gridBuilder = new GridBuilder();
-        currentGrid = new ArrayList<List<Cell>>();
-        currentGrid = gridBuilder.reconstructGrid(simulation.returnGraph());
-        grid = new Grid(simulation.returnGraph());
-        setupGame(SIZE, SIZE, BACKGROUND);
+
+        root = new Group();
+        display = new ArrayList<Rectangle>();
+
+        initializeGrid(simulation);
+
+        barChart = new BarGraph(grid.getNumStates());
+
+        setupGame(SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
+        updateGrid(grid.getGrid());
         mySlider = new Slider();
     }
 
-    private void setupGame(int width, int height, Paint background) {
-        ButtonNames myButtonNames = new ButtonNames(BUTTON_NAME_PATH);
-        String[] buttonNames = myButtonNames.getButtonNames();
+    private void initializeGrid(Simulation simulation) {
+        String gridType = simulation.getGridType();
+        if(gridType.equals(HEXAGON)){
+            grid = new HexagonalBoard(simulation.returnGraph());
+        }
+        else if(gridType.equals(TRIANGULAR)){
+            grid = new TriangularBoard(simulation.returnGraph());
+        }
+        else{
+            grid = new SquareBoard(simulation.returnGraph());
+        }
+    }
 
-        Button pauseResume = uiBuilder.makeButtons(SIZE * (1.8 / 4), SIZE * (9.0 / 10), PAUSE, 25, "White");
+    private void setupGame(double width, double height, Paint background) {
+        String[] buttonNames = getButtonNames();
+
+        Button displayGraph = uiBuilder.makeButtons(width * (0.5 / 4), height * (2.0/10), DISPLAY, width/10.0, "White");
+        displayGraph.setOnAction(value -> displayGraphFunc(displayGraph));
+
+        Button pauseResume = uiBuilder.makeButtons(width * (1.0 / 4), height * (2.0 / 10), PAUSE, width/10.0, "White");
         pauseResume.setOnAction(value -> pauseResumeFunc(pauseResume));
 
-        Button makeStep = uiBuilder.makeButtons(SIZE * (2.35 / 4), SIZE * (9.0 / 10), buttonNames[1], 25, "White");
+        Button makeStep = uiBuilder.makeButtons(width * (0.5 / 4), height * (9.0 / 10), buttonNames[1], width/10.0, "White");
         makeStep.setOnAction(value -> stepButtonFunc());
 
-        Button getFile = uiBuilder.makeButtons(SIZE * (2.8 / 4), SIZE * (9.0 / 10), buttonNames[2], 25, "White");
-        getFile.setOnAction(value -> getFileButtonHasBeenPushed());
-
-        Button changeSimulation = uiBuilder.makeButtons(SIZE * (0.1 / 4), SIZE * (9.0 / 10), buttonNames[3], 25, "White");
+        Button changeSimulation = uiBuilder.makeButtons(width * (1.0 / 4), height * (9.0 / 10), buttonNames[3], width/10.0, "White");
         changeSimulation.setOnAction(value -> changeSimulationFunc());
 
-        root.getChildren().addAll(pauseResume, makeStep, getFile, changeSimulation);
+        root.getChildren().addAll(displayGraph, pauseResume, makeStep, changeSimulation);
 
-
-        simulationSpeedText = uiBuilder.makeText("Simulation Rate: 50", "Serif", 15, Color.BLACK, SIZE*(.4/5), SIZE*(8.9/10));
+        simulationSpeedText = uiBuilder.makeText("Simulation Rate: 50", "Serif", 15, Color.BLACK, width*(0.5/4), height*(1.0/10));
 
         root.getChildren().add(simulationSpeedText);
 
         myScene = new Scene(root, width, height, background);
+    }
+
+    private void displayGraphFunc(Button displayGraph) {
+        if (displayGraph.getText().equals(DISPLAY)) {
+            displayGraph.setText(HIDE);
+            showGraph = true;
+            handleGraphDisplay();
+        } else {
+            displayGraph.setText(RESUME);
+            showGraph = false;
+            handleGraphDisplay();
+        }
+    }
+
+    private void handleGraphDisplay() {
+        if(!showGraph){
+            root.getChildren().remove(barChart.getBarGraph());
+        }
+        else{
+            root.getChildren().remove(barChart.getBarGraph());
+            barChart = new BarGraph(grid.getNumStates());
+            BarChart bc = barChart.getBarGraph();
+            bc.setLayoutX(0);
+            bc.setLayoutY(SCREEN_HEIGHT*(1.0/4));
+            root.getChildren().add(barChart.getBarGraph());
+        }
     }
 
 
@@ -119,9 +176,12 @@ public class Visualization {
         }
         display.clear();
         display = grid.placeCells(root, graph);
+        handleGraphDisplay();
+        ready = true;
     }
 
     private void pauseResumeFunc(Button pauseResumeButton) {
+        paused = !paused;
         if (pauseResumeButton.getText().equals(RESUME)) {
             pauseResumeButton.setText(PAUSE);
             mySlider.setSimulationSpeed(true);
@@ -141,23 +201,12 @@ public class Visualization {
     }
 
     private void stepButtonFunc(){
-        System.out.println("step");
-    }
-
-    private void getFileButtonHasBeenPushed() {
-        //make way to get real path
-        SimulationFile mySimulationFile = new SimulationFile(SIMULATION_FILE_EXAMPLE_PATH);
-        createArrayOfTextFromSimulationFile(mySimulationFile);
-        displayArrayOfTextInScene();
-        Map<String, String> rulesRelatingConditionOfCellToColor = mySimulationFile.getRulesRelatingConditionOfCellToColor();
-        String cellStatus = mySimulationFile.getCellStatus();
-//        myBoard = new Board(root, rulesRelatingConditionOfCellToColor, cellStatus);
+        step = true;
     }
 
     private void changeSimulationFunc() {
-        System.out.println("return to main screen");
+        newSimulation = true;
     }
-
 
     private void createArrayOfTextFromSimulationFile(SimulationFile mySimulationFile) {
         myText = new ArrayList<>();
@@ -175,4 +224,29 @@ public class Visualization {
         myText.add(currentText);
     }
 
+    public boolean isVisualizationReady() {
+        return ready;
+    }
+
+    public boolean checkPaused() {
+        return paused;
+    }
+
+    public boolean stepped() {
+        return step;
+    }
+
+    public void setStep(){
+        step = false;
+    }
+
+    public boolean checkStartNewSim() {
+        return newSimulation;
+    }
+
+    public void newSimStarted() {
+        newSimulation = false;
+    }
 }
+
+
