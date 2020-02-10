@@ -13,7 +13,7 @@ public class HexagonalNeighborBehavior extends TesselatingNeigborBehvaior {
         Collection<int[]> c = super.getNeighbors(row,col,gridWidth,gridLength);
         if(col%2==1 && row!=0) {
             c.add(new int[]{row - 1, col - 1});
-            if (col != row - 1) {
+            if (col != gridLength - 1) {
                 c.add(new int[]{row - 1, col + 1});
             }
         }
@@ -21,7 +21,7 @@ public class HexagonalNeighborBehavior extends TesselatingNeigborBehvaior {
             if(col!=0){
                 c.add(new int[] {row+1,col-1});
             }
-            if(col!=row-1){
+            if(col!=gridLength-1){
                 c.add(new int[] {row+1,col+1});
             }
         }

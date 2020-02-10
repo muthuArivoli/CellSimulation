@@ -32,11 +32,11 @@ public class BarGraph {
 
     public void addSeries(CellState state, double amount){
         XYChart.Series series = new XYChart.Series();
+        bc.getData().add(series);
         series.setName(state.toString());
         XYChart.Data data = new XYChart.Data(state.toString(), amount);
-        //data.getNode().setStyle(state.getColor().toString());
         series.getData().add(data);
-        bc.getData().addAll(series);
+        series.getNode().setStyle(state.getColor().toString());
     }
 
     public void updateChart(Map<CellState, Double> numStates) {

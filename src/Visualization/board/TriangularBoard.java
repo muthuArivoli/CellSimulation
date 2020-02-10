@@ -4,6 +4,7 @@ import Visualization.shape.Triangle;
 import cellsociety.Cell;
 import javafx.scene.Group;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
@@ -20,19 +21,18 @@ public class TriangularBoard extends Board {
     }
 
     public List<Shape> placeCells(Group root, Collection newGraph) {
-
         grid = new ArrayList<ArrayList<Cell>>(newGraph);
         numStates = new HashMap<>();
-
+        boolean flip = false;
         List<Shape> display = new ArrayList<Shape>();
-
         int length = grid.size();
         double width = GRID_SIZE/length;
-
         for (int i=0; i<length; i++) {
             List<Cell> row = grid.get(i);
             for(int j = 0; j < row.size(); j++) {
-                Shape shape = new Triangle(X_START_POS + width*j, Y_START_POS + width*i, width);
+                Triangle triangle = new Triangle(X_START_POS + width*j, Y_START_POS + width*i, width, flip);
+                flip = !flip;
+                Polygon shape = triangle.getPolygon();
                 shape.setOnMouseClicked(event -> this.determineWhichClicked(shape));
                 updateTotal(row.get(j));
                 Paint color = row.get(j).getState().getColor();

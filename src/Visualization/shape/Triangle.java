@@ -1,31 +1,60 @@
 package Visualization.shape;
 
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Shape;
 
-public class Triangle extends Shape {
-    private double topX;
-    private double topY;
+public class Triangle {
+    private Polygon polygon;
+    private double mySize;
+    private double pointX;
+    private double pointY;
     private double rightX;
     private double rightY;
     private double leftX;
     private double leftY;
-    public Triangle(Double startX, Double startY, Double size){
-        Polygon polygon = new Polygon();
-        generatePoints(startX, startY, size);
-        polygon.getPoints().addAll(
-                topX, topY,
-                rightX, rightY,
-                leftX, leftY
-        );
+
+    public Triangle(Double startX, Double startY, Double size, boolean flip){
+        mySize = size;
+        polygon = new Polygon();
+        generatePoints(startX, startY, size, flip);
+        if(flip){
+            polygon.getPoints().addAll(
+                    leftX, leftY,
+                    rightX, rightY,
+                    pointX, pointY
+            );
+        }
+        else{
+            polygon.getPoints().addAll(
+                    pointX, pointY,
+                    rightX, rightY,
+                    leftX, leftY
+            );
+        }
     }
-    private void generatePoints(Double startX, Double startY, Double size){
+    private void generatePoints(Double startX, Double startY, Double size, boolean flip){
         Double diff = Math.sqrt(size*size*(3.0/4));
-        topX = startX;
-        topY = startY;
-        rightX = startX + size/2;
-        rightY = startY - size;
-        leftX = startX - size/2;
-        leftY = startY - size;
+        if(flip){
+            leftX = startX - size/2;
+            leftY = startY;
+            rightX = startX + size/2;
+            rightY = startY;
+            pointX = startX;
+            pointY = startY - size;
+        }
+        else{
+            pointX = startX;
+            pointY = startY;
+            rightX = startX + size/2;
+            rightY = startY - size;
+            leftX = startX - size/2;
+            leftY = startY - size;
+        }
+    }
+    public Polygon getPolygon(){
+        return polygon;
+    }
+
+    public double getSize(){
+        return mySize;
     }
 }

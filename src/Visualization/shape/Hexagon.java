@@ -6,7 +6,8 @@ import javafx.scene.shape.Shape;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hexagon extends Shape {
+public class Hexagon {
+    private Polygon polygon;
     private double topLeftX;
     private double topLeftY;
     private double topRightX;
@@ -19,9 +20,11 @@ public class Hexagon extends Shape {
     private double bottomLeftY;
     private double midLeftX;
     private double midLeftY;
+    private double width;
+    private double height;
 
     public Hexagon(Double startX, Double startY, Double size){
-        Polygon polygon = new Polygon();
+        polygon = new Polygon();
         generatePoints(startX, startY, size);
         polygon.getPoints().addAll(
                 topLeftX, topLeftY,
@@ -33,21 +36,35 @@ public class Hexagon extends Shape {
         );
     }
 
-    private void generatePoints(Double startX, Double startY, Double size){
-        Double diff = Math.sqrt(size*size*(3.0/4));
-        System.out.println(diff);
+    private void generatePoints(Double startX, Double startY, Double length){
+        Double size = length/2.0;
+        Double halfHeight = size*Math.sqrt(3);
+
+        Double diff = length/4.0;
+        width = size + diff;
+        height = 2*halfHeight;
+
         topLeftX = startX;
         topLeftY = startY;
         topRightX = startX + size;
         topRightY = startY;
         midRightX = startX + size + diff;
-        midRightY = startY - size/2;
+        midRightY = startY - halfHeight;
         bottomRightX = startX + size;
-        bottomRightY = startY - size;
+        bottomRightY = startY - 2*halfHeight;
         bottomLeftX = startX;
-        bottomLeftY = startY - size;
+        bottomLeftY = startY - 2*halfHeight;
         midLeftX = startX - diff;
-        midLeftY = startY - size/2;
+        midLeftY = startY - halfHeight;
     }
+
+    public Polygon getPolygon(){
+        return polygon;
+    }
+
+    public double getXOffset(){
+        return width;
+    }
+    public double getYOffset(){ return height/2.0;}
 
 }
