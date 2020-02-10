@@ -54,19 +54,23 @@ DefaultWaTor.xml
 Features implemented:
 
 In terms of Simulation, 5 cellular automata (Fire, Game of Life, Percolation, Segregation, Wator) were implemented. There were implemented such that various grids including a hexagonal and rectangular grid were used. Boundary conditions include a finite boundary and a torus boundary. Multiple neighborhoods are also easily implementable, with the 8 edge square being implemented.
-
+Visualization allows for graph displaying cells, can be hid, can be paused and stepped through. One time bug occurred where these switched functionalities with quick clicking - but unlikely to occur again. Can change shapes to match the grid implemented. 
+Configuration handles errors by passing in default values when the file cannot be understood.
+Visualization can run multiple simulations at once, pop up in different windows.
+Configuration allows for totally random generated grids.
 
 ### Notes/Assumptions
 
 Assumptions or Simplifications: 
-Simulation Speed Slider changes the speed of all simulations. All simulations run in one window. The pause and step buttons only effect the corresponding simulation.
+Assume that people will look at configuration files to match tags before making new files - i.e. prefer to load default if tags do not match, rather than try to guess what the user meant. Sends error message if this is the case.
 
-Interesting data files:
+Interesting data files: Default files include files that we believe are representative of our simulations, but other files can be added which follow suit.
 
-Known Bugs: The triangle grid is not fully implemented, and thus cannot be used in its current state. The hexagon grid sometimes does not pick the correct neighbors and won't update the simulation accordingly to the rules of the simulation.
+Known Bugs: The triangle grid is not fully implemented, and thus cannot be used in its current state. The hexagon grid sometimes does not pick the correct neighbors and won't update the simulation accordingly to the rules of the simulation. Configuration might not load if given a blank file or file that is of a different type. Bars on graph do not match color with those in the simulation. Some small blips during simulations in terms of switching states. Clicking on cells does not change color. Slider does not change speed - would have been easy to implement but simply ran out of time.
+Visualiztion will run for a second before popping up meaning that the first screen is not displayed for a few rounds.
 
 Extra credit:
-
+Visualization has several new features added - see above, similarly with Simulation and Configuration.
 
 ### Impressions
 
