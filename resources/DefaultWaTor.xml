@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <General>
     <Configuration>
-        <author>"Dennis Harrsch"</author>
+        <author>Dennis Harrsch</author>
         <title>WaTor</title>
         <type>Square</type>
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
-        <percentage>7</percentage>
-        <shape>Rectangle</shape>
     </Configuration>
     <WaTor>
-        <probEaten>.3</probEaten>
+        <percentPrey>50</percentPrey>
+        <percentPredator>30</percentPredator>
+        <birthRate>7</birthRate>
+        <energy>3</energy>
     </WaTor>
 </General>
+
 

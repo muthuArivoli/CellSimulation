@@ -1,6 +1,9 @@
 package configuration.parameters;
 
+import cellsociety.Cell;
 import cellsociety.cellstate.*;
+import simulation.PercolationSimulation;
+import simulation.Simulation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,20 +13,20 @@ public class PercolationParameter extends Parameter {
 
 
     public PercolationParameter(){
-        this("Simulation Team 7", 25, 25, .7);
+        this("Square", 100, 100, .60);
     }
 
-    public PercolationParameter(String type, Integer length, Integer width, double perc){
+    public PercolationParameter(String type, Integer length, Integer width, double probOpen){
         gridType = type;
         gridLength = length;
         gridWidth = width;
-        percentage = perc;
-        possibleStates = new ArrayList<CellState>(Arrays.asList(State.OPEN, State.BLOCKED, State.FULL));
+        percentage = probOpen;
+        possibleStates = new ArrayList<CellState>(Arrays.asList(State.BLOCKED, State.OPEN, State.FULL));
     }
 
-    public PercolationCell makeCell(double prob){
+    public PercolationCell makeCell(){
         CellState state;
-        if(Math.random() < prob){
+        if(Math.random() < percentage){
             state = possibleStates.get(1);
         }
         else{
@@ -35,6 +38,11 @@ public class PercolationParameter extends Parameter {
     public double getThreshold(){
         return threshold;
     }
+
+    public Simulation makeSimulation(ArrayList<ArrayList<Cell>> initialGrid, Parameter currentParam){
+        return new PercolationSimulation(initialGrid, currentParam);
+    }
+
 
     @Override
     public String toString(){

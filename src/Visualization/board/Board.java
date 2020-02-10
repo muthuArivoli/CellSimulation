@@ -4,6 +4,7 @@ import cellsociety.Cell;
 import cellsociety.cellstate.CellState;
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Screen;
 
 import java.util.*;
@@ -17,15 +18,16 @@ public abstract class  Board {
 
     protected Map<String, String> rulesRelatingConditionOfCellToColor;
     protected Map<CellState, Double> numStates;
-    protected ArrayList<ArrayList<Cell>> grid;
+    protected List<ArrayList<Cell>> grid;
+    protected List<Shape> display;
 
     public Board(){}
 
-    public ArrayList<ArrayList<Cell>> getGrid(){
+    public List<ArrayList<Cell>> getGrid(){
         return grid;
     }
 
-    public abstract List<Rectangle> placeCells(Group root, Collection newGraph);
+    public abstract List<Shape> placeCells(Group root, Collection newGraph);
 
     public void updateTotal(Cell cell) {
         numStates.putIfAbsent(cell.getState(), 0.0);
@@ -36,15 +38,18 @@ public abstract class  Board {
         return new ArrayList(numStates.keySet());
     }
 
-    public void determineWhichClicked(Rectangle currentRect) {
-
-        double x = (currentRect.getX());
-        double y = (currentRect.getY());
-        double x_index = (x - X_START_POS)/(GRID_SIZE/grid.size());
-        double y_index = (y - Y_START_POS)/(GRID_SIZE/grid.size());
-        System.out.println(x_index);
-        System.out.println(y_index);
-        //tell the simulation which ones were clicked!
+    public void handleShapeClicked(Shape shape) {
+        int displayIndex = display.indexOf(shape);
+        int x_index = 0;
+        int y_index = 0;
+        if(displayIndex != 0){
+            x_index = displayIndex%(grid.size());
+            y_index = (int) grid.size()/displayIndex;
+        }
+        Cell clickedCell = grid.get(y_index).get(x_index);
+        clickedCell.cycleState();
+        Shape clickedShape = display.get(displayIndex);
+        clickedShape.setFill(clickedCell.getState().getColor());
     }
 
     public Map getNumStates() {

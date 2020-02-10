@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <General>
     <Configuration>
-        <author>"Dennis Harrsch"</author>
+        <author>Dennis Harrsch</author>
         <title>Segregation</title>
         <type>Square</type>
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
-        <percentage>7</percentage>
-        <shape>Rectangle</shape>
     </Configuration>
     <Segregation>
-        <tolerance>.2</tolerance>
+        <percentMinority>30</percentMinority>
+        <percentTolerance>20</percentTolerance>
+        <percentOpen>20</percentOpen>
     </Segregation>
 </General>
 

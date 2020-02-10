@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <General>
     <Configuration>
-        <author>"Dennis Harrsch"</author>
+        <author>Dennis Harrsch</author>
         <title>Fire</title>
-        <type>Square</type>
+        <type>Hexagon</type>
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
-        <percentage>8</percentage>
-        <shape>Rectangle</shape>
+        <percentage>5</percentage>
     </Configuration>
     <Fire>
-        <probability>.5</probability>
+        <percentAlive>80</percentAlive>
+        <percentBurning>20</percentBurning>
+        <percentCatch>80</percentCatch>
     </Fire>
 </General>

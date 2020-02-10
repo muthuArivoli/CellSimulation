@@ -12,7 +12,6 @@ public class PercolationSimulation extends CurrStateSimulation{
 
     public PercolationSimulation(Collection grid, Parameter param) {
         super(grid, param);
-        gridType = param.getGridType();
     }
 
     protected void getNextState(Cell cell, Collection<Cell> neighbor, Grid newGrid, Iterator<Cell> it){
@@ -30,7 +29,7 @@ public class PercolationSimulation extends CurrStateSimulation{
                 it.next().setState(State.FULL);
                 return;
             }
-            it.next();
         }
+        it.next();
     }
 }

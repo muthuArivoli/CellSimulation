@@ -1,9 +1,11 @@
 package Visualization.board;
 
+import Visualization.shape.Hexagon;
 import cellsociety.Cell;
 import javafx.scene.Group;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,24 +18,40 @@ public class HexagonalBoard extends Board {
         numStates = new HashMap<>();
     }
 
-    public List<Rectangle> placeCells(Group root, Collection newGraph) {
+    public List<Shape> placeCells(Group root, Collection newGraph) {
         grid = new ArrayList<ArrayList<Cell>>(newGraph);
         numStates = new HashMap<>();
-        ArrayList<Rectangle> display = new ArrayList<Rectangle>();
-        int length = grid.size();
-        double width = GRID_SIZE/length;
-        for (int i=0; i<length; i++) {
-            ArrayList<Cell> row = grid.get(i);
+        display = new ArrayList<Shape>();
+        double width = GRID_SIZE/grid.size();
+        double xOffset = calcXOffset(width);
+        double yOffset = calcYOffset(width);
+        boolean offset = false;
+        for (int i=0; i<grid.size(); i++) {
+            List<Cell> row = grid.get(i);
+            double xPos = X_START_POS;
+            if(offset){
+                xPos += xOffset;
+            }
             for(int j = 0; j < row.size(); j++) {
-                Rectangle currentRect = new Rectangle(X_START_POS + width*j, Y_START_POS + width*i, width, width);
-                currentRect.setOnMouseClicked(event -> this.determineWhichClicked(currentRect));
+                Hexagon hex = new Hexagon(xPos + j*(2*xOffset), Y_START_POS + yOffset*i, width);
+                Polygon shape = hex.getPolygon();
+                shape.setOnMouseClicked(event -> this.handleShapeClicked(shape));
                 updateTotal(row.get(j));
                 Paint color = row.get(j).getState().getColor();
-                currentRect.setFill(color);
-                display.add(currentRect);
-                root.getChildren().add(currentRect);
+                shape.setFill(color);
+                display.add(shape);
+                root.getChildren().add(shape);
             }
+            offset = !offset;
         }
         return display;
+    }
+
+    private double calcXOffset(Double length){
+        return (3.0)*length/(4.0);
+    }
+    private double calcYOffset(Double length){
+        double halfHeight = length*Math.sqrt(3);
+        return halfHeight;
     }
 }

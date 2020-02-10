@@ -41,9 +41,9 @@ public class BarGraph {
         XYChart.Series series = new XYChart.Series();
         series.setName(state.toString());
         XYChart.Data data = new XYChart.Data(state.toString(), amount);
-        //data.getNode().setStyle(state.getColor().toString());
         series.getData().add(data);
-        bc.getData().addAll(series);
+        bc.getData().add(series);
+//        series.getNode().setStyle(state.getColor().toString());
     }
 
     public void updateChart(Map<CellState, Double> numStates) {

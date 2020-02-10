@@ -3,7 +3,7 @@ package Visualization;
 
 import Visualization.board.Board;
 import Visualization.board.HexagonalBoard;
-import Visualization.board.SquareBoard;
+import Visualization.board.RectangularBoard;
 import Visualization.board.TriangularBoard;
 import configuration.GridBuilder;
 import javafx.scene.Group;
@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -27,11 +28,11 @@ public class Visualization {
     public static final double SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
     public static final double SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
     public static final Paint BACKGROUND = Color.WHEAT;
-    
+
     private Scene myScene;
     private Group root;
     private Board grid;
-    private List<Rectangle> display;
+    private List<Shape> display;
     private Slider mySlider;
     private Text simulationSpeedText;
     private GUITools uiBuilder;
@@ -53,7 +54,7 @@ public class Visualization {
         GridBuilder gridBuilder = new GridBuilder();
 
         root = new Group();
-        display = new ArrayList<Rectangle>();
+        display = new ArrayList<Shape>();
 
         Shapes newShapes = new Shapes();
         myShapes = newShapes.getMyShapes();
@@ -76,8 +77,8 @@ public class Visualization {
         else if(gridType.equals(myShapes[1])){
             grid = new TriangularBoard(simulation.returnGraph());
         }
-        else {
-            grid = new SquareBoard(simulation.returnGraph());
+        else{
+            grid = new RectangularBoard(simulation.returnGraph());
         }
     }
 
@@ -140,8 +141,8 @@ public class Visualization {
     }
 
     public void updateGrid(Collection graph) {
-        for(Rectangle r : display){
-            root.getChildren().remove(r);
+        for(Shape s : display){
+            root.getChildren().remove(s);
         }
         display.clear();
         display = grid.placeCells(root, graph);

@@ -2,6 +2,7 @@ package configuration;
 
 import Visualization.GUITools;
 import cellsociety.Cell;
+import configuration.configurationerror.IncorrectFileTypeError;
 import configuration.parameters.Parameter;
 import configuration.parameters.FireParameter;
 import configuration.parameters.PercolationParameter;
@@ -155,32 +156,18 @@ public class Configuration {
 
     private void initializeFile(File file){
         checkSelected = true;
-        currentParam = gridBuilder.makeParameter(file);
+        try{
+            currentParam = gridBuilder.makeParameter(file);
+        }
+        catch(IncorrectFileTypeError e){
+            currentParam = gridBuilder.makeParameter(new File(DEFAULT_FIRE));
+        }
         initialGrid = gridBuilder.makeGrid(currentParam);
         createSimulation();
     }
 
     private void createSimulation(){
-        if(currentParam.toString().equals("Fire Simulation")){
-            currentSim = new FireSimulation(this.getInitialGrid(), this.getCurrentParam());
-        }
-
-        if(currentParam.toString().equals("Game of Life Simulation")){
-            currentSim = new GameOfLifeSimulation(this.getInitialGrid(), this.getCurrentParam());
-        }
-        if(currentParam.toString().equals("Percolation Simulation")){
-            currentSim = new PercolationSimulation(this.getInitialGrid(), this.getCurrentParam());
-        }
-        if(currentParam.toString().equals("Segregation Simulation")){
-            currentSim = new SegregationSimulation(this.getInitialGrid(), this.getCurrentParam());
-        }
-        if(currentParam.toString().equals("Wa Tor Simulation")){
-            currentSim = new WatorSimulation(this.getInitialGrid(), this.getCurrentParam());
-        }
-        if(currentParam.toString().equals("Wa Tor Simulation")){
-            currentSim = new WatorSimulation(this.getInitialGrid(), this.getCurrentParam());
-        }
-
+       currentSim = currentParam.makeSimulation(this.initialGrid, this.currentParam);
     }
 
     private void handleKeyInput (KeyCode code) {
