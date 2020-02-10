@@ -133,11 +133,11 @@ public class GridBuilder {
             }
         }
         catch(Exception e){
+            double prob = .8;
+            param = new FireParameter(type, length, width, prob, percentage);
             throw new MalformedConfigurationException("Could not find all related fields for parameter. " +
                     "Missing values set to default.");
         }
-        double prob = .8;
-        param = new FireParameter(type, length, width, prob, percentage);
     }
 
     private void readGameOfLifeParam() throws MalformedConfigurationException{
@@ -152,6 +152,7 @@ public class GridBuilder {
             }
         }
         catch(Exception e){
+            param = new GameOfLifeParameter(type, length, width, percentage);
             throw new MalformedConfigurationException("Could not find all related fields for parameter. " +
                     "Missing values set to default.");
         }
@@ -169,6 +170,7 @@ public class GridBuilder {
             }
         }
         catch(Exception e){
+            param = new PercolationParameter(type, length, width, percentage);
             throw new MalformedConfigurationException("Could not find all related fields for parameter. " +
                     "Missing values set to default.");
         }
@@ -186,9 +188,12 @@ public class GridBuilder {
             }
         }
         catch(Exception e){
+            double prob = .8;
+            param = new SegregationParameter(type, length, width, prob, percentage);
             throw new MalformedConfigurationException("Could not find all related fields for parameter. " +
                     "Missing values set to default.");
         }
+        double prob = .8;
         param = new SegregationParameter(type, length, width, prob, percentage);
     }
     private void readWatorParam()throws MalformedConfigurationException{
@@ -203,9 +208,12 @@ public class GridBuilder {
             }
         }
         catch(Exception e){
+            double prob = .8;
+            param = new WatorParameter(type, length, width, prob, percentage);
             throw new MalformedConfigurationException("Could not find all related fields for parameter. " +
                     "Missing values set to default.");
         }
+        double prob = .8;
         param = new WatorParameter(type, length, width, prob, percentage);
     }
 }

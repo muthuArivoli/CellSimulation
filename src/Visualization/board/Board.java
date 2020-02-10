@@ -9,7 +9,7 @@ import javafx.stage.Screen;
 
 import java.util.*;
 
-public abstract class Board {
+public abstract class  Board {
     public static final double SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
     public static final double SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
     public static final double GRID_SIZE = SCREEN_HEIGHT;

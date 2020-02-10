@@ -1,5 +1,6 @@
 package Visualization;
 
+
 import Visualization.board.Board;
 import Visualization.board.HexagonalBoard;
 import Visualization.board.RectangularBoard;
@@ -27,22 +28,12 @@ public class Visualization {
     public static final double SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
     public static final double SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
     public static final Paint BACKGROUND = Color.WHEAT;
-    public static final String BUTTON_NAME_PATH = "./resources/ButtonNames.txt";
-    private static final String RESUME = "Resume";
-    private static final String PAUSE = "Pause";
-    private static final String DISPLAY = "Display Graph";
-    private static final String HIDE = "Hide Graph";
-    private static final String HEXAGON = "Hexagon";
-    private static final String TRIANGULAR = "TRIANGLE";
-    private static final String SQUARE = "Square";
-
 
     private Scene myScene;
     private Group root;
     private Board grid;
     private List<Shape> display;
     private Slider mySlider;
-    private List<Text> myText;
     private Text simulationSpeedText;
     private GUITools uiBuilder;
     private BarGraph barChart;
@@ -51,6 +42,8 @@ public class Visualization {
     private boolean step;
     private boolean newSimulation;
     private boolean showGraph;
+    private String[] myButtonNames;
+    private String[] myShapes;
 
     public Visualization(Simulation simulation){
         paused = false;
@@ -63,6 +56,9 @@ public class Visualization {
         root = new Group();
         display = new ArrayList<Shape>();
 
+        Shapes newShapes = new Shapes();
+        myShapes = newShapes.getMyShapes();
+
         initializeGrid(simulation);
 
         barChart = new BarGraph(grid.getNumStates());
@@ -74,10 +70,11 @@ public class Visualization {
 
     private void initializeGrid(Simulation simulation) {
         String gridType = simulation.getGridType();
-        if(gridType.equals(HEXAGON)){
+
+        if (gridType.equals(myShapes[0])){
             grid = new HexagonalBoard(simulation.returnGraph());
         }
-        else if(gridType.equals(TRIANGULAR)){
+        else if(gridType.equals(myShapes[1])){
             grid = new TriangularBoard(simulation.returnGraph());
         }
         else{
@@ -86,36 +83,39 @@ public class Visualization {
     }
 
     private void setupGame(double width, double height, Paint background) {
-        String[] buttonNames = getButtonNames();
+        ButtonNames myButtons = new ButtonNames();
+        myButtonNames = myButtons.getButtonNames();
 
-        Button displayGraph = uiBuilder.makeButtons(width * (0.5 / 4), height * (2.0/10), DISPLAY, width/10.0, "White");
+        Button displayGraph = uiBuilder.makeButtons(width * (0.5 / 4), height * (2.0/10), myButtonNames[0], width/10.0, "White");
         displayGraph.setOnAction(value -> displayGraphFunc(displayGraph));
 
-        Button pauseResume = uiBuilder.makeButtons(width * (1.0 / 4), height * (2.0 / 10), PAUSE, width/10.0, "White");
+        Button pauseResume = uiBuilder.makeButtons(width * (1.0 / 4), height * (2.0 / 10), myButtonNames[2], width/10.0, "White");
         pauseResume.setOnAction(value -> pauseResumeFunc(pauseResume));
 
-        Button makeStep = uiBuilder.makeButtons(width * (0.5 / 4), height * (9.0 / 10), buttonNames[1], width/10.0, "White");
+        Button makeStep = uiBuilder.makeButtons(width * (0.5 / 4), height * (9.0 / 10), myButtonNames[4], width/10.0, "White");
         makeStep.setOnAction(value -> stepButtonFunc());
 
-        Button changeSimulation = uiBuilder.makeButtons(width * (1.0 / 4), height * (9.0 / 10), buttonNames[3], width/10.0, "White");
+        Button changeSimulation = uiBuilder.makeButtons(width * (1.0 / 4), height * (9.0 / 10), myButtonNames[5], width/10.0, "White");
         changeSimulation.setOnAction(value -> changeSimulationFunc());
 
         root.getChildren().addAll(displayGraph, pauseResume, makeStep, changeSimulation);
 
-        simulationSpeedText = uiBuilder.makeText("Simulation Rate: 50", "Serif", 15, Color.BLACK, width*(0.5/4), height*(1.0/10));
+        String simulationSpeedTextString = barChart.getSimulationSpeedText();
+        simulationSpeedText = uiBuilder.makeText(simulationSpeedTextString, "Serif", 15, Color.BLACK, width*(0.5/4), height*(1.0/10));
 
         root.getChildren().add(simulationSpeedText);
+
 
         myScene = new Scene(root, width, height, background);
     }
 
     private void displayGraphFunc(Button displayGraph) {
-        if (displayGraph.getText().equals(DISPLAY)) {
-            displayGraph.setText(HIDE);
+        if (displayGraph.getText().equals(myButtonNames[0])) {
+            displayGraph.setText(myButtonNames[1]);
             showGraph = true;
             handleGraphDisplay();
         } else {
-            displayGraph.setText(RESUME);
+            displayGraph.setText(myButtonNames[0]);
             showGraph = false;
             handleGraphDisplay();
         }
@@ -140,32 +140,6 @@ public class Visualization {
         return myScene;
     }
 
-    private String[] getButtonNames() {
-        String[] buttonNames = new String[4];
-        //change hard coding
-        try {
-            File newFile = new File(BUTTON_NAME_PATH);
-            Scanner myReader = new Scanner(newFile);
-            int i=0;
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                buttonNames[i] = data;
-                i++;
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        }
-        return buttonNames;
-    }
-
-    private void displayArrayOfTextInScene(){
-        for (int i=0; i<myText.size(); i++) {
-            myText.get(i).setY(50+i*50);
-            root.getChildren().add(myText.get(i));
-        }
-    }
-
     public void updateGrid(Collection graph) {
         for(Shape s : display){
             root.getChildren().remove(s);
@@ -178,11 +152,11 @@ public class Visualization {
 
     private void pauseResumeFunc(Button pauseResumeButton) {
         paused = !paused;
-        if (pauseResumeButton.getText().equals(RESUME)) {
-            pauseResumeButton.setText(PAUSE);
+        if (pauseResumeButton.getText().equals(myButtonNames[3])) {
+            pauseResumeButton.setText(myButtonNames[2]);
             mySlider.setSimulationSpeed(true);
         } else {
-            pauseResumeButton.setText(RESUME);
+            pauseResumeButton.setText(myButtonNames[3]);
             mySlider.setSimulationSpeed(false);
         }
     }
@@ -200,22 +174,6 @@ public class Visualization {
 
     private void changeSimulationFunc() {
         newSimulation = true;
-    }
-
-    private void createArrayOfTextFromSimulationFile(SimulationFile mySimulationFile) {
-        myText = new ArrayList<>();
-        createTextBoxWithTheFollowingInformation(mySimulationFile.getFileName());
-        createTextBoxWithTheFollowingInformation(mySimulationFile.getSimulationName());
-        List<String> arrayOfRules = mySimulationFile.getArrayOfRules();
-        for (int i=0; i<arrayOfRules.size(); i++) {
-            createTextBoxWithTheFollowingInformation(arrayOfRules.get(i));
-        }
-    }
-    private void createTextBoxWithTheFollowingInformation(String text){
-        Text currentText = new Text(25, 25, text);
-        currentText.setFill(Color.BLACK);
-        currentText.setFont(Font.font(java.awt.Font.SERIF, 15));
-        myText.add(currentText);
     }
 
     public boolean isVisualizationReady() {
