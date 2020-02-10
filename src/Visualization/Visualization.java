@@ -53,12 +53,12 @@ public class Visualization {
     private boolean ready;
     private boolean paused;
     private boolean step;
-    private boolean reset;
+    private boolean newSimulation;
     private boolean showGraph;
 
     public Visualization(Simulation simulation){
         paused = false;
-        reset = false;
+        newSimulation = false;
         showGraph = false;
 
         uiBuilder = new GUITools();
@@ -205,7 +205,7 @@ public class Visualization {
     }
 
     private void changeSimulationFunc() {
-        reset = true;
+        newSimulation = true;
     }
 
     private void createArrayOfTextFromSimulationFile(SimulationFile mySimulationFile) {
@@ -240,8 +240,13 @@ public class Visualization {
         step = false;
     }
 
-    public boolean checkReset() {
-        return reset;
+    public boolean checkStartNewSim() {
+        return newSimulation;
+    }
+
+    public void newSimStarted() {
+        newSimulation = false;
     }
 }
+
 
