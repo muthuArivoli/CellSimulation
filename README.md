@@ -36,12 +36,19 @@ Main class: cellsociety/Driver
 Data files needed: 
 
 ButtonNames.properties
+
 GraphInformation.properties
+
 Shapes.properties
+
 DefaultFire.xml
+
 DefaultGameofLife.xml
+
 DefaultPercolation.xml
+
 DefaultSegregation.xml
+
 DefaultWaTor.xml
 
 Features implemented:
