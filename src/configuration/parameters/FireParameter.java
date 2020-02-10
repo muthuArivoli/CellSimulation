@@ -17,7 +17,7 @@ public class FireParameter extends Parameter {
         gridType = type;
         gridLength = length;
         gridWidth = width;
-        probCatch = prob;
+        probCatch = 1 - prob;
         percentage = perc;
         possibleStates = new ArrayList<CellState>(Arrays.asList(State.BURNING, State.ALIVE, State.EMPTY));
     }

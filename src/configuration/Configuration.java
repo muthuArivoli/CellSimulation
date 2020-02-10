@@ -51,12 +51,14 @@ public class Configuration {
     private ArrayList<ArrayList<Cell>> initialGrid;
     private Simulation currentSim;
     private boolean checkSelected;
+    private boolean waiting;
 
     public Configuration(){
         myLayout = new Group();
         myScene = new Scene(myLayout, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
         gridBuilder = new GridBuilder();
         checkSelected = false;
+        waiting = true;
         initializeConfigurationUI();
     }
 
@@ -185,5 +187,13 @@ public class Configuration {
         if (code == KeyCode.ESCAPE){
             System.exit(0);
         }
+    }
+
+    public boolean isWaiting() {
+        return waiting;
+    }
+
+    public void notWaiting() {
+        waiting = false;
     }
 }

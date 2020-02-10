@@ -6,7 +6,7 @@
         <type>Square</type>
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
-        <percentage>8</percentage>
+        <percentage>7</percentage>
         <shape>Rectangle</shape>
     </Configuration>
 </General>

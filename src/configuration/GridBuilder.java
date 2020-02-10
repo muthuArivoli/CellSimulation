@@ -18,7 +18,7 @@ import java.util.List;
 
 public class GridBuilder {
 
-    private static final double ORIGINAL_DIST = .15;
+    private static final double ORIGINAL_DIST = .3;
     private static final File BLANK_FILE = new File("./resources/DefaultFire.xml");
 
     private Parameter param;

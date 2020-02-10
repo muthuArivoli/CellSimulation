@@ -37,10 +37,13 @@ public abstract class  Board {
     }
 
     public void determineWhichClicked(Rectangle currentRect) {
+
         double x = (currentRect.getX());
         double y = (currentRect.getY());
-        x = (x - X_START_POS)/(GRID_SIZE/grid.size());
-        y = (y - Y_START_POS)/(GRID_SIZE/grid.size());
+        double x_index = (x - X_START_POS)/(GRID_SIZE/grid.size());
+        double y_index = (y - Y_START_POS)/(GRID_SIZE/grid.size());
+        System.out.println(x);
+        System.out.println(y);
         //tell the simulation which ones were clicked!
     }
 
