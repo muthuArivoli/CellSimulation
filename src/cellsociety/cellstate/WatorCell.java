@@ -11,20 +11,16 @@ import java.util.List;
 public class WatorCell extends Cell implements CellState {
     private int energy;
     private int birth;
+    private int birthRate;
 
-    public WatorCell(CellState myState, int energyStart, int birthRate){
+    public WatorCell(CellState myState, int energyStart, int birthRateGiven){
         super(myState);
         energy = energyStart;
-        birth = birthRate;
+        birth = birthRateGiven;
+        birthRate = birthRateGiven;
         possibleStates = new ArrayList<CellState>(Arrays.asList(State.DEAD, State.PREY, State.PREDATOR));
     }
 
-    public int getEnergy(){
-        return energy;
-    }
-    public int getBirth() {
-        return birth;
-    }
     public void decrementBirth(){
         birth--;
     }
@@ -46,7 +42,7 @@ public class WatorCell extends Cell implements CellState {
             return State.MOVE;
         }
         else{
-            birth = 7;
+            birth = birthRate;
         }
         return getState();
     }
