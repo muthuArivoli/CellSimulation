@@ -5,7 +5,9 @@ This project implements a cellular automata simulator.
 
 Names:
 Muthu Arivoli (ma381)
+
 Dennis Harrsch (dmh58)
+
 Luke Peterson (lp175)
 
 ### Timeline
@@ -19,7 +21,9 @@ Hours Spent: 80
 ### Primary Roles
 
 Muthu Arivoli: Simulation
+
 Dennis Harrsch: Configuration
+
 Luke Peterson: Visualization
 
 ### Resources Used
