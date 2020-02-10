@@ -4,6 +4,7 @@ import cellsociety.Cell;
 import cellsociety.cellstate.CellState;
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Screen;
 
 import java.util.*;
@@ -25,7 +26,7 @@ public abstract class Board {
         return grid;
     }
 
-    public abstract List<Rectangle> placeCells(Group root, Collection newGraph);
+    public abstract List<Shape> placeCells(Group root, Collection newGraph);
 
     public void updateTotal(Cell cell) {
         numStates.putIfAbsent(cell.getState(), 0.0);
@@ -36,15 +37,11 @@ public abstract class Board {
         return new ArrayList(numStates.keySet());
     }
 
-    public void determineWhichClicked(Rectangle currentRect) {
-
-        double x = (currentRect.getX());
-        double y = (currentRect.getY());
+    public void determineWhichClicked(Shape shape) {
+        double x = (shape.getLayoutX());
+        double y = (shape.getLayoutY());
         double x_index = (x - X_START_POS)/(GRID_SIZE/grid.size());
         double y_index = (y - Y_START_POS)/(GRID_SIZE/grid.size());
-        System.out.println(x);
-        System.out.println(y);
-        //tell the simulation which ones were clicked!
     }
 
     public Map getNumStates() {

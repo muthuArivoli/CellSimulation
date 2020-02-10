@@ -11,7 +11,6 @@ import java.util.Iterator;
 public class PercolationSimulation extends CurrStateSimulation{
     public PercolationSimulation(Collection grid, Parameter param) {
         super(grid, param);
-        gridType = param.getGridType();
     }
 
     protected void getNextState(Cell cell, Collection<Cell> neighbor, Grid newGrid, Iterator<Cell> it){

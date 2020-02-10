@@ -160,23 +160,7 @@ public class Configuration {
     }
 
     private void createSimulation(){
-        if(currentParam.toString().equals("Fire Simulation")){
-            currentSim = new FireSimulation(this.getInitialGrid(), this.getCurrentParam());
-        }
-
-        if(currentParam.toString().equals("Game of Life Simulation")){
-            currentSim = new GameOfLifeSimulation(this.getInitialGrid(), this.getCurrentParam());
-        }
-        if(currentParam.toString().equals("Percolation Simulation")){
-            currentSim = new PercolationSimulation(this.getInitialGrid(), this.getCurrentParam());
-        }
-        if(currentParam.toString().equals("Segregation Simulation")){
-            currentSim = new SegregationSimulation(this.getInitialGrid(), this.getCurrentParam());
-        }
-        if(currentParam.toString().equals("Wa Tor Simulation")){
-            currentSim = new WatorSimulation(this.getInitialGrid(), this.getCurrentParam());
-        }
-
+       currentSim = currentParam.makeSimulation(this.initialGrid, this.currentParam);
     }
 
     private void handleKeyInput (KeyCode code) {

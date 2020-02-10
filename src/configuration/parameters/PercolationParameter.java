@@ -1,6 +1,10 @@
 package configuration.parameters;
 
+import cellsociety.Cell;
 import cellsociety.cellstate.*;
+import simulation.FireSimulation;
+import simulation.PercolationSimulation;
+import simulation.Simulation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +39,11 @@ public class PercolationParameter extends Parameter {
     public double getThreshold(){
         return threshold;
     }
+
+    public Simulation makeSimulation(ArrayList<ArrayList<Cell>> initialGrid, Parameter currentParam){
+        return new PercolationSimulation(initialGrid, currentParam);
+    }
+
 
     @Override
     public String toString(){

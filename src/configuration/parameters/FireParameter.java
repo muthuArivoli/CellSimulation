@@ -1,8 +1,11 @@
 package configuration.parameters;
 
+import cellsociety.Cell;
 import cellsociety.cellstate.CellState;
 import cellsociety.cellstate.FireCell;
 import cellsociety.cellstate.State;
+import simulation.FireSimulation;
+import simulation.Simulation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +39,11 @@ public class FireParameter extends Parameter {
     public double getThreshold() {
         return probCatch;
     }
+
+    public Simulation makeSimulation(ArrayList<ArrayList<Cell>> initialGrid, Parameter currentParam){
+        return new FireSimulation(initialGrid, currentParam);
+    }
+
 
     @Override
     public String toString(){

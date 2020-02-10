@@ -9,9 +9,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class GameOfLifeSimulation extends CurrStateSimulation {
-    public GameOfLifeSimulation(Collection<Cell> grid, Parameter param) {
+    public GameOfLifeSimulation(Collection grid, Parameter param) {
         super(grid, param);
-        gridType = param.getGridType();
     }
 
     protected void getNextState(Cell cell, Collection<Cell> neighbor, Grid newGrid, Iterator<Cell> it){

@@ -2,7 +2,7 @@ package Visualization;
 
 import Visualization.board.Board;
 import Visualization.board.HexagonalBoard;
-import Visualization.board.SquareBoard;
+import Visualization.board.RectangularBoard;
 import Visualization.board.TriangularBoard;
 import configuration.GridBuilder;
 import javafx.scene.Group;
@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -44,7 +45,7 @@ public class Visualization {
     private Scene myScene;
     private Group root;
     private Board grid;
-    private List<Rectangle> display;
+    private List<Shape> display;
     private Slider mySlider;
     private List<Text> myText;
     private Text simulationSpeedText;
@@ -65,7 +66,7 @@ public class Visualization {
         GridBuilder gridBuilder = new GridBuilder();
 
         root = new Group();
-        display = new ArrayList<Rectangle>();
+        display = new ArrayList<Shape>();
 
         initializeGrid(simulation);
 
@@ -85,7 +86,7 @@ public class Visualization {
             grid = new TriangularBoard(simulation.returnGraph());
         }
         else{
-            grid = new SquareBoard(simulation.returnGraph());
+            grid = new RectangularBoard(simulation.returnGraph());
         }
     }
 
@@ -171,8 +172,8 @@ public class Visualization {
     }
 
     public void updateGrid(Collection graph) {
-        for(Rectangle r : display){
-            root.getChildren().remove(r);
+        for(Shape s : display){
+            root.getChildren().remove(s);
         }
         display.clear();
         display = grid.placeCells(root, graph);

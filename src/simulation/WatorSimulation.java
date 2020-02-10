@@ -15,7 +15,6 @@ public class WatorSimulation extends Simulation {
 
     public WatorSimulation(Collection grid, Parameter param) {
         super(grid, param);
-        gridType = param.getGridType();
     }
 
     protected void getNextState(Cell cell, Collection neighbor, Grid newGrid, Iterator<Cell> it){

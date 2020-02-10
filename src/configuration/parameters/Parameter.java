@@ -2,6 +2,7 @@ package configuration.parameters;
 import cellsociety.Cell;
 import cellsociety.cellstate.CellState;
 import javafx.scene.shape.Shape;
+import simulation.Simulation;
 
 import java.util.ArrayList;
 
@@ -38,4 +39,6 @@ public abstract class Parameter {
     public String getGridType(){
         return gridType;
     }
+
+    public abstract Simulation makeSimulation(ArrayList<ArrayList<Cell>> initialGrid, Parameter currentParam);
 }

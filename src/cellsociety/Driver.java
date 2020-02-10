@@ -19,8 +19,6 @@ public class Driver extends Application {
     public static final int MILLISECOND_DELAY = 100000 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
-    private boolean waiting;
-
     private List<Stage> myStages;
     private List<Scene> myScenes;
     private List<Configuration> myConfigs;
@@ -42,8 +40,6 @@ public class Driver extends Application {
         myConfigs = new ArrayList<Configuration>();
         mySimulations = new ArrayList<Simulation>();
         myVisualizations = new ArrayList<Visualization>();
-
-        waiting = true;
         speed = 1;
 
         Configuration myConfig = new Configuration();

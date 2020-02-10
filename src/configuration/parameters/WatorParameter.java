@@ -1,6 +1,10 @@
 package configuration.parameters;
 
+import cellsociety.Cell;
 import cellsociety.cellstate.*;
+import simulation.FireSimulation;
+import simulation.Simulation;
+import simulation.WatorSimulation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +43,10 @@ public class WatorParameter extends Parameter {
 
     public double getThreshold() {
         return probEaten;
+    }
+
+    public Simulation makeSimulation(ArrayList<ArrayList<Cell>> initialGrid, Parameter currentParam){
+        return new WatorSimulation(initialGrid, currentParam);
     }
 
     @Override

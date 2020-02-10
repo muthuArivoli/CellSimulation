@@ -1,8 +1,12 @@
 package configuration.parameters;
 
+import cellsociety.Cell;
 import cellsociety.cellstate.CellState;
 import cellsociety.cellstate.SegregationCell;
 import cellsociety.cellstate.State;
+import simulation.FireSimulation;
+import simulation.SegregationSimulation;
+import simulation.Simulation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +46,11 @@ public class SegregationParameter extends Parameter {
     public double getThreshold() {
         return probEaten;
     }
+
+    public Simulation makeSimulation(ArrayList<ArrayList<Cell>> initialGrid, Parameter currentParam){
+        return new SegregationSimulation(initialGrid, currentParam);
+    }
+
 
     @Override
     public String toString(){

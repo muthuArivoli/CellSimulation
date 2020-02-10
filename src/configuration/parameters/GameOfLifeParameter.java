@@ -1,11 +1,16 @@
 package configuration.parameters;
 
+import cellsociety.Cell;
 import cellsociety.cellstate.CellState;
 import cellsociety.cellstate.GameOfLifeCell;
 import cellsociety.cellstate.State;
+import simulation.FireSimulation;
+import simulation.GameOfLifeSimulation;
+import simulation.Simulation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 
 public class GameOfLifeParameter extends Parameter {
     private double threshold;
@@ -37,6 +42,12 @@ public class GameOfLifeParameter extends Parameter {
     public double getThreshold(){
         return threshold;
     }
+
+    public Simulation makeSimulation(ArrayList<ArrayList<Cell>> initialGrid, Parameter currentParam){
+        return new GameOfLifeSimulation(initialGrid, currentParam);
+    }
+
+
 
     @Override
     public String toString(){
