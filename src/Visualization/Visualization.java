@@ -23,8 +23,6 @@ import java.util.*;
 import java.util.List;
 
 public class Visualization {
-    public static final String TITLE = "Visualization";
-    public static final int FRAMES_PER_SECOND = 60;
     public static final double SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
     public static final double SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
     public static final Paint BACKGROUND = Color.WHEAT;
@@ -39,7 +37,6 @@ public class Visualization {
     private Board grid;
     private List<Rectangle> display;
     private Slider mySlider;
-    private List<Text> myText;
     private Text simulationSpeedText;
     private GUITools uiBuilder;
     private BarGraph barChart;
@@ -48,7 +45,6 @@ public class Visualization {
     private boolean step;
     private boolean newSimulation;
     private boolean showGraph;
-    private ResourceBundle myResources;
     private String[] myButtonNames;
 
     public Visualization(Simulation simulation){
@@ -85,7 +81,6 @@ public class Visualization {
     }
 
     private void setupGame(double width, double height, Paint background) {
-        //String[] buttonNames = getButtonNames();
         ButtonNames myButtons = new ButtonNames();
         myButtonNames = myButtons.getButtonNames();
 
@@ -104,7 +99,7 @@ public class Visualization {
         root.getChildren().addAll(displayGraph, pauseResume, makeStep, changeSimulation);
 
         String simulationSpeedTextString = barChart.getSimulationSpeedText();
-        simulationSpeedText = uiBuilder.makeText(simulationSpeedTextString + " 50", "Serif", 15, Color.BLACK, width*(0.5/4), height*(1.0/10));
+        simulationSpeedText = uiBuilder.makeText(simulationSpeedTextString, "Serif", 15, Color.BLACK, width*(0.5/4), height*(1.0/10));
 
         root.getChildren().add(simulationSpeedText);
 
@@ -143,25 +138,6 @@ public class Visualization {
         return myScene;
     }
 
-    private String[] getButtonNames() {
-        String[] buttonNames = new String[4];
-        //change hard coding
-        try {
-            File newFile = new File(BUTTON_NAME_PATH);
-            Scanner myReader = new Scanner(newFile);
-            int i=0;
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                buttonNames[i] = data;
-                i++;
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        }
-        return buttonNames;
-    }
-
     public void updateGrid(Collection graph) {
         for(Rectangle r : display){
             root.getChildren().remove(r);
@@ -177,11 +153,9 @@ public class Visualization {
         if (pauseResumeButton.getText().equals(myButtonNames[3])) {
             pauseResumeButton.setText(myButtonNames[2]);
             mySlider.setSimulationSpeed(true);
-            System.out.println(mySlider.getCurrentSimulationSpeed());
         } else {
             pauseResumeButton.setText(myButtonNames[3]);
             mySlider.setSimulationSpeed(false);
-            System.out.println(mySlider.getCurrentSimulationSpeed());
         }
     }
 

@@ -23,7 +23,6 @@ public class BarGraph {
 
     public BarGraph(Map<CellState, Double> numStates) {
         getInformationFromFile();
-        printForDebugging();
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
         bc = new BarChart<String, Number>(xAxis, yAxis);
@@ -61,15 +60,14 @@ public class BarGraph {
         myInformation[2] = (myResources.getString("State"));
         myInformation[3] = (myResources.getString("NumberonScreen"));
         myInformation[4] = (myResources.getString("SimulationSpeedText"));
-    }
-
-    private void printForDebugging(){
-        for (int i=0; i<myInformation.length; i++){
-            System.out.println(myInformation[i]);
-        }
+        myInformation[5] = (myResources.getString("Filenotfound"));
     }
 
     public String getSimulationSpeedText() {
         return myInformation[4];
+    }
+
+    public String getFileNotFound() {
+        return myInformation[5];
     }
 }
