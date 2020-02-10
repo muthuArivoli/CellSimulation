@@ -6,7 +6,7 @@
         <type>Hexagon</type>
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
-        <percentage>8</percentage>
+        <percentage>7</percentage>
     </Configuration>
     <Fire>
         <probability>.5</probability>
