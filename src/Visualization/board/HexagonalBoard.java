@@ -18,7 +18,6 @@ public class HexagonalBoard extends Board {
     }
 
     public List<Shape> placeCells(Group root, Collection newGraph) {
-
         grid = new ArrayList<ArrayList<Cell>>(newGraph);
         numStates = new HashMap<>();
 

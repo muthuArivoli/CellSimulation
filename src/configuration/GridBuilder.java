@@ -99,10 +99,10 @@ public class GridBuilder {
                     Element eElement = (Element) nNode;
                     title = eElement.getElementsByTagName("title").item(0).getTextContent();
                     type = eElement.getElementsByTagName("type").item(0).getTextContent();
+                    System.out.println(type);
                     width = Integer.parseInt(eElement.getElementsByTagName("gridWidth").item(0).getTextContent());
                     length = Integer.parseInt(eElement.getElementsByTagName("gridLength").item(0).getTextContent());
                     percentage = Integer.parseInt(eElement.getElementsByTagName("percentage").item(0).getTextContent()) / 10.0;
-                    System.out.println(title);
                 }
             }
         }
