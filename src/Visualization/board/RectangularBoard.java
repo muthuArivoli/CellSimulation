@@ -24,7 +24,7 @@ public class RectangularBoard extends Board {
         grid = new ArrayList<ArrayList<Cell>>(newGraph);
         numStates = new HashMap<>();
 
-        List<Shape> display = new ArrayList<Shape>();
+        display = new ArrayList<Shape>();
 
         int length = grid.size();
         double width = GRID_SIZE/length;
@@ -33,7 +33,7 @@ public class RectangularBoard extends Board {
             List<Cell> row = grid.get(i);
             for(int j = 0; j < row.size(); j++) {
                 Shape shape = new Rectangle(X_START_POS + width*j, Y_START_POS + width*i, width, width);
-                shape.setOnMouseClicked(event -> this.determineWhichClicked(shape));
+                shape.setOnMouseClicked(event -> this.handleShapeClicked(shape));
                 updateTotal(row.get(j));
                 Paint color = row.get(j).getState().getColor();
                 shape.setFill(color);

@@ -9,7 +9,6 @@ import java.util.List;
 public class PercolationCell extends Cell {
 
     private CellState state;
-    private List<CellState> possibleStates;
 
     public PercolationCell(CellState state){
         this.state = state;

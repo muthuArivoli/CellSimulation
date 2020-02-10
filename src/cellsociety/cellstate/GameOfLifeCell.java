@@ -9,7 +9,6 @@ import java.util.List;
 public class GameOfLifeCell extends Cell {
 
     private CellState state;
-    private List<CellState> possibleStates;
 
     public GameOfLifeCell(CellState state){
         this.state = state;

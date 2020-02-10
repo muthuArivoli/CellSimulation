@@ -18,11 +18,12 @@ public abstract class Board {
 
     protected Map<String, String> rulesRelatingConditionOfCellToColor;
     protected Map<CellState, Double> numStates;
-    protected ArrayList<ArrayList<Cell>> grid;
+    protected List<ArrayList<Cell>> grid;
+    protected List<Shape> display;
 
     public Board(){}
 
-    public ArrayList<ArrayList<Cell>> getGrid(){
+    public List<ArrayList<Cell>> getGrid(){
         return grid;
     }
 
@@ -37,11 +38,20 @@ public abstract class Board {
         return new ArrayList(numStates.keySet());
     }
 
-    public void determineWhichClicked(Shape shape) {
-        double x = (shape.getLayoutX());
-        double y = (shape.getLayoutY());
-        double x_index = (x - X_START_POS)/(GRID_SIZE/grid.size());
-        double y_index = (y - Y_START_POS)/(GRID_SIZE/grid.size());
+    public void handleShapeClicked(Shape shape) {
+        int displayIndex = display.indexOf(shape);
+        System.out.println("PRINTING INDICES");
+        System.out.println(displayIndex);
+        int x_index = 0;
+        int y_index = 0;
+        if(displayIndex != 0){
+            x_index = displayIndex%(grid.size());
+            y_index = (int) grid.size()/displayIndex;
+        }
+        Cell clickedCell = grid.get(y_index).get(x_index);
+        clickedCell.cycleState();
+        Shape clickedShape = display.get(displayIndex);
+        clickedShape.setFill(clickedCell.getState().getColor());
     }
 
     public Map getNumStates() {

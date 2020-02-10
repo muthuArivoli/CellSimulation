@@ -21,7 +21,7 @@ public class HexagonalBoard extends Board {
     public List<Shape> placeCells(Group root, Collection newGraph) {
         grid = new ArrayList<ArrayList<Cell>>(newGraph);
         numStates = new HashMap<>();
-        List<Shape> display = new ArrayList<Shape>();
+        display = new ArrayList<Shape>();
         double width = GRID_SIZE/grid.size();
         double xOffset = calcXOffset(width);
         double yOffset = calcYOffset(width);
@@ -35,7 +35,7 @@ public class HexagonalBoard extends Board {
             for(int j = 0; j < row.size(); j++) {
                 Hexagon hex = new Hexagon(xPos + j*(2*xOffset), Y_START_POS + yOffset*i, width);
                 Polygon shape = hex.getPolygon();
-                shape.setOnMouseClicked(event -> this.determineWhichClicked(shape));
+                shape.setOnMouseClicked(event -> this.handleShapeClicked(shape));
                 updateTotal(row.get(j));
                 Paint color = row.get(j).getState().getColor();
                 shape.setFill(color);

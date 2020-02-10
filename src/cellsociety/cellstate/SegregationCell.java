@@ -9,7 +9,6 @@ import java.util.List;
 public class SegregationCell extends Cell {
 
     private CellState state;
-    private List<CellState> possibleStates;
 
     public SegregationCell(CellState state){
         this.state = state;

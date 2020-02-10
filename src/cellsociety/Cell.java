@@ -5,9 +5,12 @@ import cellsociety.cellstate.CellState;
 
 import simulation.Clonable;
 
+import java.util.List;
+
 public abstract class Cell implements Clonable {
 
     protected CellState state;
+    protected List<CellState> possibleStates;
 
     public Cell(){}
 
@@ -19,6 +22,11 @@ public abstract class Cell implements Clonable {
 
     public CellState getState(){
         return state;
+    }
+
+    public void cycleState(){
+        int dex = possibleStates.indexOf(this.state);
+        this.state = possibleStates.get((dex + 1)%possibleStates.size());
     }
 
     public void setState(CellState state) {

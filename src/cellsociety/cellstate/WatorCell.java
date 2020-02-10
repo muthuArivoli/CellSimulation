@@ -12,7 +12,6 @@ public class WatorCell extends Cell {
     private CellState myState;
     private int energy;
     private int birth;
-    private List<CellState> possibleStates;
 
     public WatorCell(CellState myState){
         this.myState = myState;

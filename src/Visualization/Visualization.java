@@ -24,15 +24,10 @@ import java.util.*;
 import java.util.List;
 
 public class Visualization {
-    public static final String TITLE = "Visualization";
-    public static final int FRAMES_PER_SECOND = 60;
     public static final double SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
     public static final double SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
-    public static final int MILLISECOND_DELAY = 1000*100000 / FRAMES_PER_SECOND;
-    public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static final Paint BACKGROUND = Color.WHEAT;
     public static final String BUTTON_NAME_PATH = "./resources/ButtonNames.txt";
-    public static final String SIMULATION_FILE_EXAMPLE_PATH = "./resources/SimulationFileExample.txt";
     private static final String RESUME = "Resume";
     private static final String PAUSE = "Pause";
     private static final String DISPLAY = "Display Graph";
@@ -186,11 +181,9 @@ public class Visualization {
         if (pauseResumeButton.getText().equals(RESUME)) {
             pauseResumeButton.setText(PAUSE);
             mySlider.setSimulationSpeed(true);
-            System.out.println(mySlider.getCurrentSimulationSpeed());
         } else {
             pauseResumeButton.setText(RESUME);
             mySlider.setSimulationSpeed(false);
-            System.out.println(mySlider.getCurrentSimulationSpeed());
         }
     }
 

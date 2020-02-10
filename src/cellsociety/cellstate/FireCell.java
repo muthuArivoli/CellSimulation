@@ -9,7 +9,6 @@ import java.util.List;
 public class FireCell extends Cell {
 
     private CellState state;
-    private List<CellState> possibleStates;
 
     public FireCell(CellState state){
         this.state = state;

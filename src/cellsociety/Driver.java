@@ -80,7 +80,6 @@ public class Driver extends Application {
                 sim.update();
                 v.updateGrid(sim.returnGraph());
                 speed = v.getCurrentSimulationSpeed();
-                System.out.println(speed);
             }
         }
     }
