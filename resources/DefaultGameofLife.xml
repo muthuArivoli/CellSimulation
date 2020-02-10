@@ -6,6 +6,8 @@
         <type>Square</type>
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
-        <percentage>7</percentage>
     </Configuration>
+    <GameofLife>
+        <percentAlive>30</percentAlive>
+    </GameofLife>
 </General>

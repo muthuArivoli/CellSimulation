@@ -13,10 +13,10 @@ public class WatorCell extends Cell {
     private int energy;
     private int birth;
 
-    public WatorCell(CellState myState){
+    public WatorCell(CellState myState, int energyStart, int birthRate){
         this.myState = myState;
-        energy = 5;
-        birth = 7;
+        energy = energyStart;
+        birth = birthRate;
         possibleStates = new ArrayList<CellState>(Arrays.asList(State.DEAD, State.PREY, State.PREDATOR));
     }
 
@@ -42,6 +42,6 @@ public class WatorCell extends Cell {
 
     @Override
     public Cell clone() {
-        return new WatorCell(this.state);
+        return new WatorCell(this.state, energy, birth);
     }
 }

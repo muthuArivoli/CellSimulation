@@ -19,7 +19,7 @@ public abstract class Parameter {
 
     public abstract double getThreshold();
 
-    public abstract Cell makeCell(double prob);
+    public abstract Cell makeCell();
 
     public String getAuthor(){ return author; }
     public Integer getGridLength(){

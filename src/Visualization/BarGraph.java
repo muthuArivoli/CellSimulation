@@ -43,7 +43,6 @@ public class BarGraph {
         XYChart.Data data = new XYChart.Data(state.toString(), amount);
         series.getData().add(data);
         bc.getData().add(series);
-
 //        series.getNode().setStyle(state.getColor().toString());
     }
 

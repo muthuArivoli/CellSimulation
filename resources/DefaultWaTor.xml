@@ -6,10 +6,12 @@
         <type>Square</type>
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
-        <percentage>7</percentage>
     </Configuration>
     <WaTor>
-        <probEaten>.3</probEaten>
+        <percentPrey>30</percentPrey>
+        <percentPredator>30</percentPredator>
+        <birthRate>7</birthRate>
+        <energy>3</energy>
     </WaTor>
 </General>
 

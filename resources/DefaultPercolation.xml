@@ -6,6 +6,8 @@
         <type>Hexagon</type>
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
-        <percentage>4</percentage>
     </Configuration>
+    <Percolation>
+        <probOpen>60</probOpen>
+    </Percolation>
 </General>

@@ -13,12 +13,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 public class GridBuilder {
     private static final double ORIGINAL_DIST = .3;
     private static final File BLANK_FILE = new File("./resources/DefaultFire.xml");
+    private static final List<String> possibleTypes = new ArrayList<String>(Arrays.asList("Square", "Hexagon", "Triangle"));
 
     private Parameter param;
     private String title;
@@ -37,14 +39,14 @@ public class GridBuilder {
         double percentage = 0;
     }
 
-    public Parameter makeParameter(File file){
+    public Parameter makeParameter(File file) throws IncorrectFileTypeError{
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             doc = dBuilder.parse(file);
             doc.getDocumentElement().normalize();
         } catch (Exception e) {
-            throw new IncorrectFileTypeError("File could not be made to conform to XML format");
+            throw new IncorrectFileTypeError("File could not be made to conform to XML format. A default simulation has been run.");
         }
         readFile(doc);
         return param;
@@ -56,7 +58,7 @@ public class GridBuilder {
             for (int i = 0; i < param.getGridWidth(); i++) {
                 ArrayList<Cell> row = new ArrayList<Cell>();
                 for (int j = 0; j < param.getGridLength(); j++) {
-                    row.add(param.makeCell(param.getPercentage()));
+                    row.add(param.makeCell());
                 }
                 grid.add(row);
             }
@@ -66,7 +68,7 @@ public class GridBuilder {
                 for(int i = 0; i < 100; i++) {
                     ArrayList<Cell> row = new ArrayList<Cell>();
                     for (int j = 0; j < 100; j++) {
-                        row.add(param.makeCell(.8));
+                        row.add(param.makeCell());
                     }
                 }
                 throw new NullParameterException("No parameter found");
@@ -91,9 +93,9 @@ public class GridBuilder {
                     Element eElement = (Element) nNode;
                     title = eElement.getElementsByTagName("title").item(0).getTextContent();
                     type = eElement.getElementsByTagName("type").item(0).getTextContent();
+                    checkType();
                     width = Integer.parseInt(eElement.getElementsByTagName("gridWidth").item(0).getTextContent());
                     length = Integer.parseInt(eElement.getElementsByTagName("gridLength").item(0).getTextContent());
-                    percentage = Integer.parseInt(eElement.getElementsByTagName("percentage").item(0).getTextContent()) / 10.0;
                 }
             }
         }
@@ -103,118 +105,159 @@ public class GridBuilder {
         assignParameter();
     }
 
+    private void checkType() {
+        if(!possibleTypes.contains(type)){
+            type = "Square";
+        }
+    }
+
     private void assignParameter(){
         if(title.equals("Fire")){
-            readFireParam();
+            try{
+                readFireParam();
+            }
+            catch(MalformedConfigurationException e){
+                param = new FireParameter();
+            }
         }
         else if(title.equals("Game of Life")){
-            readGameOfLifeParam();
+            try{
+                readGameOfLifeParam();
+            }
+            catch(MalformedConfigurationException e){
+                param = new GameOfLifeParameter();
+            }
         }
         else if(title.equals("Percolation")){
-            readPercolationParam();
+            try{
+                readPercolationParam();
+            }
+            catch(MalformedConfigurationException e){
+                param = new PercolationParameter();
+            }
         }
         else if(title.equals("Segregation")){
-            readSegregationParam();
+            try{
+                readSegregationParam();
+            }
+            catch(MalformedConfigurationException e){
+                param = new SegregationParameter();
+            }
         }
         else if(title.equals("WaTor")){
-            readWatorParam();
+            try{
+                readWatorParam();
+            }
+            catch(MalformedConfigurationException e){
+                param = new WatorParameter();
+            }
         }
     }
 
     private void readFireParam() throws MalformedConfigurationException{
+        double percentAlive = 0;
+        double percentBurning = 0;
+        double percentCatch = 0;
         try{
             NodeList nList = doc.getElementsByTagName(title);
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
-                    percentage = Integer.parseInt(eElement.getElementsByTagName("percentage").item(0).getTextContent()) / 10.0;
+                    percentAlive = Integer.parseInt(eElement.getElementsByTagName("percentAlive").item(0).getTextContent()) / 100.0;
+                    percentBurning = Integer.parseInt(eElement.getElementsByTagName("percentBurning").item(0).getTextContent()) / 100.0;
+                    percentCatch = Integer.parseInt(eElement.getElementsByTagName("percentCatch").item(0).getTextContent()) / 100.0;
                 }
             }
         }
         catch(Exception e){
-            double prob = .8;
-            param = new FireParameter(type, length, width, prob, percentage);
             throw new MalformedConfigurationException("Could not find all related fields for parameter. " +
                     "Missing values set to default.");
         }
+        param = new FireParameter(type, length, width, percentCatch, percentAlive, percentBurning);
     }
 
     private void readGameOfLifeParam() throws MalformedConfigurationException{
+        double percentAlive = 0;
         try{
             NodeList nList = doc.getElementsByTagName(title);
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
-                    percentage = Integer.parseInt(eElement.getElementsByTagName("percentage").item(0).getTextContent()) / 10.0;
+                    percentAlive = Integer.parseInt(eElement.getElementsByTagName("percentAlive").item(0).getTextContent()) / 100.0;
                 }
             }
         }
         catch(Exception e){
-            param = new GameOfLifeParameter(type, length, width, percentage);
             throw new MalformedConfigurationException("Could not find all related fields for parameter. " +
                     "Missing values set to default.");
         }
-        param = new GameOfLifeParameter(type, length, width, percentage);
+        param = new GameOfLifeParameter(type, length, width, percentAlive);
     }
     private void readPercolationParam() throws MalformedConfigurationException{
+        double probOpen = 0;
         try{
             NodeList nList = doc.getElementsByTagName(title);
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
-                    percentage = Integer.parseInt(eElement.getElementsByTagName("percentage").item(0).getTextContent()) / 10.0;
+                    probOpen = Integer.parseInt(eElement.getElementsByTagName("probOpen").item(0).getTextContent()) / 100.0;
                 }
             }
         }
         catch(Exception e){
-            param = new PercolationParameter(type, length, width, percentage);
             throw new MalformedConfigurationException("Could not find all related fields for parameter. " +
                     "Missing values set to default.");
         }
-        param = new PercolationParameter(type, length, width, percentage);
+        param = new PercolationParameter(type, length, width, probOpen);
     }
     private void readSegregationParam() throws MalformedConfigurationException{
+        double percentMinority = 0;
+        double percentTolerance = 0;
+        double percentOpen = 0;
         try{
             NodeList nList = doc.getElementsByTagName(title);
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
-                    percentage = Integer.parseInt(eElement.getElementsByTagName("percentage").item(0).getTextContent()) / 10.0;
+                    percentMinority = Integer.parseInt(eElement.getElementsByTagName("percentMinority").item(0).getTextContent()) / 100.0;
+                    percentTolerance = Integer.parseInt(eElement.getElementsByTagName("percentTolerance").item(0).getTextContent()) / 100.0;
+                    percentOpen = Integer.parseInt(eElement.getElementsByTagName("percentOpen").item(0).getTextContent()) / 100.0;
                 }
             }
         }
         catch(Exception e){
-            double prob = .8;
-            param = new SegregationParameter(type, length, width, prob, percentage);
             throw new MalformedConfigurationException("Could not find all related fields for parameter. " +
                     "Missing values set to default.");
         }
-        double prob = .8;
-        param = new SegregationParameter(type, length, width, prob, percentage);
+        param = new SegregationParameter(type, length, width, percentTolerance, percentMinority, percentOpen);
     }
     private void readWatorParam()throws MalformedConfigurationException{
+        double percentPrey = 0;
+        double percentPredator = 0;
+        int energy = 0;
+        int birthRate = 0;
         try{
             NodeList nList = doc.getElementsByTagName(title);
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
-                    percentage = Integer.parseInt(eElement.getElementsByTagName("percentage").item(0).getTextContent()) / 10.0;
+                    percentPrey = Integer.parseInt(eElement.getElementsByTagName("percentPrey").item(0).getTextContent()) / 100.0;
+                    percentPredator = Integer.parseInt(eElement.getElementsByTagName("percentPredator").item(0).getTextContent()) / 100.0;
+                    birthRate = Integer.parseInt(eElement.getElementsByTagName("birthRate").item(0).getTextContent());
+                    energy = Integer.parseInt(eElement.getElementsByTagName("energy").item(0).getTextContent());
                 }
             }
         }
         catch(Exception e){
-            double prob = .8;
-            param = new WatorParameter(type, length, width, prob, percentage);
             throw new MalformedConfigurationException("Could not find all related fields for parameter. " +
                     "Missing values set to default.");
         }
-        double prob = .8;
-        param = new WatorParameter(type, length, width, prob, percentage);
+        param = new WatorParameter(type, length, width, percentPrey, percentPredator, energy, birthRate);
     }
 }
 

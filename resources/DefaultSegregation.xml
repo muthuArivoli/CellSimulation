@@ -6,10 +6,11 @@
         <type>Square</type>
         <gridWidth>100</gridWidth>
         <gridLength>100</gridLength>
-        <percentage>7</percentage>
     </Configuration>
     <Segregation>
-        <tolerance>.2</tolerance>
+        <percentMinority>30</percentMinority>
+        <percentTolerance>20</percentTolerance>
+        <percentOpen>20</percentOpen>
     </Segregation>
 </General>
 

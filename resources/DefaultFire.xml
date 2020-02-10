@@ -9,6 +9,8 @@
         <percentage>5</percentage>
     </Configuration>
     <Fire>
-        <probability>.5</probability>
+        <percentAlive>80</percentAlive>
+        <percentBurning>20</percentBurning>
+        <percentCatch>80</percentCatch>
     </Fire>
 </General>

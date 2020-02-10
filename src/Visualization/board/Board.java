@@ -40,8 +40,6 @@ public abstract class  Board {
 
     public void handleShapeClicked(Shape shape) {
         int displayIndex = display.indexOf(shape);
-        System.out.println("PRINTING INDICES");
-        System.out.println(displayIndex);
         int x_index = 0;
         int y_index = 0;
         if(displayIndex != 0){

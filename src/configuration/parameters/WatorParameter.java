@@ -2,7 +2,6 @@ package configuration.parameters;
 
 import cellsociety.Cell;
 import cellsociety.cellstate.*;
-import simulation.FireSimulation;
 import simulation.Simulation;
 import simulation.WatorSimulation;
 
@@ -10,39 +9,42 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class WatorParameter extends Parameter {
-    private double probEaten;
+    private int energy;
+    private int birthRate;
+    private double percPredator;
 
     public WatorParameter(){
-        this("Simulation Team 7", 25, 25, .25, .7);
+        this("Square", 100,100,.30,.30,3,7);
     }
 
-
-    public WatorParameter(String type, Integer length, Integer width, Double prob, Double perc){
+    public WatorParameter(String type, Integer length, Integer width, Double percentPrey, Double percentPredator, int energyStart, int birth){
         gridType = type;
-        probEaten = prob;
+        energy = energyStart;
+        birthRate = birth;
         gridLength = length;
         gridWidth = width;
-        percentage = perc;
+        percentage = percentPrey;
+        percPredator = percentPredator;
         possibleStates = new ArrayList<CellState>(Arrays.asList(State.PREY, State.PREDATOR, State.DEAD));
     }
 
-    public WatorCell makeCell(double prob){
+    public WatorCell makeCell(){
         CellState state;
         double roll = Math.random();
-        if(roll > prob + (1 - prob)/2){
+        if(roll < percentage){
             state = possibleStates.get(0);
         }
-        else if(roll > prob){
+        else if(roll < percentage + percPredator){
             state = possibleStates.get(1);
         }
         else{
             state = possibleStates.get(2);
         }
-        return new WatorCell(state);
+        return new WatorCell(state, energy, birthRate);
     }
 
     public double getThreshold() {
-        return probEaten;
+        return birthRate;
     }
 
     public Simulation makeSimulation(ArrayList<ArrayList<Cell>> initialGrid, Parameter currentParam){

@@ -12,22 +12,23 @@ import java.util.Arrays;
 
 public class FireParameter extends Parameter {
     private double probCatch;
+
     public FireParameter(){
-        this("Simulation Team 7", 25, 25, .15, .7);
+        this("Square", 100, 100, .70, .70, .30);
     }
 
-    public FireParameter(String type, Integer length, Integer width, double prob, double perc){
+    public FireParameter(String type, Integer length, Integer width, double percentCatch, double percentAlive, double percentBurning){
         gridType = type;
         gridLength = length;
         gridWidth = width;
-        probCatch = 1 - prob;
-        percentage = perc;
+        probCatch = 1 - percentCatch;
+        percentage = percentAlive;
         possibleStates = new ArrayList<CellState>(Arrays.asList(State.BURNING, State.ALIVE, State.EMPTY));
     }
 
-    public FireCell makeCell(double prob){
+    public FireCell makeCell(){
         CellState state;
-        if(Math.random() < prob){
+        if(Math.random() < percentage){
             state = possibleStates.get(1);
         }
         else{
