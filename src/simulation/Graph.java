@@ -1,9 +1,10 @@
 package simulation;
 
+
 import java.util.*;
 
 public class Graph<T extends Clonable> {
-    private Map<T, List<T> > adjList;
+    private Map<T, List<T>> adjList;
     public Graph(){
         adjList = new LinkedHashMap<>();
     }
@@ -11,8 +12,7 @@ public class Graph<T extends Clonable> {
     public Graph(Graph<T> myGraph){
         this();
         for(T myVertex:myGraph.getVertices()){
-            addVertex((T)myVertex.clones(),new ArrayList<>(myGraph.getAdjList().get(myVertex)));
-//            System.out.println(myVertex.toString());
+            addVertex((T)myVertex.copy(),new ArrayList<>(myGraph.getAdjList().get(myVertex)));
         }
     }
 

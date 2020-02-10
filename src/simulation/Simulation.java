@@ -1,7 +1,6 @@
 package simulation;
 
 
-import Visualization.board.TriangularBoard;
 import cellsociety.Cell;
 import configuration.parameters.Parameter;
 import simulation.grid.Grid;

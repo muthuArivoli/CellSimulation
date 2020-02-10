@@ -4,10 +4,8 @@ import cellsociety.Cell;
 
 import cellsociety.cellstate.CellState;
 import cellsociety.cellstate.State;
-import cellsociety.cellstate.WatorCell;
 import configuration.parameters.Parameter;
 import simulation.grid.Grid;
-import simulation.grid.RectangularGrid;
 
 import java.util.ArrayList;
 import java.util.Collection;

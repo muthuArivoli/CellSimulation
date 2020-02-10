@@ -14,7 +14,7 @@ public class SegregationCell extends Cell {
     }
 
     @Override
-    public Cell clones() {
+    public Cell copy() {
         return new FireCell(this.state);
     }
 

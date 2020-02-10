@@ -2,7 +2,6 @@ package simulation.grid;
 
 import cellsociety.Cell;
 import simulation.behaviors.RectangleNeighborBehavior;
-import simulation.grid.Grid;
 
 import java.util.Collection;
 

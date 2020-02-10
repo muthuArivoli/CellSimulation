@@ -47,8 +47,6 @@ public class Configuration {
     private Scene myScene;
     private Group myLayout;
     private GridBuilder gridBuilder;
-    private int gridLength;
-    private int gridWidth;
     private Parameter currentParam;
     private List<List<Cell>> initialGrid;
     private Simulation currentSim;
@@ -155,13 +153,18 @@ public class Configuration {
         }
     }
 
-    private void initializeFile(File file){
+    private void initializeFile(File file) throws IncorrectFileTypeError{
         checkSelected = true;
         try{
             currentParam = gridBuilder.makeParameter(file);
         }
         catch(IncorrectFileTypeError e){
-            currentParam = gridBuilder.makeParameter(new File(DEFAULT_FIRE));
+            try{
+                currentParam = gridBuilder.makeParameter(new File(DEFAULT_FIRE));
+            }
+            catch(IncorrectFileTypeError ex){
+                throw new IncorrectFileTypeError("File could not be configured properly");
+            }
         }
         initialGrid = gridBuilder.makeGrid(currentParam);
         createSimulation();
