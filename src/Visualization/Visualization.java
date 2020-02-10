@@ -1,5 +1,6 @@
 package Visualization;
 
+
 import Visualization.board.Board;
 import Visualization.board.HexagonalBoard;
 import Visualization.board.SquareBoard;
@@ -26,12 +27,7 @@ public class Visualization {
     public static final double SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
     public static final double SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
     public static final Paint BACKGROUND = Color.WHEAT;
-    public static final String BUTTON_NAME_PATH = "./resources/ButtonNames.txt";
-    private static final String HEXAGON = "Hexagon";
-    private static final String TRIANGULAR = "TRIANGLE";
-    private static final String SQUARE = "Square";
-
-
+    
     private Scene myScene;
     private Group root;
     private Board grid;
@@ -46,6 +42,7 @@ public class Visualization {
     private boolean newSimulation;
     private boolean showGraph;
     private String[] myButtonNames;
+    private String[] myShapes;
 
     public Visualization(Simulation simulation){
         paused = false;
@@ -58,6 +55,9 @@ public class Visualization {
         root = new Group();
         display = new ArrayList<Rectangle>();
 
+        Shapes newShapes = new Shapes();
+        myShapes = newShapes.getMyShapes();
+
         initializeGrid(simulation);
 
         barChart = new BarGraph(grid.getNumStates());
@@ -69,13 +69,14 @@ public class Visualization {
 
     private void initializeGrid(Simulation simulation) {
         String gridType = simulation.getGridType();
-        if(gridType.equals(HEXAGON)){
+
+        if (gridType.equals(myShapes[0])){
             grid = new HexagonalBoard(simulation.returnGraph());
         }
-        else if(gridType.equals(TRIANGULAR)){
+        else if(gridType.equals(myShapes[1])){
             grid = new TriangularBoard(simulation.returnGraph());
         }
-        else{
+        else {
             grid = new SquareBoard(simulation.returnGraph());
         }
     }
