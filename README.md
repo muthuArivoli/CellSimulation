@@ -51,10 +51,12 @@ Simulation Speed Slider changes the speed of all simulations. All simulations ru
 
 Interesting data files:
 
-Known Bugs:
+Known Bugs: The triangle grid is not fully implemented, and thus cannot be used in its current state. The hexagon grid sometimes does not pick the correct neighbors and won't update the simulation accordingly to the rules of the simulation.
 
 Extra credit:
 
 
 ### Impressions
+
+Muthu Arivoli: This project has been my first major software project with a team. Navigating through team dynamics and implementing a large software project has definetly been a challenge, and has taught me many useful skills for my future in software development.
 
