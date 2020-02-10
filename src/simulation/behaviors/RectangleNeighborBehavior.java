@@ -10,11 +10,12 @@ public class RectangleNeighborBehavior implements NeighborBehavior {
 
     @Override
     public Collection<int[]> getNeighbors(int row, int col, int gridWidth, int gridLength) {
+
         List<int[]> neighbors = new ArrayList<>();
         if(row!=0){
             neighbors.add(new int[] {row-1,col});
         }
-        if(row!=gridWidth-1){
+        if(row!=gridLength-1){
             neighbors.add(new int[] {row+1,col});
         }
         if(col!=0){

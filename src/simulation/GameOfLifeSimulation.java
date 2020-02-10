@@ -12,7 +12,6 @@ public class GameOfLifeSimulation extends CurrStateSimulation {
     public GameOfLifeSimulation(Collection grid, Parameter param) {
         super(grid, param);
     }
-
     protected void getNextState(Cell cell, Collection<Cell> neighbor, Grid newGrid, Iterator<Cell> it){
         int liveNeighbors = 0;
         for(Cell c: neighbor){

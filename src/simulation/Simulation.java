@@ -20,6 +20,7 @@ public abstract class Simulation {
     protected int gridWidth;
     protected String gridType;
 
+
     public Simulation(Collection<Cell> grid, Parameter param){
         this.gridWidth = param.getGridWidth();
         this.gridLength = param.getGridLength();

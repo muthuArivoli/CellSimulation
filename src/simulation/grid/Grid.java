@@ -16,7 +16,7 @@ public abstract class Grid {
     private NeighborBehavior myNeighbors;
 
     public Grid(Collection grid, int gridLength, int gridWidth, NeighborBehavior myNeighbors){
-        myGrid = new Graph<Cell>();
+        myGrid = new Graph<>();
         this.myNeighbors = myNeighbors;
         this.gridLength = gridLength;
         this.gridWidth = gridWidth;

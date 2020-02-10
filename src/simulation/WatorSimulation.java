@@ -1,10 +1,12 @@
 package simulation;
 
 import cellsociety.Cell;
+
 import cellsociety.cellstate.State;
 import cellsociety.cellstate.WatorCell;
 import configuration.parameters.Parameter;
 import simulation.grid.Grid;
+import simulation.grid.RectangularGrid;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -65,7 +67,15 @@ public class WatorSimulation extends Simulation {
 //            }
 //        }
     }
-    public void update(){
 
+    @Override
+    public void update() {
+        Grid newGrid = new RectangularGrid(returnGraph(),gridLength,gridWidth);
+        Iterator it = newGrid.getVertices().iterator();
+        for(Cell c:myGrid.getVertices()){
+            getNextState(c,myGrid.getNeighbors(c), newGrid, it);
+        }
+        myGrid = newGrid;
+        newGrid.createGraph(returnGraph());
     }
 }

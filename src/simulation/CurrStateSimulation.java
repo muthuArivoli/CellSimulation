@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public abstract class CurrStateSimulation extends Simulation {
+
     public CurrStateSimulation(Collection grid, Parameter param){
         super(grid, param);
     }

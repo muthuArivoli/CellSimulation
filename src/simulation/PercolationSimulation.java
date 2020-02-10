@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class PercolationSimulation extends CurrStateSimulation{
+
     public PercolationSimulation(Collection grid, Parameter param) {
         super(grid, param);
     }

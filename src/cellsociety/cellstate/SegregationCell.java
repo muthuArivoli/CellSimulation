@@ -33,4 +33,5 @@ public class SegregationCell extends Cell {
     public String toString(){
         return state.toString();
     }
+
 }
