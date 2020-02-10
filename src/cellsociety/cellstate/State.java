@@ -14,8 +14,8 @@ public enum State implements CellState {
     BLOCKED (Color.BLACK),
     MAJORITY (Color.PURPLE),
     MINORITY (Color.YELLOW),
-    ALIVE (Color.GREEN);
-
+    ALIVE (Color.GREEN),
+    MOVE (Color.BLUE);
     private Paint color;
 
     State(Paint color){

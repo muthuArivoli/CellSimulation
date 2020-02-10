@@ -8,14 +8,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class WatorCell extends Cell {
-    private CellState myState;
+public class WatorCell extends Cell implements CellState {
     private int energy;
     private int birth;
     private List<CellState> possibleStates;
 
     public WatorCell(CellState myState){
-        this.myState = myState;
+        super(myState);
         energy = 5;
         birth = 7;
         possibleStates = new ArrayList<CellState>(Arrays.asList(State.DEAD, State.PREY, State.PREDATOR));
@@ -24,7 +23,6 @@ public class WatorCell extends Cell {
     public int getEnergy(){
         return energy;
     }
-
     public int getBirth() {
         return birth;
     }
@@ -34,8 +32,24 @@ public class WatorCell extends Cell {
     public void decrementEnergy(){
         energy--;
     }
-    public CellState getState(){
-        return myState;
+
+    @Override
+    public CellState getNextState(){
+        if(getState() == State.EMPTY){
+            return State.EMPTY;
+        }
+        decrementBirth();
+        decrementEnergy();
+        if(energy<=0 && getState() == State.PREDATOR){
+            return State.DEAD;
+        }
+        if(birth>0){
+            return State.MOVE;
+        }
+        else{
+            birth = 7;
+        }
+        return getState();
     }
     public Paint getColor(){
         return Color.GREEN;

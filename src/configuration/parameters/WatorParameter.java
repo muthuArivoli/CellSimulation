@@ -23,20 +23,20 @@ public class WatorParameter extends Parameter {
         gridLength = length;
         gridWidth = width;
         percentage = perc;
-        possibleStates = new ArrayList<CellState>(Arrays.asList(State.PREY, State.PREDATOR, State.DEAD));
+        possibleStates = new ArrayList<CellState>(Arrays.asList(State.PREY, State.PREDATOR, State.EMPTY, State.DEAD));
     }
 
     public WatorCell makeCell(double prob){
         CellState state;
         double roll = Math.random();
         if(roll > prob + (1 - prob)/2){
-            state = possibleStates.get(0);
+            state = possibleStates.get(2);
         }
         else if(roll > prob){
             state = possibleStates.get(1);
         }
         else{
-            state = possibleStates.get(2);
+            state = possibleStates.get(0);
         }
         return new WatorCell(state);
     }

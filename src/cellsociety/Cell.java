@@ -9,7 +9,9 @@ public abstract class Cell implements Clonable {
 
     protected CellState state;
 
-    public Cell(){}
+    public Cell(CellState state){
+        this.state = state;
+    }
 
 
     public Cell(Cell c){
@@ -31,6 +33,9 @@ public abstract class Cell implements Clonable {
         return state.toString();
     }
 
+    public CellState getNextState(){
+        return state;
+    }
     public abstract Cell clone();
 
 }

@@ -2,6 +2,7 @@ package simulation;
 
 import cellsociety.Cell;
 
+import cellsociety.cellstate.CellState;
 import cellsociety.cellstate.State;
 import cellsociety.cellstate.WatorCell;
 import configuration.parameters.Parameter;
@@ -13,69 +14,47 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-public class WatorSimulation extends Simulation {
+public class WatorSimulation extends CurrStateSimulation {
 
     public WatorSimulation(Collection grid, Parameter param) {
         super(grid, param);
     }
 
-    protected void getNextState(Cell cell, Collection neighbor, Grid newGrid, Iterator<Cell> it){
-//        Cell myTemp = it.next();
-//        if(((WatorCell)myTemp.getState()).getState() == State.EMPTY){
-//            return;
-//        }
-//        ((WatorCell)cell.getState()).decrementEnergy();
-//        ((WatorCell)cell.getState()).decrementBirth();
-//        if(((WatorCell)cell.getState()).getState()== State.PREY){
-//            Cell currCell = myTemp;
-//            List<Integer> available = new ArrayList<>();
-//            for(int i=0;i<newGrid.getAdjList().get(currCell).size();i++){
-//                if(neighbor.get(i).getState() == State.EMPTY){
-//                    available.add(Integer.valueOf(i));
-//                }
-//            }
-//            int randValue =(int) Math.random()*neighbor.size();
-//            neighbor.get(randValue).setState(cell.getState());
-//            if(((WatorCell)cell.getState()).getBirth()!=0){
-//                cell = new WatorCell(State.EMPTY);
-//            }
-//
-//        }
-//        else if (((WatorCell)cell.getState()).getState() == State.PREDATOR){
-//            if(((WatorCell)cell.getState()).getEnergy()<=0){
-//                cell = new WatorCell(State.EMPTY);
-//                return;
-//            }
-//            boolean move = false;
-//            for(int i=0;i<neighbor.size();i++){
-//                if(neighbor.get(i).getState()== State.PREY){
-//                    neighbor.get(i).setState(cell.getState());
-//                    move = true;
-//                    break;
-//                }
-//            }
-//            if(!move){
-//                for(int i=0;i<neighbor.size();i++){
-//                    if(neighbor.get(i).getState()== State.EMPTY){
-//                        neighbor.get(i).setState(cell.getState());
-//                        break;
-//                    }
-//                }
-//            }
-//            if(((WatorCell)cell.getState()).getBirth()!=0){
-//                cell = new WatorCell(State.EMPTY);
-//            }
-//        }
-    }
-
-    @Override
-    public void update() {
-        Grid newGrid = new RectangularGrid(returnGraph(),gridLength,gridWidth);
-        Iterator it = newGrid.getVertices().iterator();
-        for(Cell c:myGrid.getVertices()){
-            getNextState(c,myGrid.getNeighbors(c), newGrid, it);
+    protected void getNextState(Cell cell, Collection<Cell> neighbors, Grid newGrid, Iterator<Cell> it){
+        Cell myTemp = it.next();
+        Collection<Cell> neighbor = newGrid.getNeighbors(myTemp);
+        CellState nextState = myTemp.getNextState();
+        if(nextState == State.DEAD || nextState == State.EMPTY){
+            myTemp.setState(State.EMPTY);
+            return;
         }
-        myGrid = newGrid;
-        newGrid.createGraph(returnGraph());
+        CellState currState = myTemp.getState();
+        if(nextState == State.MOVE){
+            myTemp.setState(State.EMPTY);
+        }
+        if(currState==State.PREY){
+            movetoEmptyCell(neighbor, currState);
+        }
+        else if (currState == State.PREDATOR){
+            for(Cell c:neighbor){
+                if(c.getState()== State.PREY){
+                    c.setState(currState);
+                    return;
+                }
+            }
+            movetoEmptyCell(neighbor,currState);
+        }
+    }
+    private void movetoEmptyCell(Collection<Cell> neighbor, CellState currState){
+        List<Cell> available = new ArrayList<>();
+        for(Cell c:neighbor){
+            if(c.getState() == State.EMPTY){
+                available.add(c);
+            }
+        }
+        if(available.size()>0) {
+            int randValue = (int)( Math.random() * available.size());
+            available.get(randValue).setState(currState);
+        }
     }
 }

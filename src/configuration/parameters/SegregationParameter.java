@@ -32,13 +32,13 @@ public class SegregationParameter extends Parameter {
         CellState state;
         double roll = Math.random();
         if(roll > prob + (1 - prob)/2){
-            state = possibleStates.get(2);
+            state = possibleStates.get(0);
         }
         else if(roll > prob){
             state = possibleStates.get(1);
         }
         else{
-            state = possibleStates.get(0);
+            state = possibleStates.get(2);
         }
         return new SegregationCell(state);
     }
