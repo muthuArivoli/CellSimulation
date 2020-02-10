@@ -29,7 +29,7 @@ public class PercolationSimulation extends CurrStateSimulation{
                 it.next().setState(State.FULL);
                 return;
             }
-            it.next();
         }
+        it.next();
     }
 }
