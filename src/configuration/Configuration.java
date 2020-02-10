@@ -86,14 +86,14 @@ public class Configuration {
 
         GUITools constructor = new GUITools();
 
-        Text title = constructor.makeText(properties[0], "Times New Roman", FONT_SIZE, TEXT_COLOR,
+        Text title = constructor.makeText(properties[0], properties[17], FONT_SIZE, TEXT_COLOR,
                 HALFWAY - INDENT - 15, myScene.getHeight()*(1.0/8.0));
         myLayout.getChildren().add(title);
 
         makeSimulationButtons(constructor);
 
         Button uploadFile = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(7.0/8.0),
-                properties[1], BUTTON_LENGTH, "-fx-base: white;");
+                properties[1], BUTTON_LENGTH, properties[16]);
         uploadFile.setOnAction( event -> chooseFile());
         myLayout.getChildren().add(uploadFile);
 
@@ -102,27 +102,27 @@ public class Configuration {
 
     private void makeSimulationButtons(GUITools constructor) {
         Button PercolationSimulation = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(2.0/8.0),
-                properties[2], BUTTON_LENGTH, "-fx-base: #264653;");
+                properties[2], BUTTON_LENGTH, properties[6]);
         PercolationSimulation.setOnAction( event -> uploadPercolation());
         myLayout.getChildren().add(PercolationSimulation);
 
         Button WaTorSimulation = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(3.0/8.0),
-                properties[3], BUTTON_LENGTH, "-fx-base: #2A9D8F;");
+                properties[3], BUTTON_LENGTH, properties[7]);
         WaTorSimulation.setOnAction( event -> uploadWaTor());
         myLayout.getChildren().add(WaTorSimulation);
 
         Button GameofLifeSimulation = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(4.0/8.0),
-                properties[4], BUTTON_LENGTH, "-fx-base: #E9C46A;");
+                properties[4], BUTTON_LENGTH, properties[8]);
         GameofLifeSimulation.setOnAction( event -> uploadGameofLife());
         myLayout.getChildren().add(GameofLifeSimulation);
 
         Button SegregationSimulation = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(5.0/8.0),
-                "SEGREGATION", BUTTON_LENGTH, "-fx-base:  #F4A261;");
+                properties[4], BUTTON_LENGTH, properties[9]);
         SegregationSimulation.setOnAction( event -> uploadSegregation());
         myLayout.getChildren().add(SegregationSimulation);
 
         Button FireSimulation = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(6.0/8.0),
-                "FIRE", BUTTON_LENGTH, "-fx-base: #E76F51;");
+                properties[5], BUTTON_LENGTH, properties[10]);
         FireSimulation.setOnAction( event -> uploadFire());
         myLayout.getChildren().add(FireSimulation);
     }
@@ -164,23 +164,22 @@ public class Configuration {
     }
 
     private void createSimulation(){
-        if(currentParam.toString().equals("Fire Simulation")){
+        if(currentParam.toString().equals(properties[11])){
             currentSim = new FireSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
-
-        if(currentParam.toString().equals("Game of Life Simulation")){
+        if(currentParam.toString().equals(properties[12])){
             currentSim = new GameOfLifeSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
-        if(currentParam.toString().equals("Percolation Simulation")){
+        if(currentParam.toString().equals(properties[13])){
             currentSim = new PercolationSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
-        if(currentParam.toString().equals("Segregation Simulation")){
+        if(currentParam.toString().equals(properties[14])){
             currentSim = new SegregationSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
-        if(currentParam.toString().equals("Wa Tor Simulation")){
+        if(currentParam.toString().equals(properties[15])){
             currentSim = new WatorSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
-        if(currentParam.toString().equals("Wa Tor Simulation")){
+        if(currentParam.toString().equals(properties[15])){
             currentSim = new WatorSimulation(this.getInitialGrid(), this.getCurrentParam());
         }
 
