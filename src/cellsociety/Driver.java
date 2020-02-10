@@ -67,6 +67,50 @@ public class Driver extends Application {
 
 
     private void step (double elapsedTime) {
+        handleConfigurations();
+        for(int j = 0; j < myVisualizations.size(); j++){
+            Visualization v = myVisualizations.get(j);
+            Simulation sim = mySimulations.get(j);
+            startNewSimulations(v);
+            updateSimulations(v, sim);
+            stepSimulation(v, sim);
+        }
+
+    }
+
+    private void updateSimulations(Visualization v, Simulation sim) {
+        if(!v.checkPaused()){
+            if (v.isVisualizationReady()) {
+                sim.update();
+                v.updateGrid(sim.returnGraph());
+                speed = v.getCurrentSimulationSpeed();
+                System.out.println(speed);
+            }
+        }
+    }
+
+    private void stepSimulation(Visualization v, Simulation sim) {
+        if(v.stepped()) {
+            sim.update();
+            v.updateGrid(sim.returnGraph());
+            v.setStep();
+        }
+    }
+
+    private void startNewSimulations(Visualization v) {
+        if(v.checkStartNewSim()) {
+            v.newSimStarted();
+            Configuration myConfig = new Configuration();
+            myConfigs.add(myConfig);
+            Stage myStage = new Stage();
+            Scene myScene = myConfig.getConfigurationScene();
+            myStage.setScene(myScene);
+            myStage.show();
+            myStages.add(myStage);
+        }
+    }
+
+    private void handleConfigurations() {
         for(Configuration c : myConfigs){
             if(c.isWaiting()) {
                 if (c.isSimulationSelected()) {
@@ -80,34 +124,6 @@ public class Driver extends Application {
                 }
             }
         }
-        for(int j = 0; j < myVisualizations.size(); j++){
-            Visualization v = myVisualizations.get(j);
-            Simulation sim = mySimulations.get(j);
-            if(v.checkStartNewSim()) {
-                v.newSimStarted();
-                Configuration myConfig = new Configuration();
-                myConfigs.add(myConfig);
-                Stage myStage = new Stage();
-                Scene myScene = myConfig.getConfigurationScene();
-                myStage.setScene(myScene);
-                myStage.show();
-                myStages.add(myStage);
-            }
-            if(!v.checkPaused()){
-                if (v.isVisualizationReady()) {
-                    sim.update();
-                    v.updateGrid(sim.returnGraph());
-                    speed = v.getCurrentSimulationSpeed();
-                    System.out.println(speed);
-                }
-            }
-            else if(v.stepped()) {
-                sim.update();
-                v.updateGrid(sim.returnGraph());
-                v.setStep();
-            }
-        }
-
     }
 }
 
