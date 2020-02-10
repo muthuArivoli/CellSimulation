@@ -52,6 +52,7 @@ public class Configuration {
     private Simulation currentSim;
     private boolean checkSelected;
     private boolean waiting;
+    private String[] properties;
 
     public Configuration(){
         myLayout = new Group();
@@ -59,6 +60,8 @@ public class Configuration {
         gridBuilder = new GridBuilder();
         checkSelected = false;
         waiting = true;
+        ConfigurationProperties currentProperties = new ConfigurationProperties();
+        properties = currentProperties.getProperties();
         initializeConfigurationUI();
     }
 
@@ -83,14 +86,14 @@ public class Configuration {
 
         GUITools constructor = new GUITools();
 
-        Text title = constructor.makeText("LETS SIMULATE!", "Times New Roman", FONT_SIZE, TEXT_COLOR,
+        Text title = constructor.makeText(properties[0], "Times New Roman", FONT_SIZE, TEXT_COLOR,
                 HALFWAY - INDENT - 15, myScene.getHeight()*(1.0/8.0));
         myLayout.getChildren().add(title);
 
         makeSimulationButtons(constructor);
 
         Button uploadFile = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(7.0/8.0),
-                "Choose a file to upload:", BUTTON_LENGTH, "-fx-base: white;");
+                properties[1], BUTTON_LENGTH, "-fx-base: white;");
         uploadFile.setOnAction( event -> chooseFile());
         myLayout.getChildren().add(uploadFile);
 
@@ -99,17 +102,17 @@ public class Configuration {
 
     private void makeSimulationButtons(GUITools constructor) {
         Button PercolationSimulation = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(2.0/8.0),
-                "PERCOLATION", BUTTON_LENGTH, "-fx-base: #264653;");
+                properties[2], BUTTON_LENGTH, "-fx-base: #264653;");
         PercolationSimulation.setOnAction( event -> uploadPercolation());
         myLayout.getChildren().add(PercolationSimulation);
 
         Button WaTorSimulation = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(3.0/8.0),
-                "WATOR", BUTTON_LENGTH, "-fx-base: #2A9D8F;");
+                properties[3], BUTTON_LENGTH, "-fx-base: #2A9D8F;");
         WaTorSimulation.setOnAction( event -> uploadWaTor());
         myLayout.getChildren().add(WaTorSimulation);
 
         Button GameofLifeSimulation = constructor.makeButtons(HALFWAY - INDENT, myScene.getHeight()*(4.0/8.0),
-                "GAME OF LIFE", BUTTON_LENGTH, "-fx-base: #E9C46A;");
+                properties[4], BUTTON_LENGTH, "-fx-base: #E9C46A;");
         GameofLifeSimulation.setOnAction( event -> uploadGameofLife());
         myLayout.getChildren().add(GameofLifeSimulation);
 

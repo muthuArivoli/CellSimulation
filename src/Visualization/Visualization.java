@@ -27,7 +27,7 @@ public class Visualization {
     public static final double SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
     public static final double SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
     public static final Paint BACKGROUND = Color.WHEAT;
-    
+
     private Scene myScene;
     private Group root;
     private Board grid;
