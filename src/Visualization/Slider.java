@@ -9,10 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-/*
- * A simple swing slider example with different constructors
- */
 
+/*
+ * Slider containing the current simulation speed
+ */
 public class Slider {
     public static final int SMALLEST_VISUALIZATION_SIZE = 0;
     public static final int BIGGEST_VISUALIZATION_SIZE = 100;
@@ -22,6 +22,10 @@ public class Slider {
     private int currentSimulationSpeed;
     private int speedBeforePause;
 
+    /**
+     * This is the constructor for the slider
+     * creates a slider and puts it in a new window on the screen
+     */
     public Slider() {
         currentSimulationSpeed = 50;
         speedBeforePause = 50;
@@ -58,6 +62,10 @@ public class Slider {
         return ticks;
     }
 
+    /**
+     * @param setLastSpeed The last integer of the speed
+     * changes the simulation speed
+     */
     public void setSimulationSpeed(boolean setLastSpeed){
         if (setLastSpeed){
             currentSimulationSpeed = speedBeforePause;
@@ -68,6 +76,9 @@ public class Slider {
         }
     }
 
+    /**
+     * @return The current simulation speed
+     */
     public int getCurrentSimulationSpeed() {
         return currentSimulationSpeed;
     }

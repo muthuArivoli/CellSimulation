@@ -2,6 +2,9 @@ package Visualization.shape;
 
 import javafx.scene.shape.Polygon;
 
+/**
+ * Triangle is one types of cell shape
+ */
 public class Triangle {
     private Polygon polygon;
     private double mySize;
@@ -12,6 +15,12 @@ public class Triangle {
     private double leftX;
     private double leftY;
 
+    /**
+     * @param startX is the starting x
+     * @param startY is the starting y
+     * @param size is the size
+     * @param flip is boolean representing flip
+     */
     public Triangle(Double startX, Double startY, Double size, boolean flip){
         mySize = size;
         polygon = new Polygon();
@@ -50,10 +59,17 @@ public class Triangle {
             leftY = startY - size;
         }
     }
+
+    /**
+     * @return the Triangle
+     */
     public Polygon getPolygon(){
         return polygon;
     }
 
+    /**
+     * @return the size of the Triangle
+     */
     public double getSize(){
         return mySize;
     }

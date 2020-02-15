@@ -13,13 +13,26 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Triangular Board is one types of board shape that extends the abstract class Board
+ */
 public class TriangularBoard extends Board {
 
+    /**
+     * This is the constructor for the Triangular Board
+     * @param array is the collection of cells
+     * initializes variables
+     */
     public TriangularBoard(Collection array){
         grid = new ArrayList<List<Cell>>(array);
         numStates = new HashMap<>();
     }
 
+    /**
+     * @param root the group for cells to be placed
+     * @param newGraph the collection of cells in the simulation
+     * places the cells
+     */
     public List<Shape> placeCells(Group root, Collection newGraph) {
         grid = new ArrayList<List<Cell>>(newGraph);
         numStates = new HashMap<>();

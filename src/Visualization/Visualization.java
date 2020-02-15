@@ -24,6 +24,9 @@ import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.List;
 
+/**
+ * Visualization represents the visualization of the simulation
+ */
 public class Visualization {
     public static final double SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
     public static final double SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
@@ -45,6 +48,12 @@ public class Visualization {
     private String[] myButtonNames;
     private String[] myShapes;
 
+
+    /**
+     * This is the constructor for the visualization
+     * @param simulation The simulation that the visualization is representing
+     * creates a new instance of GUITools, group, and slider
+     */
     public Visualization(Simulation simulation){
         paused = false;
         newSimulation = false;
@@ -109,6 +118,7 @@ public class Visualization {
         myScene = new Scene(root, width, height, background);
     }
 
+
     private void displayGraphFunc(Button displayGraph) {
         if (displayGraph.getText().equals(myButtonNames[0])) {
             displayGraph.setText(myButtonNames[1]);
@@ -135,11 +145,17 @@ public class Visualization {
         }
     }
 
-
+    /**
+     * @return returns the scene
+     */
     public Scene getScene(){
         return myScene;
     }
 
+    /**
+     * @graph the new graph to be displayed
+     * updates the visualization with the new graph
+     */
     public void updateGrid(Collection graph) {
         for(Shape s : display){
             root.getChildren().remove(s);
@@ -161,6 +177,9 @@ public class Visualization {
         }
     }
 
+    /**
+     * @return returns the simulation speed
+     */
     public int getCurrentSimulationSpeed(){
         if (mySlider.getCurrentSimulationSpeed()==0){
             return 10000;
@@ -176,26 +195,44 @@ public class Visualization {
         newSimulation = true;
     }
 
+    /**
+     * @return boolean relating to if the visualization is ready
+     */
     public boolean isVisualizationReady() {
         return ready;
     }
 
+    /**
+     * @return boolean relating to if the visualization is paused
+     */
     public boolean checkPaused() {
         return paused;
     }
 
+    /**
+     * @return boolean relating to if the simulation needs to be steped
+     */
     public boolean stepped() {
         return step;
     }
 
+    /**
+     * sets the step back to false
+     */
     public void setStep(){
         step = false;
     }
 
+    /**
+     * @return boolean relating to if the simulation needs to be changed
+     */
     public boolean checkStartNewSim() {
         return newSimulation;
     }
 
+    /**
+     * @return boolean relating to if the new simulation has started
+     */
     public void newSimStarted() {
         newSimulation = false;
     }

@@ -14,8 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * GUITools holds all the information about creating new GUI elements
+ */
 public class GUITools {
 
+    /**
+     * @param txt The text to go in the Text Box
+     * @param font The font to go in the Text Box
+     * @param size The size of the Text Box
+     * @param textColor The color of the Text Box
+     * @param x The x position of the Text Box
+     * @param y The y position of the Text Box
+     * @return text The created text box
+     */
     public Text makeText(String txt, String font, int size, Paint textColor, double x, double y) {
         Text text = new Text(txt);
         text.setFont(Font.font (font, size));
@@ -25,6 +37,14 @@ public class GUITools {
         return text;
     }
 
+    /**
+     * @param x The x position of the button
+     * @param y The y position of the button
+     * @param txt The text to go on the button
+     * @param width The width of the button
+     * @param color The color of the Text Box
+     * @return text The created button
+     */
     public Button makeButtons(double x, double y, String txt, double width, String color){
         Button button = new Button(txt);
         button.setStyle(color);
@@ -35,6 +55,13 @@ public class GUITools {
         return button;
     }
 
+    /**
+     * @param x The x position of the combo box
+     * @param y The y position of the combo box
+     * @param txt The text to go in the combo box
+     * @param possible The possible options in the combo box
+     * @return text The created combo box
+     */
     public ComboBox makeDropDown(String txt, double x, double y, List<Parameter> possible){
         ComboBox combo_box = new ComboBox(FXCollections.observableArrayList(possible));
         combo_box.setEffect(new DropShadow());

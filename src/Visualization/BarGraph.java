@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Bar Graph is a graph representing the instances of different cell states
+ */
 public class BarGraph {
     private static final String DEFAULT_RESOURCES_PACKAGE = "Visualization.GraphInformation";
 
@@ -21,6 +24,10 @@ public class BarGraph {
     BarChart<String,Number> bc;
     private ResourceBundle myResources;
 
+    /**
+     * This is the constructor for the BarGraph
+     * @param numStates A map of of each possible state and how many cells are currently that state
+     */
     public BarGraph(Map<CellState, Double> numStates) {
         getInformationFromFile();
         final CategoryAxis xAxis = new CategoryAxis();
@@ -33,10 +40,17 @@ public class BarGraph {
 
     }
 
+    /**
+     * @return bc returns the Bar Graph
+     */
     public BarChart getBarGraph(){
         return bc;
     }
 
+    /**
+     * @param state The state that is having its number changed
+     * @param amount How much the cell is changing
+     */
     public void addSeries(CellState state, double amount){
         XYChart.Series series = new XYChart.Series();
         series.setName(state.toString());
@@ -46,13 +60,20 @@ public class BarGraph {
 //        series.getNode().setStyle(state.getColor().toString());
     }
 
+    /**
+     * @param numStates The new condition of the cells
+     * changes the chart to represent the new amount of each cell
+     */
     public void updateChart(Map<CellState, Double> numStates) {
         for(CellState s  : numStates.keySet()){
             addSeries(s, numStates.get(s));
         }
     }
 
-    public void getInformationFromFile(){
+    /**
+     * changes the chart to represent the new amount of each cell
+     */
+    private void getInformationFromFile(){
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCES_PACKAGE);
         myInformation = new String[10];
         myInformation[0] = (myResources.getString("DisplayGraph"));
@@ -63,10 +84,16 @@ public class BarGraph {
         myInformation[5] = (myResources.getString("Filenotfound"));
     }
 
+    /**
+     * @return the text representing the simulation speed
+     */
     public String getSimulationSpeedText() {
         return myInformation[4];
     }
 
+    /**
+     * @return the text representing the file not found
+     */
     public String getFileNotFound() {
         return myInformation[5];
     }

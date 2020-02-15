@@ -6,6 +6,9 @@ import javafx.scene.shape.Shape;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Hexagon is one types of cell shape
+ */
 public class Hexagon {
     private Polygon polygon;
     private double topLeftX;
@@ -23,6 +26,11 @@ public class Hexagon {
     private double width;
     private double height;
 
+    /**
+     * @param startX is the starting x
+     * @param startY is the starting y
+     * @param size is the size
+     */
     public Hexagon(Double startX, Double startY, Double size){
         polygon = new Polygon();
         generatePoints(startX, startY, size);
@@ -58,13 +66,23 @@ public class Hexagon {
         midLeftY = startY - halfHeight;
     }
 
+    /**
+     * @return the hexagon
+     */
     public Polygon getPolygon(){
         return polygon;
     }
 
+    /**
+     * @return the width of the hexagon
+     */
     public double getXOffset(){
         return width;
     }
+
+    /**
+     * @return the Y offset of the hexagon
+     */
     public double getYOffset(){ return height/2.0;}
 
 }
